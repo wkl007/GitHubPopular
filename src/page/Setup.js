@@ -6,6 +6,8 @@ import CustomKeyPage from './my/CustomKeyPage'
 import SortKeyPage from './my/SortKeyPage'
 import RepositoryDetail from './RepositoryDetail'
 import PopularPage from './PopularPage'
+import AboutPage from './about/AboutPage'
+import AboutMePage from './about/AboutMePage'
 
 const App = StackNavigator({
   WelcomePage: {
@@ -25,6 +27,12 @@ const App = StackNavigator({
   },
   RepositoryDetail: {
     screen: RepositoryDetail,
+  },
+  AboutPage:{
+    screen: AboutPage,
+  },
+  AboutMePage:{
+    screen: AboutMePage,
   }
 }, {
   mode: 'card',

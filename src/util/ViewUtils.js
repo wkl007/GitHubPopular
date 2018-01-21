@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  StyleSheet
 } from 'react-native';
 
 export default class ViewUtils {
@@ -22,14 +23,15 @@ export default class ViewUtils {
       <TouchableOpacity
         onPress={callback}
       >
-        <View style={{alignItems: 'center', flexDirection: 'row'}}>
-          {icon ?
-            <Image source={icon} resizeMode='stretch'
-                   style={[{opacity: 1, width: 16, height: 16, marginRight: 10,}, tintStyle]}/> :
-            <View style={{opacity: 1, width: 16, height: 16, marginRight: 10}}>
-              <Text>{text}</Text>
-            </View>
-          }
+        <View style={[styles.setting_item_container]}>
+          <View style={{alignItems: 'center', flexDirection: 'row'}}>
+            {icon ?
+              <Image source={icon} resizeMode='stretch'
+                     style={[{opacity: 1, width: 16, height: 16, marginRight: 10,}, tintStyle]}/> :
+              <View style={{opacity: 1, width: 16, height: 16, marginRight: 10}}/>
+            }
+            <Text>{text}</Text>
+          </View>
           <Image source={expandableIco ? expandableIco : require('../assets/images/ic_tiaozhuan.png')}
                  style={[{marginRight: 10, height: 22, width: 22, alignSelf: 'center', opacity: 1}, tintStyle]}
           />
@@ -112,3 +114,13 @@ export default class ViewUtils {
     </TouchableOpacity>
   }
 }
+
+const styles = StyleSheet.create({
+  setting_item_container: {
+    backgroundColor: 'white',
+    padding: 10, height: 60,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+});

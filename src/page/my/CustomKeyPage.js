@@ -136,7 +136,6 @@ export default class CustomKeyPage extends Component {
   render() {
     let rightButtonTitle = this.isRemoveKey ? '移除' : '保存';
     let title = this.isRemoveKey ? '标签移除' : '自定义标签';
-
     title = this.flag === FLAG_LANGUAGE.flag_language ? '自定义语言' : title;
     return (
       <View style={styles.container}>
