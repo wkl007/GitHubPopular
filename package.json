@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "GitHubTrending": "^3.0.0",
+    "create-react-class": "^15.6.2",
+    "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native": "0.51.0",
     "react-native-check-box": "^2.0.2",
@@ -17,7 +19,8 @@
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-sortable-listview": "^0.2.7",
     "react-native-splash-screen": "^3.0.6",
-    "react-native-tab-navigator": "^0.3.4"
+    "react-native-tab-navigator": "^0.3.4",
+    "react-navigation": "^1.0.0-beta.22"
   },
   "devDependencies": {
     "babel-jest": "22.0.4",
