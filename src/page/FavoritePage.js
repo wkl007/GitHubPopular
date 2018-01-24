@@ -22,6 +22,7 @@ import FavoriteDao from '../expand/dao/FavoriteDao'
 //构造函数
 import ProjectModel from "../model/ProjectModel";
 import ArrayUtils from '../util/ArrayUtils'
+import ActionUtils from '../util/ActionUtils'
 
 export default class FavoritePage extends Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class FavoriteTab extends Component {
     this.setState(dic)
   }
 
-  onUpdateFavorite(){
+  onUpdateFavorite() {
     this.loadData(false);
     if (this.props.flag === FLAG_STORAGE.flag_popular) {
       DeviceEventEmitter.emit('favoriteChanged_popular');
@@ -152,7 +153,12 @@ class FavoriteTab extends Component {
     return (
       <CellComponent
         key={this.props.flag === FLAG_STORAGE.flag_popular ? projectModel.item.id : projectModel.item.fullName}
-        onSelect={() => this.onSelect(projectModel)}
+        onSelect={() => ActionUtils.onSelectRepository({
+          projectModel: projectModel,
+          flag: this.props.flag,
+          onUpdateFavorite: () => this.onUpdateFavorite(),
+          ...this.props
+        })}
         onFavorite={(item, isFavorite) => {
           this.onFavorite(item, isFavorite)
         }}

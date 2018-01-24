@@ -28,21 +28,6 @@ export default class DataRepository {
     AsyncStorage.setItem(url, JSON.stringify(wrapData), callback)
   }
 
-  /**
-   * 判断数据是否过时
-   * @param longTime  数据的事件戳
-   * @returns {boolean}
-   */
-  checkData(longTime) {
-    let cDate = new Date();
-    let tDate = new Date();
-    tDate.setTime(longTime);
-    if (cDate.getMonth() !== tDate.getMonth()) return false;
-    if (cDate.getDay() !== tDate.getDay()) return false;
-    if (cDate.getHours() - tDate.getHours() > 4) return false;
-    return true;
-  }
-
   fetchRepository(url) {
     return new Promise((resolve, reject) => {
       //获取本地数据
@@ -99,20 +84,24 @@ export default class DataRepository {
       if (this.flag !== FLAG_STORAGE.flag_trending) {
         fetch(url)
           .then(response => response.json())
-          .then(result => {
-            if (!result) {
-              reject(new Error('responseData is null'));
-              return;
-            }
-            resolve(result.items);
-            this.saveRepository(url, result.items)
-          })
           .catch(err => {
             reject(err)
           })
+          .then(result => {
+            if (this.flag === FLAG_STORAGE.flag_my && result) {
+              this.saveRepository(url, result);
+              resolve(result)
+            }else if(result&&result.items){
+              this.saveRepository(url, result.items);
+              resolve(result.items);
+            }else {
+              reject(new Error('responseData is null'));
+            }
+          })
+
       } else {
         this.treding.fetchTrending(url)
-          .then((items) =>  {
+          .then((items) => {
             if (!items) {
               reject(new Error('responseData is null'));
             }

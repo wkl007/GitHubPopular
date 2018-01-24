@@ -33,13 +33,13 @@ export default class AboutPage extends Component {
     }
   }
 
- /* componentDidMount() {
+  componentDidMount() {
     this.aboutCommon.componentDidMount();
   }
 
   componentWillunmount() {
     this.aboutCommon.componentWillUnmount();
-  }*/
+  }
 
   updateState(dic) {
     this.setState(dic);
@@ -49,27 +49,32 @@ export default class AboutPage extends Component {
     let TargetComponent, parame = {menuType: tab};
     switch (tab) {
       case MORE_MENU.About_Author:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_language;
+        TargetComponent = 'AboutMePage';
         break;
       case MORE_MENU.Website:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
+        TargetComponent = 'WebViewPage';
+        parame.title = 'GitHubPopular';
+        parame.url = 'https://gitee.com/wkl--007/GitHubPopular';
         break;
       case MORE_MENU.Feedback:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        parame.isRemoveKey = true;
+        let url = 'mailto://499657357@qq.com';
+        Linking.canOpenURL(url).then(supported => {
+          if (!supported) {
+            console.log(`can\'t handle url:${url}`)
+          } else {
+            return Linking.openURL(url)
+          }
+        });
         break;
     }
     if (TargetComponent) {
-      // this.props.navigation.navigate(TargetComponent, parame)
+      this.props.navigation.navigate(TargetComponent, parame)
     }
   }
 
-
   render() {
     let content = <View>
+      {this.aboutCommon.renderRepository(this.state.projectModels)}
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Website)
         }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website, {tintColor: '#2196f3'}

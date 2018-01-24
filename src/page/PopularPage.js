@@ -20,6 +20,7 @@ import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from "../model/ProjectModel";
 //工具函数，检查该Item是否被收藏
 import Utils from '../util/Utils'
+import ActionUtils from '../util/ActionUtils'
 //接口路径
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -123,7 +124,7 @@ class PopularTab extends Component {
       .then(result => {
         this.items = result && result.items ? result.items : result ? result : [];
         this.getFavoriteKeys();
-        if (result && result.update_date && !this.dataRepository.checkData(result.update_date)) {
+        if (result && result.update_date && !Utils.checkDate(result.update_date)) {
 
           return this.dataRepository.fetchNetRepository(url);
         } else {
@@ -203,7 +204,12 @@ class PopularTab extends Component {
   renderRow(projectModel) {
     return <RepositoryCell
       key={projectModel.item.id}
-      onSelect={() => this.onSelect(projectModel)}
+      onSelect={() => ActionUtils.onSelectRepository({
+        projectModel: projectModel,
+        flag: FLAG_STORAGE.flag_popular,
+        onUpdateFavorite: () => this.onUpdateFavorite(),
+        ...this.props
+      })}
       onFavorite={(item, isFavorite) => {
         this.onFavorite(item, isFavorite)
       }}

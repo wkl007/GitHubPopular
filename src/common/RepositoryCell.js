@@ -98,5 +98,4 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     color: '#757575'
   },
-
 });

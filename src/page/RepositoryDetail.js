@@ -18,7 +18,7 @@ const TRENDING_URL = 'https://github.com/';
 export default class RepositoryDetail extends Component {
   constructor(props) {
     super(props);
-    let projectModel=this.props.navigation.state.params.projectModel;
+    let projectModel = this.props.navigation.state.params.projectModel;
     let item = projectModel.item;
     this.url = item.html_url ? item.html_url : TRENDING_URL + item.fullName;
     let title = item.full_name ? item.full_name : item.fullName;
@@ -37,7 +37,7 @@ export default class RepositoryDetail extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.navigation.state.params.onUpdateFavorite)this.props.navigation.state.params.onUpdateFavorite();
+    if (this.props.navigation.state.params.onUpdateFavorite) this.props.navigation.state.params.onUpdateFavorite();
   }
 
   //返回

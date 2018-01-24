@@ -12,7 +12,7 @@ import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
-
+export const ACTION_HOME={A_SHOW_TOAST:'showToast',A_RESTART:'restart',A_THEME:'theme'};
 export default class HomePage extends Component {
   constructor(props) {
     super(props);

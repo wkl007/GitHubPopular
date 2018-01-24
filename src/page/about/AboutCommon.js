@@ -14,8 +14,13 @@ import {
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import config from '../../assets/data/config'
-import ViewUtils from '../../util/ViewUtils'
 import FavoriteDao from '../../expand/dao/FavoriteDao'
+import ActionUtils from '../../util/ActionUtils'
+import {FLAG_STORAGE} from "../../expand/dao/DataRepository";
+import ViewUtils from '../../util/ViewUtils'
+import Utils from "../../util/Utils";
+import RepositoryUtils from '../../expand/dao/RepositoryUtils'
+import RepositoryCell from "../../common/RepositoryCell";
 
 export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'};
 
@@ -25,10 +30,105 @@ export default class AboutCommon {
     this.updateState = updateState;
     this.flag_about = flag_about;
     this.config = config;
-    this.favoriteDao = new FavoriteDao(FLAG_ABOUT.flag_popular);
+    this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
     this.repositories = [];
+    this.repositoryUtils = new RepositoryUtils(this);
+    this.favoriteKeys = null;
+  }
 
-    this.favoriteKeys=null;
+  componentDidMount() {
+    if (this.flag_about === FLAG_ABOUT.flag_about) {
+      this.repositoryUtils.fetchRepository(this.config.info.currentRepoUrl);
+    } else {
+      let urls = [];
+      let items = this.config.items;
+      for (let i = 0, len = items.length; i < len; i++) {
+        urls.push(this.config.info.url + items[i]);
+      }
+      this.repositoryUtils.fetchRepositories(urls)
+    }
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  /**
+   * 通知数据发生改变
+   * @param items 改变的数据
+   */
+  onNotifyDataChanged(items) {
+    this.updateFavorite(items);
+  }
+
+  async updateFavorite(repositories) {
+    if (repositories) this.repositories = repositories;
+    if (!this.repositories) return;
+    if (!this.favoriteKeys) {
+      this.favoriteKeys = await this.favoriteDao.getFavoriteKeys();
+    }
+    let projectModels = [];
+    for (let i = 0, len = this.repositories.length; i < len; i++) {
+      let data = this.repositories[i];
+      let item = data.item ? data.item : data;
+      projectModels.push({
+        isFavorite: Utils.checkFavorite(item, this.favoriteKeys ? this.favoriteKeys : []),
+        item: item,
+      })
+    }
+    this.updateState({
+      projectModels: projectModels
+    })
+  }
+
+  //更新favorite
+  onUpdateFavorite() {
+    this.componentDidMount();
+  }
+
+  onSelect(projectModel) {
+    this.props.navigation.navigate('RepositoryDetail', {
+      projectModel: projectModel,
+      flag: FLAG_STORAGE.flag_popular,
+      onUpdateFavorite: () => this.onUpdateFavorite(),
+    })
+  }
+
+  //处理收藏事件
+  onFavorite(item, isFavorite) {
+    if (isFavorite) {
+      this.favoriteDao.saveFavoriteItem(item.id.toString(), JSON.stringify(item))
+    } else {
+      this.favoriteDao.removeFavoriteItem(item.id.toString())
+    }
+  }
+
+  /**
+   * 创建项目视图
+   * @param projectModels
+   * @returns {null}
+   */
+  renderRepository(projectModels) {
+    if (!projectModels || projectModels.length === 0) return null;
+    let views = [];
+    for (let i = 0, len = projectModels.length; i < len; i++) {
+      let projectModel = projectModels[i];
+      views.push(
+        <RepositoryCell
+          key={projectModel.item.id}
+          projectModel={projectModel}
+          onSelect={() => ActionUtils.onSelectRepository({
+            projectModel:projectModel,
+            ...this.props,
+            flag:FLAG_STORAGE.flag_popular
+          })}
+          onFavorite={(item, isFavorite) => {
+            this.onFavorite(item, isFavorite)
+          }}
+        />
+      )
+    }
+    return views;
   }
 
   getParallaxRenderConfig(params) {
@@ -79,7 +179,7 @@ export default class AboutCommon {
     return config;
   }
 
-  render(contentView, params)  {
+  render(contentView, params) {
     let renderConfig = this.getParallaxRenderConfig(params);
     return (
       <ParallaxScrollView

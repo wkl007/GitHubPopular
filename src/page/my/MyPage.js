@@ -8,10 +8,6 @@ import {
   TouchableHighlight
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
-import SortKeyPage from "./SortKeyPage";
-import CustomKeyPage from "./CustomKeyPage";
-import AboutPage from '../about/AboutPage'
-import AboutMePage from '../about/AboutMePage'
 import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import {MORE_MENU} from "../../common/MoreMenu";
 import GlobalStyles from '../../assets/styles/GlobalStyles'

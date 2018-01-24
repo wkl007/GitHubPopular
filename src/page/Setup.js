@@ -2,6 +2,8 @@ import {StackNavigator} from 'react-navigation'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import WelcomePage from './WelcomePage'
 import HomePage from './HomePage'
+import WebViewPage from './WebViewPage'
+import SearchPage from './SearchPage'
 import CustomKeyPage from './my/CustomKeyPage'
 import SortKeyPage from './my/SortKeyPage'
 import RepositoryDetail from './RepositoryDetail'
@@ -16,6 +18,12 @@ const App = StackNavigator({
   HomePage: {
     screen: HomePage,
   },
+  WebViewPage: {
+    screen: WebViewPage,
+  },
+  SearchPage: {
+    screen: SearchPage,
+  },
   PopularPage: {
     screen: PopularPage,
   },
@@ -28,10 +36,10 @@ const App = StackNavigator({
   RepositoryDetail: {
     screen: RepositoryDetail,
   },
-  AboutPage:{
+  AboutPage: {
     screen: AboutPage,
   },
-  AboutMePage:{
+  AboutMePage: {
     screen: AboutMePage,
   }
 }, {

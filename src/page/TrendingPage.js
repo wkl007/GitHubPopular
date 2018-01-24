@@ -20,6 +20,7 @@ import TimeSpan from '../model/TimeSpan'
 import ProjectModel from "../model/ProjectModel";
 //工具函数，检查该Item是否被收藏
 import Utils from '../util/Utils'
+import ActionUtils from '../util/ActionUtils'
 import FavoriteDao from "../expand/dao/FavoriteDao";
 //接口路径
 const API_URL = 'https://github.com/trending/';
@@ -220,7 +221,7 @@ class TrendingTab extends Component {
       .then(result => {
         this.items = result && result.items ? result.items : result ? result : [];
         this.getFavoriteKeys();
-        if (!this.items || isRefresh && result && result.update_date && !dataRepository.checkData(result.update_date)) {
+        if (!this.items || isRefresh && result && result.update_date && !Utils.checkDate(result.update_date)) {
           DeviceEventEmitter.emit('showToast', '数据过时');
           return dataRepository.fetchNetRepository(url);
         } else {
@@ -281,7 +282,12 @@ class TrendingTab extends Component {
   renderRow(projectModel) {
     return <TrendingCell
       key={projectModel.item.id}
-      onSelect={() => this.onSelect(projectModel)}
+      onSelect={() => ActionUtils.onSelectRepository({
+        projectModel: projectModel,
+        flag: FLAG_STORAGE.flag_trending,
+        onUpdateFavorite: () => this.onUpdateFavorite(),
+        ...this.props
+      })}
       onFavorite={(item, isFavorite) => {
         this.onFavorite(item, isFavorite)
       }}
