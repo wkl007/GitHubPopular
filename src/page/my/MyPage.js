@@ -104,7 +104,7 @@ export default class MyPage extends Component {
                        height: 22,
                        width: 22,
                        alignSelf: 'center'
-                     }]}
+                     }, {tintColor: '#2196F3'}]}
               />
             </View>
           </TouchableHighlight>

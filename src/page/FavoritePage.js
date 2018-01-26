@@ -137,7 +137,6 @@ class FavoriteTab extends Component {
     } else {
       this.favoriteDao.removeFavoriteItem(key)
     }
-
     ArrayUtils.updateArray(this.unFavoriteItems, item);
     if (this.unFavoriteItems.length > 0) {
       if (this.props.flag === FLAG_STORAGE.flag_popular) {

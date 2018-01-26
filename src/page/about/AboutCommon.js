@@ -94,15 +94,6 @@ export default class AboutCommon {
     })
   }
 
-  //处理收藏事件
-  onFavorite(item, isFavorite) {
-    if (isFavorite) {
-      this.favoriteDao.saveFavoriteItem(item.id.toString(), JSON.stringify(item))
-    } else {
-      this.favoriteDao.removeFavoriteItem(item.id.toString())
-    }
-  }
-
   /**
    * 创建项目视图
    * @param projectModels
@@ -118,13 +109,11 @@ export default class AboutCommon {
           key={projectModel.item.id}
           projectModel={projectModel}
           onSelect={() => ActionUtils.onSelectRepository({
-            projectModel:projectModel,
+            projectModel: projectModel,
             ...this.props,
-            flag:FLAG_STORAGE.flag_popular
+            flag: FLAG_STORAGE.flag_popular
           })}
-          onFavorite={(item, isFavorite) => {
-            this.onFavorite(item, isFavorite)
-          }}
+          onFavorite={(item, isFavorite) => ActionUtils.onFavorite(this.favoriteDao, item, isFavorite, FLAG_STORAGE.flag_popular)}
         />
       )
     }

@@ -288,9 +288,7 @@ class TrendingTab extends Component {
         onUpdateFavorite: () => this.onUpdateFavorite(),
         ...this.props
       })}
-      onFavorite={(item, isFavorite) => {
-        this.onFavorite(item, isFavorite)
-      }}
+      onFavorite={(item, isFavorite) => ActionUtils.onFavorite(favoriteDao, item, isFavorite, FLAG_STORAGE.flag_trending)}
       projectModel={projectModel}/>
   }
 

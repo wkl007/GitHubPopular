@@ -53,6 +53,24 @@ export default class PopularPage extends Component {
       })
   }
 
+  //导航右侧按钮
+  renderRightButton() {
+    return <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate('SearchPage')
+        }}
+      >
+        <View style={{padding: 5, marginRight: 8}}>
+          <Image
+            style={{width: 24, height: 24}}
+            source={require('../assets/images/ic_search_white_48pt.png')}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+  }
+
   render() {
     let content = this.state.dataArray.length > 0 ? <ScrollableTabView
       tabBarBackgroundColor='#2196F3'
@@ -68,10 +86,12 @@ export default class PopularPage extends Component {
     </ScrollableTabView> : null;
     return (
       <View style={styles.container}>
-        <NavigationBar title='最热'
-                       statusBar={{
-                         backgroundColor: '#2196F3'
-                       }}
+        <NavigationBar
+          title='最热'
+          statusBar={{
+            backgroundColor: '#2196F3'
+          }}
+          rightButton={this.renderRightButton()}
         />
         {content}
       </View>
@@ -210,9 +230,7 @@ class PopularTab extends Component {
         onUpdateFavorite: () => this.onUpdateFavorite(),
         ...this.props
       })}
-      onFavorite={(item, isFavorite) => {
-        this.onFavorite(item, isFavorite)
-      }}
+      onFavorite={(item, isFavorite) => ActionUtils.onFavorite(favoriteDao, item, isFavorite)}
       projectModel={projectModel}/>
   }
 

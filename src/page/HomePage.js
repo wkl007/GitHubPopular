@@ -6,26 +6,55 @@ import {
   Image,
   DeviceEventEmitter
 } from 'react-native'
+import {NavigationActions} from 'react-navigation'
 import TabNavigator from 'react-native-tab-navigator';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
-export const ACTION_HOME={A_SHOW_TOAST:'showToast',A_RESTART:'restart',A_THEME:'theme'};
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({routeName: 'HomePage'})
+  ]
+});
+
+export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_THEME: 'theme'};
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
+    console.log(NavigationActions);
     this.state = {
       selectedTab: 'tb_popular'
     }
   }
 
   componentDidMount() {
-    this.listener = DeviceEventEmitter.addListener('showToast', (text) => {
-      this.toast.show(text, DURATION.LENGTH_LONG);
-    });
+    this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params));
   }
+
+  /**
+   * 通知回调事件处理
+   * @param action
+   * @param params
+   */
+  onAction(action, params) {
+    if (ACTION_HOME.A_RESTART === action) {
+      this.onRestart(params)
+    } else if (ACTION_HOME.A_SHOW_TOAST === action) {
+      this.toast.show(params.text, DURATION.LENGTH_LONG);
+    }
+  }
+
+  /**
+   * 重启首页
+   * @param jumpToTab
+   */
+  onRestart(jumpToTab) {
+    this.props.navigation.dispatch(resetAction)
+  }
+
 
   componentWillUnmount() {
     this.listener && this.listener.remove();
