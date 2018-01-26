@@ -13,6 +13,14 @@ import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
+
+export const FLAG_TAB = {
+  flag_popularTab:'tb_popular',
+  flag_trendingTab:'tb_trending',
+  flag_favoriteTab:'tb_favorite',
+  flag_my:'tb_my'
+};
+
 const resetAction = NavigationActions.reset({
   index: 0,
   actions: [
@@ -24,14 +32,18 @@ export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_T
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
-    console.log(NavigationActions);
+    let selectedTab = this.props.selectedTab ? this.props.selectedTab : 'tb_popular';
     this.state = {
-      selectedTab: 'tb_popular'
+      selectedTab: selectedTab
     }
   }
 
   componentDidMount() {
     this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params));
+  }
+
+  componentWillUnmount() {
+    this.listener && this.listener.remove();
   }
 
   /**
@@ -52,12 +64,8 @@ export default class HomePage extends Component {
    * @param jumpToTab
    */
   onRestart(jumpToTab) {
-    this.props.navigation.dispatch(resetAction)
-  }
+    this.props.navigation.dispatch(resetAction);
 
-
-  componentWillUnmount() {
-    this.listener && this.listener.remove();
   }
 
   //遍历tab

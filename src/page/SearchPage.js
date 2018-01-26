@@ -17,6 +17,7 @@ import GlobalStyles from '../assets/styles/GlobalStyles'
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 import ActionUtils from '../util/ActionUtils'
+import makeCancelable from '../util/Cancelable'
 import ProjectModel from '../model/ProjectModel'
 import Utils from '../util/Utils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
@@ -52,6 +53,7 @@ export default class SearchPage extends Component {
     if (this.isKeyChange) {
       DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART);
     }
+    this.cancelable&&this.cancelable.cancel();
   }
 
   //加载数据
@@ -59,7 +61,8 @@ export default class SearchPage extends Component {
     this.updateState({
       isLoading: true,
     });
-    fetch(this.genFetchUrl(this.inputkey))
+    this.cancelable = makeCancelable(fetch(this.genFetchUrl(this.inputkey)))
+    this.cancelable.promise
       .then(response => response.json())
       .then(result => {
         if (!this || !result || !result.items || result.items.length === 0) {
@@ -173,6 +176,7 @@ export default class SearchPage extends Component {
       this.loadData();
     } else {
       this.updateState({rightButtonText: '搜索', isLoading: false});
+      this.cancelable&&this.cancelable.cancel();
     }
   }
 
