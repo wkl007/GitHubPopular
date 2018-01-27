@@ -115,7 +115,6 @@ export default class SortKeyPage extends Component {
   render() {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-      barStyle: 'light-content'
     };
     let rightButton = <TouchableOpacity
       onPress={() => {

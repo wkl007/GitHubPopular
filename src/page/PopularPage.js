@@ -49,7 +49,7 @@ export default class PopularPage extends BaseComponent {
     this.loadData();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     super.componentWillUnmount();
   }
 
@@ -116,7 +116,6 @@ export default class PopularPage extends BaseComponent {
   render() {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
-      barStyle: 'light-content'
     };
     let navigationBar = <NavigationBar
       title='最热'

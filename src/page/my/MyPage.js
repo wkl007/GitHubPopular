@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
 import {MORE_MENU} from "../../common/MoreMenu";
+import BaseComponent from '../BaseComponent'
 import CustomTheme from './CustomTheme'
 import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 
@@ -16,7 +17,7 @@ import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 
 
-export default class MyPage extends Component {
+export default class MyPage extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,11 +25,7 @@ export default class MyPage extends Component {
       theme: this.props.theme,
     }
   }
-
-  componentDidMount() {
-
-  }
-
+  
   //主题view
   renderCustomThemeView() {
     return (
@@ -93,7 +90,6 @@ export default class MyPage extends Component {
   render() {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
-      barStyle: 'light-content'
     };
     let navigationBar = <NavigationBar
       title='我的'

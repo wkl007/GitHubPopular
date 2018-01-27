@@ -101,7 +101,6 @@ export default class RepositoryDetail extends Component {
     let titleLayoutStyle = this.state.title.length > 20 ? {paddingRight: 30} : null;
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-      barStyle: 'light-content'
     };
     return (
       <View style={{flex: 1}}>

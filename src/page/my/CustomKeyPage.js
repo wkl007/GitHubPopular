@@ -141,7 +141,6 @@ export default class CustomKeyPage extends Component {
   render() {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-      barStyle: 'light-content'
     };
     let rightButtonTitle = this.isRemoveKey ? '移除' : '保存';
     let title = this.isRemoveKey ? '标签移除' : '自定义标签';

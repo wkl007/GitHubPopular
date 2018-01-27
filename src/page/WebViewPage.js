@@ -42,7 +42,6 @@ export default class WebViewPage extends Component {
   render() {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-      barStyle: 'light-content'
     };
     let {params} = this.props.navigation.state;
     return (

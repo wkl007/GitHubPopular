@@ -145,7 +145,6 @@ export default class TrendingPage extends BaseComponent {
   render() {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
-      barStyle: 'light-content'
     };
     let navigationBar =
       <NavigationBar

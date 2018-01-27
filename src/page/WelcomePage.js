@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import {NavigationActions} from 'react-navigation'
 import ThemeDao from '../expand/dao/ThemeDao'
+import SplashScreen from 'react-native-splash-screen'
 
 export default class WelcomePage extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class WelcomePage extends Component {
     });
 
     this.timer = setTimeout(() => {
+      SplashScreen.hide();
       let resetAction = NavigationActions.reset({
         index: 0,
         actions: [
@@ -34,11 +36,7 @@ export default class WelcomePage extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <Text>欢迎</Text>
-      </View>
-    )
+    return null;
   }
 }
 

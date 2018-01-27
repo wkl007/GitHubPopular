@@ -15,8 +15,10 @@ import {
   Linking,
 } from 'react-native'
 import Popover from '../common/Popover'
+import BaseComponent from '../page/BaseComponent'
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 import share from '../assets/data/share.json'
+
 
 export const MORE_MENU = {
   Custom_Language: '自定义语言',
@@ -32,12 +34,13 @@ export const MORE_MENU = {
   Share: '分享',
 };
 
-export default class MoreMenu extends Component {
+export default class MoreMenu extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
       isVisible: false,//显示隐藏
-      buttonRect: {}
+      buttonRect: {},
+      theme: this.props.theme,
     }
   }
 
@@ -73,7 +76,7 @@ export default class MoreMenu extends Component {
   onMoreMenuSelect(tab) {
     this.closePopover();
     if (typeof (this.props.onMoreMenuSelect) == 'function') this.props.onMoreMenuSelect(tab);
-    let TargetComponent, parame = {menuType: tab};
+    let TargetComponent, parame = {menuType: tab, theme: this.state.theme};
     switch (tab) {
       case MORE_MENU.Custom_Language:
         TargetComponent = 'CustomKeyPage';
