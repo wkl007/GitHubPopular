@@ -15,6 +15,9 @@ import NavigationBar from '../common/NavigationBar'
 //两种cell
 import RepositoryCell from '../common/RepositoryCell'
 import TrendingCell from '../common/TrendingCell'
+import MoreMenu, {MORE_MENU} from "../common/MoreMenu";
+import CustomTheme from './my/CustomTheme'
+import BaseComponent from './BaseComponent'
 //flag
 import {FLAG_STORAGE} from '../expand/dao/DataRepository'
 //获取AsyncStorage中的数据
@@ -23,18 +26,62 @@ import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from "../model/ProjectModel";
 import ArrayUtils from '../util/ArrayUtils'
 import ActionUtils from '../util/ActionUtils'
+import ViewUtils from "../util/ViewUtils";
+import {FLAG_TAB} from "./HomePage";
 
-export default class FavoritePage extends Component {
+export default class FavoritePage extends BaseComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      theme: this.props.theme,
+      customThemeViewVisible: false,
+    };
   }
 
+  //更多菜单
+  renderMoreView() {
+    let params = {...this.props, fromPage: FLAG_TAB.flag_popularTab};
+    return <MoreMenu
+      ref='moreMenu'
+      {...params}
+      menus={[MORE_MENU.Custom_Theme, MORE_MENU.Share,
+        MORE_MENU.About_Author, MORE_MENU.About]}
+      anchorView={() => this.refs.moreMenuButton}
+      onMoreMenuSelect={(e) => {
+        if (e === MORE_MENU.Custom_Theme) {
+          this.setState({
+            customThemeViewVisible: true
+          })
+        }
+      }}
+    />
+  }
+
+  //主题view
+  renderCustomThemeView() {
+    return (
+      <CustomTheme
+        visible={this.state.customThemeViewVisible}
+        {...this.props}
+        onClose={() => this.setState({customThemeViewVisible: false})}
+      />
+    )
+  }
 
   render() {
+    let statusBar = {
+      backgroundColor: this.state.theme.themeColor,
+      barStyle: 'light-content'
+    };
+    let navigationBar = <NavigationBar
+      title='收藏'
+      statusBar={statusBar}
+      style={this.state.theme.styles.navBar}
+      rightButton={ViewUtils.getMoreButton(() => this.refs.moreMenu.open())}
+    />;
     let content =
       <ScrollableTabView
-        tabBarBackgroundColor='#2196F3'
+        tabBarBackgroundColor={this.state.theme.themeColor}
         tabBarActiveTextColor='#fff'
         tabBarInactiveTextColor='mintcream'
         tabBarUnderlineStyle={{backgroundColor: '#e7e7e7', height: 2}}
@@ -45,13 +92,10 @@ export default class FavoritePage extends Component {
       </ScrollableTabView>;
     return (
       <View style={styles.container}>
-        <NavigationBar
-          title='收藏'
-          statusBar={{
-            backgroundColor: '#2196F3'
-          }}
-        />
+        {navigationBar}
         {content}
+        {this.renderMoreView()}
+        {this.renderCustomThemeView()}
       </View>
     )
   }
@@ -65,6 +109,7 @@ class FavoriteTab extends Component {
     this.state = {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       isLoading: false,
+      theme: this.props.theme
     };
   }
 
@@ -151,6 +196,7 @@ class FavoriteTab extends Component {
     let CellComponent = this.props.flag === FLAG_STORAGE.flag_popular ? RepositoryCell : TrendingCell;
     return (
       <CellComponent
+        theme={this.props.theme}
         key={this.props.flag === FLAG_STORAGE.flag_popular ? projectModel.item.id : projectModel.item.fullName}
         onSelect={() => ActionUtils.onSelectRepository({
           projectModel: projectModel,
@@ -181,14 +227,13 @@ class FavoriteTab extends Component {
           refreshControl={
             <RefreshControl
               title='Loading...'
-              titleColor={'#2196f3'}
-              colors={['#2196f3']}
+              titleColor={this.props.theme.themeColor}
+              colors={[this.props.theme.themeColor]}
               refreshing={this.state.isLoading}
               onRefresh={() => this.onRefresh()}
-              tintColor={'#2196f3'}
+              tintColor={this.props.theme.themeColor}
             />
           }
-
         />
       </View>
     )

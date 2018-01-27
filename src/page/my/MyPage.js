@@ -8,8 +8,10 @@ import {
   TouchableHighlight
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
-import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import {MORE_MENU} from "../../common/MoreMenu";
+import CustomTheme from './CustomTheme'
+import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
+
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 
@@ -19,6 +21,7 @@ export default class MyPage extends Component {
     super(props);
     this.state = {
       customThemeViewVisible: false,
+      theme: this.props.theme,
     }
   }
 
@@ -26,13 +29,25 @@ export default class MyPage extends Component {
 
   }
 
+  //主题view
+  renderCustomThemeView() {
+    return (
+      <CustomTheme
+        visible={this.state.customThemeViewVisible}
+        {...this.props}
+        onClose={() => this.setState({customThemeViewVisible: false})}
+      />
+    )
+  }
+
   //点击事件
   onClick(tab) {
-    let TargetComponent, parame = {menuType: tab};
+    let TargetComponent, parame = {menuType: tab, theme: this.state.theme};
     switch (tab) {
       case MORE_MENU.Custom_Language:
         TargetComponent = 'CustomKeyPage';
         parame.flag = FLAG_LANGUAGE.flag_language;
+
         break;
       case MORE_MENU.Custom_Key:
         TargetComponent = 'CustomKeyPage';
@@ -72,15 +87,18 @@ export default class MyPage extends Component {
   getItem(tag, icon, text) {
     return ViewUtils.getSettingItem(() => {
       this.onClick(tag)
-    }, icon, text, {tintColor: '#2196F3'}, null)
+    }, icon, text, this.state.theme.styles.tabBarSelectedIcon, null)
   }
 
   render() {
+    let statusBar = {
+      backgroundColor: this.state.theme.themeColor,
+      barStyle: 'light-content'
+    };
     let navigationBar = <NavigationBar
       title='我的'
-      statusBar={{
-        backgroundColor: '#2196F3'
-      }}
+      statusBar={statusBar}
+      style={this.state.theme.styles.navBar}
     />;
     return (
       <View style={GlobalStyles.root_container}>
@@ -94,7 +112,7 @@ export default class MyPage extends Component {
             <View style={[styles.item, {height: 90}]}>
               <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Image source={require('../../assets/images/ic_trending.png')}
-                       style={[{width: 40, height: 40, marginRight: 10}, {tintColor: '#2196F3'}]}/>
+                       style={[{width: 40, height: 40, marginRight: 10}, this.state.theme.styles.tabBarSelectedIcon]}/>
                 <Text>GitHub Popular</Text>
               </View>
               <Image source={require('../../assets/images/ic_tiaozhuan.png')}
@@ -104,7 +122,7 @@ export default class MyPage extends Component {
                        height: 22,
                        width: 22,
                        alignSelf: 'center'
-                     }, {tintColor: '#2196F3'}]}
+                     }, this.state.theme.styles.tabBarSelectedIcon]}
               />
             </View>
           </TouchableHighlight>
@@ -139,6 +157,7 @@ export default class MyPage extends Component {
           {this.getItem(MORE_MENU.About_Author, require('./images/ic_insert_emoticon.png'), '关于作者')}
           <View style={GlobalStyles.line}/>
         </ScrollView>
+        {this.renderCustomThemeView()}
       </View>
     )
   }

@@ -3,10 +3,11 @@
 import React from 'react';
 import {
   Image,
-  TouchableOpacity,
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 
 export default class ViewUtils {
@@ -80,8 +81,8 @@ export default class ViewUtils {
    * @returns {*}
    */
   static getMoreButton(callback) {
-    return <TouchableOpacity
-      underlayColor='transparent'
+    return <TouchableHighlight
+      underlayColor={'transparent'}
       ref='moreMenuButton'
       style={{padding: 5}}
       onPress={callback}
@@ -89,10 +90,10 @@ export default class ViewUtils {
       <View style={{paddingRight: 8}}>
         <Image
           style={{width: 24, height: 24}}
-          srouce={require('../assets/images/ic_more_vert_white_48pt.png')}
+          source={require('../assets/images/ic_more_vert_white_48pt.png')}
         />
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   }
 
   /**
@@ -101,7 +102,7 @@ export default class ViewUtils {
    * @returns {*}
    */
   static getShareButton(callback) {
-    return <TouchableOpacity
+    return <TouchableHighlight
       underlayColor='transparent'
       ref='moreMenuButton'
       style={{padding: 5}}
@@ -109,9 +110,9 @@ export default class ViewUtils {
     >
       <Image
         style={{width: 20, height: 20, opacity: 0.9}}
-        srouce={require('../assets/images/ic_share.png')}
+        source={require('../assets/images/ic_share.png')}
       />
-    </TouchableOpacity>
+    </TouchableHighlight>
   }
 }
 

@@ -30,6 +30,8 @@ const QUERY_STR = '&sort=stars';
 export default class SearchPage extends Component {
   constructor(props) {
     super(props);
+    let {params} = this.props.navigation.state;
+    this.theme = params.theme;
     this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
     this.favoriteKeys = [];
     this.keys = [];
@@ -53,7 +55,7 @@ export default class SearchPage extends Component {
     if (this.isKeyChange) {
       DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART);
     }
-    this.cancelable&&this.cancelable.cancel();
+    this.cancelable && this.cancelable.cancel();
   }
 
   //加载数据
@@ -176,7 +178,7 @@ export default class SearchPage extends Component {
       this.loadData();
     } else {
       this.updateState({rightButtonText: '搜索', isLoading: false});
-      this.cancelable&&this.cancelable.cancel();
+      this.cancelable && this.cancelable.cancel();
     }
   }
 
@@ -188,6 +190,7 @@ export default class SearchPage extends Component {
     return <RepositoryCell
       key={projectModel.item.id}
       projectModel={projectModel}
+      theme={this.theme}
       onSelect={() => ActionUtils.onSelectRepository({
         projectModel: projectModel,
         flag: FLAG_STORAGE.flag_popular,
@@ -219,7 +222,7 @@ export default class SearchPage extends Component {
       </View>
     </TouchableOpacity>;
     return <View style={{
-      backgroundColor: '#2196F3',
+      backgroundColor: this.theme.themeColor,
       flexDirection: 'row',
       alignItems: 'center',
       height: (Platform.OS === 'ios') ? GlobalStyles.nav_bar_height_ios : GlobalStyles.nav_bar_height_android,
@@ -233,7 +236,7 @@ export default class SearchPage extends Component {
   render() {
     let statusBar = null;
     if (Platform.OS === 'ios') {
-      statusBar = <View style={[styles.statusBar, {backgroundColor: '#2196F3'}]}/>
+      statusBar = <View style={[styles.statusBar, {backgroundColor: this.theme.themeColor}]}/>
     }
     let listView = !this.state.isLoading ? <ListView
       dataSource={this.state.dataSource}
@@ -251,7 +254,7 @@ export default class SearchPage extends Component {
     </View>;
     let bottomButton = this.state.showBottomButton ?
       <TouchableOpacity
-        style={[styles.bottomButton, {backgroundColor: '#2196F3'}]}
+        style={[styles.bottomButton, {backgroundColor: this.theme.themeColor}]}
         onPress={() => {
           this.saveKey()
         }}

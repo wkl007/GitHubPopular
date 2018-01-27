@@ -6,14 +6,15 @@ import {
   Image,
   StyleSheet,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
 import SortableListView from 'react-native-sortable-listview'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
 import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
-
+import {ACTION_HOME, FLAG_TAB} from "../HomePage";
 
 export default class SortKeyPage extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class SortKeyPage extends Component {
     const {params} = this.props.navigation.state;
     this.flag = params.flag;
     this.languageDao = new LanguageDao(params.flag);
-
+    this.theme = params.theme;
     this.dataArray = [];//原始数组
     this.originalCheckedArray = [];//筛选后的数组
     this.sortResultArray = [];//筛选后的数组应用到原始数组中
@@ -78,10 +79,11 @@ export default class SortKeyPage extends Component {
         return;
       }
     }
-
     this.getSortResult();
     this.languageDao.save(this.sortResultArray);
-    this.props.navigation.goBack();
+    // this.props.navigation.goBack();
+    let jumpToTab = this.props.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab;
+    DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART, jumpToTab)
   }
 
   //获取排序后的数组
@@ -111,6 +113,10 @@ export default class SortKeyPage extends Component {
   }
 
   render() {
+    let statusBar = {
+      backgroundColor: this.theme.themeColor,
+      barStyle: 'light-content'
+    };
     let rightButton = <TouchableOpacity
       onPress={() => {
         this.onSave();
@@ -120,15 +126,14 @@ export default class SortKeyPage extends Component {
         <Text style={styles.title}>保存</Text>
       </View>
     </TouchableOpacity>;
-    let title = this.flag=== FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序';
+    let title = this.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序';
 
     return (
       <View style={styles.container}>
         <NavigationBar
           title={title}
-          statusBar={{
-            backgroundColor: '#2196F3'
-          }}
+          statusBar={statusBar}
+          style={this.theme.styles.navBar}
           leftButton={ViewUtils.getLeftButton(() => {
             this.onBack()
           })}
@@ -141,7 +146,7 @@ export default class SortKeyPage extends Component {
             this.state.checkedArray.splice(e.to, 0, this.state.checkedArray.splice(e.from, 1)[0]);
             this.forceUpdate();
           }}
-          renderRow={row => <SortCell data={row}/>}
+          renderRow={row => <SortCell data={row} theme={this.theme}/>}
         />
       </View>
     )
@@ -158,7 +163,12 @@ class SortCell extends Component {
         {...this.props.sortHandlers}
       >
         <View style={styles.row}>
-          <Image style={styles.image} source={require('./images/ic_sort.png')}/>
+          <Image style={[{
+            opacity: 1,
+            width: 16,
+            height: 16,
+            marginRight: 10,
+          }, this.props.theme.styles.tabBarSelectedIcon]} source={require('./images/ic_sort.png')}/>
           <Text>{this.props.data.name}</Text>
         </View>
       </TouchableHighlight>
@@ -174,12 +184,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  image: {
-    tintColor: '#2196F3',
-    height: 16,
-    width: 16,
-    marginRight: 10
   },
   title: {
     fontSize: 20,

@@ -14,10 +14,11 @@ import ViewUtils from '../util/ViewUtils'
 export default class WebViewPage extends Component {
   constructor(props) {
     super(props);
-    let parame = this.props.navigation.state.params;
+    let {params} = this.props.navigation.state;
+    this.theme = params.theme;
     this.state = {
-      url: parame.url,
-      title: parame.title,
+      url: params.url,
+      title: params.title,
       canGoBack: false,
     }
   }
@@ -39,17 +40,20 @@ export default class WebViewPage extends Component {
   }
 
   render() {
-    let parame = this.props.navigation.state.params;
+    let statusBar = {
+      backgroundColor: this.theme.themeColor,
+      barStyle: 'light-content'
+    };
+    let {params} = this.props.navigation.state;
     return (
       <View style={GlobalStyles.root_container}>
         <NavigationBar
-          title={parame.title}
+          title={params.title}
           leftButton={ViewUtils.getLeftButton(() => {
             this.onBackPress()
           })}
-          statusBar={{
-            backgroundColor: '#2196F3'
-          }}
+          statusBar={statusBar}
+          style={this.theme.styles.navBar}
         />
         <WebView
           ref={webView => this.webView = webView}

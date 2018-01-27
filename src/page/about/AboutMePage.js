@@ -75,7 +75,9 @@ const FLAG = {
 export default class AboutMePage extends Component {
   constructor(props) {
     super(props);
+    const {params} = this.props.navigation.state;
     this.aboutCommon = new AboutCommon(props, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config);
+    this.theme = params.theme;
     this.state = {
       projectModels: [],
       author: config.author,
@@ -108,7 +110,7 @@ export default class AboutMePage extends Component {
   }
 
   onClick(tab) {
-    let TargetComponent, parame = {menuType: tab};
+    let TargetComponent, parame = {menuType: tab,theme:this.theme};
     switch (tab) {
       case FLAG.BLOG.items.CSDN:
       case FLAG.BLOG.items.GITHUB:
@@ -167,7 +169,7 @@ export default class AboutMePage extends Component {
       let title = isShowAccount ? `${dic[i].title}:${dic[i].account}` : dic[i].title;
       views.push(
         <View key={i}>
-          {ViewUtils.getSettingItem(() => this.onClick(dic[i]), '', title, {tintColor: '#2196f3'})}
+          {ViewUtils.getSettingItem(() => this.onClick(dic[i]), '', title, this.theme.styles.tabBarSelectedIcon)}
           <View style={GlobalStyles.line}/>
         </View>
       )
@@ -179,32 +181,32 @@ export default class AboutMePage extends Component {
     let content = <View>
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.BLOG)
-        }, require('../../assets/images/ic_computer.png'), FLAG.BLOG.name, {tintColor: '#2196f3'}, this.getClickIcon(this.state.showBlog)
+        }, require('../../assets/images/ic_computer.png'), FLAG.BLOG.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showBlog)
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showBlog ? this.renderItems(FLAG.BLOG.items) : null}
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.REPOSITORY)
-        }, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, {tintColor: '#2196f3'}, this.getClickIcon(this.state.showRepository)
+        }, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showRepository ? this.aboutCommon.renderRepository(this.state.projectModels) : null}
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.QQ)
-        }, require('../../assets/images/ic_computer.png'), FLAG.QQ.name, {tintColor: '#2196f3'}, this.getClickIcon(this.state.showQQ)
+        }, require('../../assets/images/ic_computer.png'), FLAG.QQ.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showQQ)
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showQQ ? this.renderItems(FLAG.QQ.items, true) : null}
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.CONTACT)
-        }, require('../../assets/images/ic_contacts.png'), FLAG.CONTACT.name, {tintColor: '#2196f3'}, this.getClickIcon(this.state.showContact)
+        }, require('../../assets/images/ic_contacts.png'), FLAG.CONTACT.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showContact)
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showContact ? this.renderItems(FLAG.CONTACT.items, true) : null}
     </View>;
     return (
       <View style={styles.container}>
-        {this.aboutCommon.render(content,this.state.author)}
+        {this.aboutCommon.render(content, this.state.author)}
         <Toast ref={e => this.toast = e}/>
       </View>
     )

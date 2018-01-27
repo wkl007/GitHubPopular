@@ -18,11 +18,13 @@ const TRENDING_URL = 'https://github.com/';
 export default class RepositoryDetail extends Component {
   constructor(props) {
     super(props);
-    let projectModel = this.props.navigation.state.params.projectModel;
+    let {params} = this.props.navigation.state;
+    let projectModel = params.projectModel;
     let item = projectModel.item;
     this.url = item.html_url ? item.html_url : TRENDING_URL + item.fullName;
     let title = item.full_name ? item.full_name : item.fullName;
-    this.favoriteDao = new FavoriteDao(this.props.navigation.state.params.flag);
+    this.favoriteDao = new FavoriteDao(params.flag);
+    this.theme = params.theme;
     this.state = {
       url: this.url,
       title: title,
@@ -37,7 +39,8 @@ export default class RepositoryDetail extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.navigation.state.params.onUpdateFavorite) this.props.navigation.state.params.onUpdateFavorite();
+    let {params} = this.props.navigation.state;
+    if (params.onUpdateFavorite) params.onUpdateFavorite();
   }
 
   //返回
@@ -96,14 +99,17 @@ export default class RepositoryDetail extends Component {
 
   render() {
     let titleLayoutStyle = this.state.title.length > 20 ? {paddingRight: 30} : null;
+    let statusBar = {
+      backgroundColor: this.theme.themeColor,
+      barStyle: 'light-content'
+    };
     return (
       <View style={{flex: 1}}>
         <NavigationBar
           title={this.state.title}
           titleLayoutStyle={titleLayoutStyle}
-          statusBar={{
-            backgroundColor: '#2196F3'
-          }}
+          statusBar={statusBar}
+          style={this.theme.styles.navBar}
           leftButton={ViewUtils.getLeftButton(() => {
             this.onBack()
           })}

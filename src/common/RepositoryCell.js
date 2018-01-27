@@ -41,7 +41,8 @@ export default class RepositoryCell extends Component {
         this.onPressFavorite()
       }}
     >
-      <Image style={[{width: 22, height: 22}, {tintColor: '#2196f3'}]} source={this.state.favoriteIcon}/>
+      <Image style={[{width: 22, height: 22}, this.props.theme.styles.tabBarSelectedIcon]}
+             source={this.state.favoriteIcon}/>
     </TouchableOpacity>;
     return (
       <TouchableOpacity

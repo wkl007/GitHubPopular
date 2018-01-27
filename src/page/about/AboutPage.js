@@ -24,9 +24,11 @@ import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
 export default class AboutPage extends Component {
   constructor(props) {
     super(props);
+    let {params} = this.props.navigation.state;
     this.aboutCommon = new AboutCommon(props, (dic) => {
       this.updateState(dic)
     }, FLAG_ABOUT.flag_about, config);
+    this.theme = params.theme;
     this.state = {
       projectModels: [],
       author: config.author
@@ -46,7 +48,7 @@ export default class AboutPage extends Component {
   }
 
   onClick(tab) {
-    let TargetComponent, parame = {menuType: tab};
+    let TargetComponent, parame = {menuType: tab,theme:this.theme};
     switch (tab) {
       case MORE_MENU.About_Author:
         TargetComponent = 'AboutMePage';
@@ -77,17 +79,17 @@ export default class AboutPage extends Component {
       {this.aboutCommon.renderRepository(this.state.projectModels)}
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Website)
-        }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website, {tintColor: '#2196f3'}
+        }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website, this.theme.styles.tabBarSelectedIcon
       )}
       <View style={GlobalStyles.line}/>
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.About_Author)
-        }, require('../my/images/ic_insert_emoticon.png'), MORE_MENU.About_Author, {tintColor: '#2196f3'}
+        }, require('../my/images/ic_insert_emoticon.png'), MORE_MENU.About_Author, this.theme.styles.tabBarSelectedIcon
       )}
       <View style={GlobalStyles.line}/>
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Feedback)
-        }, require('../../assets/images/ic_feedback.png'), MORE_MENU.Feedback, {tintColor: '#2196f3'}
+        }, require('../../assets/images/ic_feedback.png'), MORE_MENU.Feedback, this.theme.styles.tabBarSelectedIcon
       )}
     </View>;
     return (

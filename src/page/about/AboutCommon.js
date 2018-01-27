@@ -27,6 +27,8 @@ export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'};
 export default class AboutCommon {
   constructor(props, updateState, flag_about, config) {
     this.props = props;
+    const {params} = this.props.navigation.state;
+    this.theme = params.theme;
     this.updateState = updateState;
     this.flag_about = flag_about;
     this.config = config;
@@ -108,6 +110,7 @@ export default class AboutCommon {
         <RepositoryCell
           key={projectModel.item.id}
           projectModel={projectModel}
+          theme={this.theme}
           onSelect={() => ActionUtils.onSelectRepository({
             projectModel: projectModel,
             ...this.props,
@@ -173,7 +176,7 @@ export default class AboutCommon {
     return (
       <ParallaxScrollView
         headerBackgroundColor="#333"
-        backgroundColor='#2196f3'
+        backgroundColor={this.theme.themeColor}
         stickyHeaderHeight={STICKY_HEADER_HEIGHT}
         parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
         backgroundSpeed={10}

@@ -4,27 +4,29 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
-// import NavigationBar from '../common/NavigationBar'
 import {NavigationActions} from 'react-navigation'
-//重置路由
-const resetAction = NavigationActions.reset({
-  index: 0,
-  actions: [
-    NavigationActions.navigate({routeName: 'HomePage'})
-  ]
-});
+import ThemeDao from '../expand/dao/ThemeDao'
 
 export default class WelcomePage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
   }
 
   componentDidMount() {
+    new ThemeDao().getTheme().then((data) => {
+      this.theme = data;
+    });
+
     this.timer = setTimeout(() => {
-      // this.props.navigation.navigate('HomePage')
+      let resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'HomePage', params: {theme: this.theme}})
+        ]
+      });
       this.props.navigation.dispatch(resetAction);
-    }, 2000)
+    }, 500)
   }
 
   componentWillUnmount() {
@@ -32,12 +34,8 @@ export default class WelcomePage extends Component {
   }
 
   render() {
-    // const {navigate} = this.props.navigation;
     return (
       <View>
-        {/*<NavigationBar
-          title='欢迎'
-        />*/}
         <Text>欢迎</Text>
       </View>
     )
@@ -47,7 +45,6 @@ export default class WelcomePage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
   },
   tips: {
     fontSize: 29

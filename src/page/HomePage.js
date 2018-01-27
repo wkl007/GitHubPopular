@@ -13,36 +13,36 @@ import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
+import BaseComponent from './BaseComponent'
+import {MORE_MENU} from "../common/MoreMenu";
 
 export const FLAG_TAB = {
-  flag_popularTab:'tb_popular',
-  flag_trendingTab:'tb_trending',
-  flag_favoriteTab:'tb_favorite',
-  flag_my:'tb_my'
+  flag_popularTab: 'tb_popular',
+  flag_trendingTab: 'tb_trending',
+  flag_favoriteTab: 'tb_favorite',
+  flag_my: 'tb_my'
 };
 
-const resetAction = NavigationActions.reset({
-  index: 0,
-  actions: [
-    NavigationActions.navigate({routeName: 'HomePage'})
-  ]
-});
-
 export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_THEME: 'theme'};
-export default class HomePage extends Component {
+export default class HomePage extends BaseComponent {
   constructor(props) {
     super(props);
-    let selectedTab = this.props.selectedTab ? this.props.selectedTab : 'tb_popular';
+    let {params} = this.props.navigation.state;
+    let selectedTab = params.selectedTab ? params.selectedTab : 'tb_popular';
+    let theme = params.theme;
     this.state = {
-      selectedTab: selectedTab
+      selectedTab: selectedTab,
+      theme: theme,
     }
   }
 
   componentDidMount() {
+    super.componentDidMount();
     this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params));
   }
 
   componentWillUnmount() {
+    super.componentWillUnmount();
     this.listener && this.listener.remove();
   }
 
@@ -64,23 +64,37 @@ export default class HomePage extends Component {
    * @param jumpToTab
    */
   onRestart(jumpToTab) {
-    this.props.navigation.dispatch(resetAction);
+    let resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'HomePage', params: {selectedTab: jumpToTab}})
+      ]
+    });
 
+    this.props.navigation.dispatch(resetAction);
   }
 
-  //遍历tab
+  /**
+   * 遍历tab
+   * @param Component
+   * @param selectTab
+   * @param title
+   * @param renderIcon
+   * @returns {*}
+   * @private
+   */
   _renderTab(Component, selectTab, title, renderIcon) {
     return (
       <TabNavigator.Item
         selected={this.state.selectedTab === selectTab}
-        selectedTitleStyle={{color: '#2196F3'}}
+        selectedTitleStyle={this.state.theme.styles.selectedTitleStyle}
         title={title}
         renderIcon={() => <Image style={styles.image} source={renderIcon}/>}
-        renderSelectedIcon={() => <Image style={[styles.image, {tintColor: '#2196F3'}]}
+        renderSelectedIcon={() => <Image style={[styles.image, this.state.theme.styles.tabBarSelectedIcon]}
                                          source={renderIcon}/>}
         onPress={() => this.setState({selectedTab: selectTab})}
       >
-        <Component {...this.props}/>
+        <Component {...this.props} theme={this.state.theme}/>
       </TabNavigator.Item>
     )
   }

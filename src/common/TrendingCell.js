@@ -36,14 +36,15 @@ export default class TrendingCell extends Component {
   }
 
   render() {
-    let item = this.props.projectModel.item? this.props.projectModel.item:this.props.projectModel;
+    let item = this.props.projectModel.item ? this.props.projectModel.item : this.props.projectModel;
     let description = `<p>${item.description}</p>`;
     let favoriteButton = <TouchableOpacity
       onPress={() => {
         this.onPressFavorite()
       }}
     >
-      <Image style={[{width: 22, height: 22}, {tintColor: '#2196f3'}]} source={this.state.favoriteIcon}/>
+      <Image style={[{width: 22, height: 22}, this.props.theme.styles.tabBarSelectedIcon]}
+             source={this.state.favoriteIcon}/>
     </TouchableOpacity>;
     return (
       <TouchableOpacity

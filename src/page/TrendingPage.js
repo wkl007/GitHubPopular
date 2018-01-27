@@ -13,6 +13,9 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import NavigationBar from '../common/NavigationBar'
 import TrendingCell from '../common/TrendingCell'
 import Popover from '../common/Popover'
+import MoreMenu, {MORE_MENU} from "../common/MoreMenu";
+import CustomTheme from './my/CustomTheme'
+import BaseComponent from './BaseComponent'
 import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
 //获取AsyncStorage中的数据
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
@@ -22,6 +25,8 @@ import ProjectModel from "../model/ProjectModel";
 import Utils from '../util/Utils'
 import ActionUtils from '../util/ActionUtils'
 import FavoriteDao from "../expand/dao/FavoriteDao";
+import {FLAG_TAB} from "./HomePage";
+import ViewUtils from "../util/ViewUtils";
 //接口路径
 const API_URL = 'https://github.com/trending/';
 
@@ -29,7 +34,7 @@ let timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
   new TimeSpan('本 周', 'since=weekly'), new TimeSpan('本 月', 'since=monthly')];
 let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending);
 let dataRepository = new DataRepository(FLAG_STORAGE.flag_trending);
-export default class TrendingPage extends Component {
+export default class TrendingPage extends BaseComponent {
   constructor(props) {
     super(props);
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_language);
@@ -38,11 +43,18 @@ export default class TrendingPage extends Component {
       isVisible: false,
       buttonRect: {},
       timeSpan: timeSpanTextArray[0],
+      theme: this.props.theme,
+      customThemeViewVisible: false,
     };
   }
 
   componentDidMount() {
+    super.componentDidMount();
     this.loadData();
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
   }
 
   loadData() {
@@ -82,6 +94,35 @@ export default class TrendingPage extends Component {
     })
   }
 
+  //更多菜单
+  renderMoreView() {
+    let params = {...this.props, fromPage: FLAG_TAB.flag_popularTab};
+    return <MoreMenu
+      ref='moreMenu'
+      {...params}
+      menus={[MORE_MENU.Custom_Language, MORE_MENU.Sort_Language, MORE_MENU.Share, MORE_MENU.Custom_Theme, MORE_MENU.About_Author, MORE_MENU.About]}
+      anchorView={() => this.refs.moreMenuButton}
+      onMoreMenuSelect={(e) => {
+        if (e === MORE_MENU.Custom_Theme) {
+          this.setState({
+            customThemeViewVisible: true
+          })
+        }
+      }}
+    />
+  }
+
+  //主题view
+  renderCustomThemeView() {
+    return (
+      <CustomTheme
+        visible={this.state.customThemeViewVisible}
+        {...this.props}
+        onClose={() => this.setState({customThemeViewVisible: false})}
+      />
+    )
+  }
+
   //渲染标题
   renderTitleView() {
     return (
@@ -102,15 +143,19 @@ export default class TrendingPage extends Component {
   }
 
   render() {
+    let statusBar = {
+      backgroundColor: this.state.theme.themeColor,
+      barStyle: 'light-content'
+    };
     let navigationBar =
       <NavigationBar
         titleView={this.renderTitleView()}
-        statusBar={{
-          backgroundColor: '#2196F3'
-        }}
+        statusBar={statusBar}
+        style={this.state.theme.styles.navBar}
+        rightButton={ViewUtils.getMoreButton(() => this.refs.moreMenu.open())}
       />;
     let content = this.state.languages.length > 0 ? <ScrollableTabView
-      tabBarBackgroundColor='#2196F3'
+      tabBarBackgroundColor={this.state.theme.themeColor}
       tabBarActiveTextColor='#fff'
       tabBarInactiveTextColor='mintcream'
       tabBarUnderlineStyle={{backgroundColor: '#e7e7e7', height: 2}}
@@ -145,7 +190,9 @@ export default class TrendingPage extends Component {
       <View style={styles.container}>
         {navigationBar}
         {content}
+        {this.renderMoreView()}
         {timeSpanView}
+        {this.renderCustomThemeView()}
       </View>
     )
   }
@@ -159,6 +206,7 @@ class TrendingTab extends Component {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       isLoading: false,
       favoriteKeys: [],//收藏的列表
+      theme: this.props.theme,
     };
   }
 
@@ -265,6 +313,7 @@ class TrendingTab extends Component {
     this.props.navigation.navigate('RepositoryDetail', {
       projectModel: projectModel,
       flag: FLAG_STORAGE.flag_trending,
+      theme: this.state.theme,
       onUpdateFavorite: () => this.onUpdateFavorite(),
     })
   }
@@ -282,6 +331,8 @@ class TrendingTab extends Component {
   renderRow(projectModel) {
     return <TrendingCell
       key={projectModel.item.id}
+      projectModel={projectModel}
+      theme={this.state.theme}
       onSelect={() => ActionUtils.onSelectRepository({
         projectModel: projectModel,
         flag: FLAG_STORAGE.flag_trending,
@@ -289,7 +340,7 @@ class TrendingTab extends Component {
         ...this.props
       })}
       onFavorite={(item, isFavorite) => ActionUtils.onFavorite(favoriteDao, item, isFavorite, FLAG_STORAGE.flag_trending)}
-      projectModel={projectModel}/>
+    />
   }
 
   render() {
@@ -301,11 +352,11 @@ class TrendingTab extends Component {
           refreshControl={
             <RefreshControl
               title='Loading...'
-              titleColor={'#2196f3'}
-              colors={['#2196f3']}
+              titleColor={this.props.theme.themeColor}
+              colors={[this.props.theme.themeColor]}
               refreshing={this.state.isLoading}
               onRefresh={() => this.onRefresh()}
-              tintColor={'#2196f3'}
+              tintColor={this.props.theme.themeColor}
             />
           }
         />
