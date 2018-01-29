@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  FlatList,
   ListView,
   RefreshControl,
   Image,

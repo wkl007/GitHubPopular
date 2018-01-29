@@ -2,8 +2,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import Trending from 'GitHubTrending';
-
-export var FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'};
+export let FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'};
 
 export default class DataRepository {
   constructor(flag) {
@@ -112,8 +111,6 @@ export default class DataRepository {
             reject(err)
           })
       }
-
     })
   }
-
 }

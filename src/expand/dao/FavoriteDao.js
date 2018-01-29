@@ -1,11 +1,7 @@
-'use strict';
-
 import {
   AsyncStorage
 } from 'react-native';
-
 const FAVORITE_KEY_PREFIX = 'favorite_';
-
 
 export default class FavoriteDao {
   constructor(flag) {

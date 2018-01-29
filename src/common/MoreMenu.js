@@ -1,15 +1,10 @@
 /**
  * 更多菜单
  */
-
-'use strict';
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet,
-  Platform,
   TouchableOpacity,
-  Image,
   Text,
   View,
   Linking,
@@ -17,8 +12,6 @@ import {
 import Popover from '../common/Popover'
 import BaseComponent from '../page/BaseComponent'
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
-import share from '../assets/data/share.json'
-
 
 export const MORE_MENU = {
   Custom_Language: '自定义语言',

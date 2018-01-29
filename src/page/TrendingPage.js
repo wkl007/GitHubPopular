@@ -135,7 +135,7 @@ export default class TrendingPage extends BaseComponent {
               style={{fontSize: 18, color: '#fff', fontWeight: '400'}}
             >趋势{this.state.timeSpan.showText}</Text>
             <Image style={{width: 12, height: 12, marginLeft: 5}}
-                   source={require('../assets/images/ic_spinner_triangle.png')}></Image>
+                   source={require('../assets/images/ic_spinner_triangle.png')}/>
           </View>
         </TouchableOpacity>
       </View>

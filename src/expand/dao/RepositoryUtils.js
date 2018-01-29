@@ -1,8 +1,3 @@
-'use strict';
-import {
-  AsyncStorage
-} from 'react-native'
-
 import DataRepository, {FLAG_STORAGE} from './DataRepository'
 import Utils from '../../util/Utils'
 

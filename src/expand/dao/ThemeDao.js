@@ -1,7 +1,6 @@
 /**
  * 主题dao
  */
-'use strict';
 import {
   AsyncStorage,
 } from 'react-native';

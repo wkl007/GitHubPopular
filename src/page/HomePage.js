@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   DeviceEventEmitter
 } from 'react-native'
@@ -14,7 +13,6 @@ import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import BaseComponent from './BaseComponent'
-import {MORE_MENU} from "../common/MoreMenu";
 
 export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',

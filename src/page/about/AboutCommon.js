@@ -1,19 +1,13 @@
-'use strict';
-import React, {Component} from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
-  ListView,
   Platform,
-  PixelRatio,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import GlobalStyles from '../../assets/styles/GlobalStyles'
-import config from '../../assets/data/config'
 import FavoriteDao from '../../expand/dao/FavoriteDao'
 import ActionUtils from '../../util/ActionUtils'
 import {FLAG_STORAGE} from "../../expand/dao/DataRepository";
@@ -189,7 +183,6 @@ export default class AboutCommon {
 }
 
 const window = Dimensions.get('window');
-
 const AVATAR_SIZE = 120;
 const ROW_HEIGHT = 60;
 const PARALLAX_HEADER_HEIGHT = 350;

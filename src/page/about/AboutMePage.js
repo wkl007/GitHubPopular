@@ -1,25 +1,16 @@
-'use strict';
 import React, {Component} from 'react';
 import {
-  Dimensions,
-  Image,
-  ListView,
-  Platform,
-  PixelRatio,
   StyleSheet,
-  Text,
   View,
   Linking,
-  TouchableOpacity,
   Clipboard
 } from 'react-native';
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import config from '../../assets/data/config'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast'
 import WebViewPage from '../../page/WebViewPage'
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
-import {MORE_MENU} from "../../common/MoreMenu";
 
 const FLAG = {
   REPOSITORY: '开源项目',
@@ -110,7 +101,7 @@ export default class AboutMePage extends Component {
   }
 
   onClick(tab) {
-    let TargetComponent, parame = {menuType: tab,theme:this.theme};
+    let TargetComponent, parame = {menuType: tab, theme: this.theme};
     switch (tab) {
       case FLAG.BLOG.items.CSDN:
       case FLAG.BLOG.items.GITHUB:
@@ -190,7 +181,7 @@ export default class AboutMePage extends Component {
         }, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)
       )}
       <View style={GlobalStyles.line}/>
-      {this.state.showRepository ? this.aboutCommon.renderRepository(this.state.projectModels) : null}
+      {/*{this.state.showRepository ? this.aboutCommon.renderRepository(this.state.projectModels) : null}*/}
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.QQ)
         }, require('../../assets/images/ic_computer.png'), FLAG.QQ.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showQQ)

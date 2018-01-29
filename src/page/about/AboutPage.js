@@ -1,24 +1,13 @@
-'use strict';
 import React, {Component} from 'react';
 import {
-  Dimensions,
-  Image,
-  ListView,
-  Platform,
-  PixelRatio,
-  StyleSheet,
-  Text,
   View,
   Linking,
-  TouchableOpacity,
 } from 'react-native';
 
 import {MORE_MENU} from "../../common/MoreMenu";
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import config from '../../assets/data/config'
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
 
 export default class AboutPage extends Component {
@@ -76,7 +65,7 @@ export default class AboutPage extends Component {
 
   render() {
     let content = <View>
-      {this.aboutCommon.renderRepository(this.state.projectModels)}
+      {/*{this.aboutCommon.renderRepository(this.state.projectModels)}*/}
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Website)
         }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website, this.theme.styles.tabBarSelectedIcon

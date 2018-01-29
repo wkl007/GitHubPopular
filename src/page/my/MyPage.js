@@ -16,7 +16,6 @@ import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 
-
 export default class MyPage extends BaseComponent {
   constructor(props) {
     super(props);
@@ -25,7 +24,7 @@ export default class MyPage extends BaseComponent {
       theme: this.props.theme,
     }
   }
-  
+
   //主题view
   renderCustomThemeView() {
     return (

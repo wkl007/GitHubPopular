@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   Image,
   Alert,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
   DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'

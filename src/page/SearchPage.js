@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
   TouchableOpacity,
@@ -88,10 +87,6 @@ export default class SearchPage extends Component {
   //搜索url路径
   genFetchUrl(key) {
     return API_URL + key + QUERY_STR;
-  }
-
-  onBackPress(e) {
-
   }
 
   //添加标签

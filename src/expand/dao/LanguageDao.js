@@ -1,5 +1,3 @@
-'use strict';
-
 import {
   AsyncStorage
 } from 'react-native';
@@ -21,14 +19,12 @@ export default class LanguageDao {
           return;
         }
         if (!result || JSON.parse(result).length === 0
-      )
-        {
+        ) {
           let data = this.flag === FLAG_LANGUAGE.flag_language ? langsData : keysData;
           this.save(data);
           resolve(data);
         }
-      else
-        {
+        else {
           try {
             resolve(JSON.parse(result));
           } catch (e) {

@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import {
   Image,
-  ScrollView,
   StyleSheet,
   WebView,
-  Platform,
   TouchableOpacity,
-  Text,
   View
 } from 'react-native'
 import NavigationBar from '../common/NavigationBar'
@@ -34,10 +31,6 @@ export default class RepositoryDetail extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   componentWillUnmount() {
     let {params} = this.props.navigation.state;
     if (params.onUpdateFavorite) params.onUpdateFavorite();
@@ -50,10 +43,6 @@ export default class RepositoryDetail extends Component {
     } else {
       this.props.navigation.goBack();
     }
-  }
-
-  onBackPress(e) {
-
   }
 
   onNavigationStateChange(e) {

@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   View,
-  Text,
-  TextInput,
   WebView,
-  DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from '../../src/common/NavigationBar'
 import GlobalStyles from '../assets/styles/GlobalStyles'
@@ -63,7 +59,6 @@ export default class WebViewPage extends Component {
           source={{
             uri: this.state.url
           }}
-
         />
       </View>
     )

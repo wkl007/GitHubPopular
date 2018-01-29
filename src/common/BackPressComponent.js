@@ -1,5 +1,7 @@
+/**
+ * 处理安卓物理返回键
+ */
 import React from 'react';
-import PropTypes from 'prop-types';
 import {BackHandler} from 'react-native'
 
 export default class BackPressComponent {

@@ -2,12 +2,8 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  FlatList,
   ListView,
   RefreshControl,
-  Image,
-  TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
@@ -247,5 +243,4 @@ const styles = StyleSheet.create({
   listView: {
     // marginTop: Platform.OS === "ios" ? 0 : 0,
   },
-
 });
