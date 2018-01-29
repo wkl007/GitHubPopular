@@ -24,9 +24,9 @@
 * [react-navigation](https://reactnavigation.org/)
 * [react-native-tab-navigator](https://github.com/happypancake/react-native-tab-navigator)
 * [react-native-scrollable-tab-view](https://github.com/skv-headless/react-native-scrollable-tab-view)
-* [react-native-easy-toast](https://github.com/crazycodeboy/react-native-easy-toast);
-* [react-native-check-box](https://github.com/crazycodeboy/react-native-check-box);
-* [react-native-htmlview](https://github.com/jsdf/react-native-htmlview);
+* [react-native-easy-toast](https://github.com/crazycodeboy/react-native-easy-toast)
+* [react-native-check-box](https://github.com/crazycodeboy/react-native-check-box)
+* [react-native-htmlview](https://github.com/jsdf/react-native-htmlview)
 * [react-native-parallax-scroll-view](https://github.com/i6mi6/react-native-parallax-scroll-view)
 * [react-native-sortable-listview](https://github.com/deanmcpherson/react-native-sortable-listview)
 * [react-native-splash-screen](https://github.com/crazycodeboy/react-native-splash-screen)
