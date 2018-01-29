@@ -64,7 +64,6 @@ export default class HomePage extends BaseComponent {
    * @param jumpToTab
    */
   onRestart(jumpToTab) {
-    console.log(jumpToTab);
     let resetAction = NavigationActions.reset({
       index: 0,
       actions: [
