@@ -81,8 +81,7 @@ export default class SortKeyPage extends Component {
     }
     this.getSortResult();
     this.languageDao.save(this.sortResultArray);
-    // this.props.navigation.goBack();
-    let jumpToTab = this.props.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab;
+    let jumpToTab = this.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab;
     DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART, jumpToTab)
   }
 

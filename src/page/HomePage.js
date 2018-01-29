@@ -15,6 +15,7 @@ import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import BaseComponent from './BaseComponent'
 import {MORE_MENU} from "../common/MoreMenu";
+import ThemeDao from '../expand/dao/ThemeDao'
 
 export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',
@@ -33,7 +34,7 @@ export default class HomePage extends BaseComponent {
     this.state = {
       selectedTab: selectedTab,
       theme: theme,
-    }
+    };
   }
 
   componentDidMount() {
@@ -64,10 +65,11 @@ export default class HomePage extends BaseComponent {
    * @param jumpToTab
    */
   onRestart(jumpToTab) {
+    console.log(jumpToTab);
     let resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({routeName: 'HomePage', params: {selectedTab: jumpToTab}})
+        NavigationActions.navigate({routeName: 'HomePage', params: {selectedTab: jumpToTab, theme: this.state.theme}})
       ]
     });
 
