@@ -15,7 +15,6 @@ import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import BaseComponent from './BaseComponent'
 import {MORE_MENU} from "../common/MoreMenu";
-import ThemeDao from '../expand/dao/ThemeDao'
 
 export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',
