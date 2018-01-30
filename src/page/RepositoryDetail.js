@@ -9,12 +9,15 @@ import {
 import NavigationBar from '../common/NavigationBar'
 import ViewUtils from '../util/ViewUtils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
+import BackPressComponent from '../common/BackPressComponent'
 
 const TRENDING_URL = 'https://github.com/';
 
 export default class RepositoryDetail extends Component {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+
     let {params} = this.props.navigation.state;
     let projectModel = params.projectModel;
     let item = projectModel.item;
@@ -31,9 +34,24 @@ export default class RepositoryDetail extends Component {
     }
   }
 
+  componentDidMount() {
+    this.backPress.componentDidMount();
+  }
+
   componentWillUnmount() {
+    this.backPress.componentWillUnmount();
     let {params} = this.props.navigation.state;
     if (params.onUpdateFavorite) params.onUpdateFavorite();
+  }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBackPress(e) {
+    this.onBack();
+    return true;
   }
 
   //返回

@@ -10,6 +10,7 @@ import {
   DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
+import BackPressComponent from '../../common/BackPressComponent'
 import SortableListView from 'react-native-sortable-listview'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
@@ -19,6 +20,8 @@ import {ACTION_HOME, FLAG_TAB} from "../HomePage";
 export default class SortKeyPage extends Component {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+
     const {params} = this.props.navigation.state;
     this.flag = params.flag;
     this.languageDao = new LanguageDao(params.flag);
@@ -32,19 +35,24 @@ export default class SortKeyPage extends Component {
   }
 
   componentDidMount() {
+    this.backPress.componentDidMount();
     this.loadData();
   }
 
-  //加载本地存储的数据
-  loadData() {
-    this.languageDao.fetch()
-      .then(result => {
-        this.getCheckedItems(result);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
   }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBackPress(e) {
+    this.onBack();
+    return true;
+  }
+
 
   //返回
   onBack() {
@@ -69,6 +77,19 @@ export default class SortKeyPage extends Component {
     }
 
   }
+
+  //加载本地存储的数据
+  loadData() {
+    this.languageDao.fetch()
+      .then(result => {
+        this.getCheckedItems(result);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+
 
   //保存
   onSave(isChecked) {

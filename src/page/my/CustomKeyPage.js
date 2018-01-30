@@ -8,6 +8,7 @@ import {
   DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
+import BackPressComponent from '../../common/BackPressComponent'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
 import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
@@ -17,6 +18,8 @@ import {ACTION_HOME, FLAG_TAB} from "../HomePage";
 export default class CustomKeyPage extends Component {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+
     const {params} = this.props.navigation.state;
     this.languageDao = new LanguageDao(params.flag);
     this.flag = params.flag;
@@ -29,7 +32,47 @@ export default class CustomKeyPage extends Component {
   }
 
   componentDidMount() {
+    this.backPress.componentDidMount();
     this.loadData();
+  }
+
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBackPress(e) {
+    this.onBack();
+    return true;
+  }
+
+
+  //返回
+  onBack() {
+    if (this.changeValues.length > 0) {
+      Alert.alert(
+        '提示',
+        '要保存修改吗？',
+        [
+          {
+            text: '否', onPress: () => {
+              this.props.navigation.goBack();
+            }
+          },
+          {
+            text: '是', onPress: () => {
+              this.onSave();
+            }
+          }
+        ]
+      )
+    } else {
+      this.props.navigation.goBack();
+    }
   }
 
   //加载本地存储的数据
@@ -60,30 +103,6 @@ export default class CustomKeyPage extends Component {
     this.languageDao.save(this.state.dataArray);
     let jumpToTab = this.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab;
     DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART, jumpToTab);
-  }
-
-  //返回
-  onBack() {
-    if (this.changeValues.length > 0) {
-      Alert.alert(
-        '提示',
-        '要保存修改吗？',
-        [
-          {
-            text: '否', onPress: () => {
-              this.props.navigation.goBack();
-            }
-          },
-          {
-            text: '是', onPress: () => {
-              this.onSave();
-            }
-          }
-        ]
-      )
-    } else {
-      this.props.navigation.goBack();
-    }
   }
 
   renderView() {

@@ -14,6 +14,7 @@ import Toast, {DURATION} from "react-native-easy-toast";
 import {ACTION_HOME} from "./HomePage";
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import RepositoryCell from '../common/RepositoryCell'
+import BackPressComponent from '../common/BackPressComponent'
 import LanguageDao, {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 import ActionUtils from '../util/ActionUtils'
 import makeCancelable from '../util/Cancelable'
@@ -29,6 +30,8 @@ const QUERY_STR = '&sort=stars';
 export default class SearchPage extends Component {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)});
+
     let {params} = this.props.navigation.state;
     this.theme = params.theme;
     this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
@@ -48,13 +51,33 @@ export default class SearchPage extends Component {
 
   componentDidMount() {
     this.initKeys();
+    this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.backPress.componentWillUnmount();
     if (this.isKeyChange) {
       DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART);
     }
     this.cancelable && this.cancelable.cancel();
+  }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBack(e) {
+    this.onBackPress();
+    return true;
+  }
+
+  //返回
+  onBackPress() {
+    //输入框失去焦点，输入法隐藏
+    this.refs.input.blur();
+    this.props.navigation.goBack();
+    return true;
   }
 
   //加载数据
@@ -62,7 +85,7 @@ export default class SearchPage extends Component {
     this.updateState({
       isLoading: true,
     });
-    this.cancelable = makeCancelable(fetch(this.genFetchUrl(this.inputkey)))
+    this.cancelable = makeCancelable(fetch(this.genFetchUrl(this.inputkey)));
     this.cancelable.promise
       .then(response => response.json())
       .then(result => {
@@ -154,13 +177,6 @@ export default class SearchPage extends Component {
     return this.state.dataSource.cloneWithRows(items);
   }
 
-  //返回
-  onBackPress() {
-    //输入框失去焦点，输入法隐藏
-    this.refs.input.blur();
-    this.props.navigation.goBack();
-    return true;
-  }
 
   updateState(dic) {
     this.setState(dic)
@@ -243,7 +259,7 @@ export default class SearchPage extends Component {
         size='large'
         animating={this.state.isLoading}
       /> : null;
-    let resultView = <View style={{flex: 1}}>
+    let resultView = <View style={{flex: 1, paddingBottom: 50}}>
       {indicatorView}
       {listView}
     </View>;
@@ -306,7 +322,7 @@ const styles = StyleSheet.create({
     height: 40,
     position: 'absolute',
     left: 10,
-    top: GlobalStyles.window_height - 45,
+    top: GlobalStyles.window_height - 70,
     right: 10,
     borderRadius: 3
   }

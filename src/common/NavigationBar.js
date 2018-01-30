@@ -19,10 +19,10 @@ const StatusBarShape = {
 
 export default class NavigationBar extends Component {
   static propTypes = {
-    style: View.propTypes.style,//样式
+    // style: View.propTypes.style,//样式
     title: PropTypes.string,//标题
     titleView: PropTypes.element,//title dom
-    titleLayoutStyle: View.propTypes.style,//
+    // titleLayoutStyle: View.propTypes.style,//
     hide: PropTypes.bool,//是否隐藏
     statusBar: PropTypes.shape(StatusBarShape),
     rightButton: PropTypes.element,//右侧按钮
@@ -56,7 +56,7 @@ export default class NavigationBar extends Component {
       <StatusBar {...this.props.statusBar}/>
     </View> : null;
 
-    let titleView = this.props.titleView ? this.props.titleView : <Text style={styles.title}>{this.props.title}</Text>;
+    let titleView = this.props.titleView ? this.props.titleView : <Text ellipsizeMode="tail" numberOfLines={1}  style={styles.title}>{this.props.title}</Text>;
 
     let content = this.props.hide ? null :
       <View style={styles.navBar}>

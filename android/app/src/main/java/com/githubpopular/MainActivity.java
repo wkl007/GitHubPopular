@@ -1,7 +1,6 @@
 package com.githubpopular;
 
 import android.os.Bundle;
-
 import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;
 
@@ -15,10 +14,9 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "GitHubPopular";
     }
-
     @Override
         protected void onCreate(Bundle savedInstanceState) {
-            SplashScreen.show(this,true);
-            super.onCreate(savedInstanceState);
-        }
+        SplashScreen.show(this,true);
+        super.onCreate(savedInstanceState);
+    }
 }

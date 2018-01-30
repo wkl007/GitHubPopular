@@ -15,12 +15,15 @@ import ViewUtils from '../../util/ViewUtils'
 import Utils from "../../util/Utils";
 import RepositoryUtils from '../../expand/dao/RepositoryUtils'
 import RepositoryCell from "../../common/RepositoryCell";
+import BackPressComponent from '../../common/BackPressComponent'
 
 export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'};
 
 export default class AboutCommon {
   constructor(props, updateState, flag_about, config) {
     this.props = props;
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+
     const {params} = this.props.navigation.state;
     this.theme = params.theme;
     this.updateState = updateState;
@@ -33,7 +36,8 @@ export default class AboutCommon {
   }
 
   componentDidMount() {
-    if (this.flag_about === FLAG_ABOUT.flag_about) {
+    this.backPress.componentDidMount();
+    /*if (this.flag_about === FLAG_ABOUT.flag_about) {
       this.repositoryUtils.fetchRepository(this.config.info.currentRepoUrl);
     } else {
       let urls = [];
@@ -42,11 +46,21 @@ export default class AboutCommon {
         urls.push(this.config.info.url + items[i]);
       }
       this.repositoryUtils.fetchRepositories(urls)
-    }
+    }*/
   }
 
   componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
 
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBackPress(e) {
+    this.props.navigation.goBack();
+    return true;
   }
 
   /**

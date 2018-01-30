@@ -13,6 +13,7 @@ import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import BaseComponent from './BaseComponent'
+import BackPressComponent from '../common/BackPressComponent'
 
 export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',
@@ -25,6 +26,8 @@ export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_T
 export default class HomePage extends BaseComponent {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+
     let {params} = this.props.navigation.state;
     let selectedTab = params.selectedTab ? params.selectedTab : 'tb_popular';
     let theme = params.theme;
@@ -35,13 +38,30 @@ export default class HomePage extends BaseComponent {
   }
 
   componentDidMount() {
+    this.backPress.componentDidMount();
     super.componentDidMount();
     this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params));
   }
 
   componentWillUnmount() {
+    this.backPress.componentWillUnmount();
     super.componentWillUnmount();
     this.listener && this.listener.remove();
+  }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBackPress(e) {
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    this.toast.show('再按一次退出应用', DURATION.LENGTH_LONG);
+    return true;
   }
 
   /**

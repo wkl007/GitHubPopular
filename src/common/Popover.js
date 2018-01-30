@@ -41,7 +41,7 @@ var Popover = createReactClass({
   propTypes: {
     isVisible: PropTypes.bool,
     onClose: PropTypes.func,
-    contentStyle: View.propTypes.style,
+    // contentStyle: View.propTypes.style,
   },
   getInitialState() {
     return {

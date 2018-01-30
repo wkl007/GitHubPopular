@@ -10,10 +10,9 @@
     "GitHubTrending": "^3.0.0",
     "create-react-class": "^15.6.2",
     "prop-types": "^15.6.0",
-    "react": "16.0.0",
-    "react-native": "0.51.0",
+    "react": "16.2.0",
+    "react-native": "0.52.2",
     "react-native-check-box": "^2.0.2",
-    "react-native-code-push": "^5.2.1",
     "react-native-easy-toast": "^1.0.9",
     "react-native-htmlview": "^0.12.1",
     "react-native-parallax-scroll-view": "^0.20.1",
@@ -21,13 +20,13 @@
     "react-native-sortable-listview": "^0.2.7",
     "react-native-splash-screen": "^3.0.6",
     "react-native-tab-navigator": "^0.3.4",
-    "react-navigation": "^1.0.0-beta.22"
+    "react-navigation": "^1.0.0-beta.27"
   },
   "devDependencies": {
-    "babel-jest": "22.0.4",
+    "babel-jest": "22.1.0",
     "babel-preset-react-native": "4.0.0",
-    "jest": "22.0.4",
-    "react-test-renderer": "16.0.0"
+    "jest": "22.1.4",
+    "react-test-renderer": "16.2.0"
   },
   "jest": {
     "preset": "react-native"

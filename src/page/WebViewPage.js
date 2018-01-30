@@ -6,10 +6,13 @@ import {
 import NavigationBar from '../../src/common/NavigationBar'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import ViewUtils from '../util/ViewUtils'
+import BackPressComponent from '../common/BackPressComponent'
 
 export default class WebViewPage extends Component {
   constructor(props) {
     super(props);
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)});
+
     let {params} = this.props.navigation.state;
     this.theme = params.theme;
     this.state = {
@@ -17,6 +20,24 @@ export default class WebViewPage extends Component {
       title: params.title,
       canGoBack: false,
     }
+  }
+
+  componentDidMount() {
+    this.backPress.componentDidMount();
+  }
+
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+
+  /**
+   * 处理安卓物理返回键
+   * @param e
+   * @returns {boolean}
+   */
+  onBack(e) {
+    this.onBackPress();
+    return true;
   }
 
   onBackPress() {

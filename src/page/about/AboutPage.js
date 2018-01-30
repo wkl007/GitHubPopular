@@ -28,7 +28,7 @@ export default class AboutPage extends Component {
     this.aboutCommon.componentDidMount();
   }
 
-  componentWillunmount() {
+  componentWillUnmount() {
     this.aboutCommon.componentWillUnmount();
   }
 
@@ -37,7 +37,7 @@ export default class AboutPage extends Component {
   }
 
   onClick(tab) {
-    let TargetComponent, parame = {menuType: tab,theme:this.theme};
+    let TargetComponent, parame = {menuType: tab, theme: this.theme};
     switch (tab) {
       case MORE_MENU.About_Author:
         TargetComponent = 'AboutMePage';

@@ -13,25 +13,20 @@ import WebViewPage from '../../page/WebViewPage'
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
 
 const FLAG = {
-  REPOSITORY: '开源项目',
   BLOG: {
     name: '技术博客',
     items: {
-      PERSONAL_BLOG: {
-        title: '个人博客',
-        url: 'http://jiapenghui.com',
-      },
       CSDN: {
         title: 'CSDN',
-        url: 'http://blog.csdn.net/fengyuzhengfan',
+        url: 'http://blog.csdn.net/qq_35844177',
       },
-      JIANSHU: {
-        title: '简书',
-        url: 'http://www.jianshu.com/users/ca3943a4172a/latest_articles',
+      GITEE: {
+        title: '码云',
+        url: 'https://gitee.com/wkl--007',
       },
       GITHUB: {
         title: 'GitHub',
-        url: 'https://github.com/crazycodeboy',
+        url: 'https://github.com/wkl007',
       },
     }
   },
@@ -48,19 +43,6 @@ const FLAG = {
       },
     }
   },
-  QQ: {
-    name: '技术交流群',
-    items: {
-      MD: {
-        title: '移动开发者技术分享群',
-        account: '335939197',
-      },
-      RN: {
-        title: 'React Native学习交流群',
-        account: '165774887',
-      }
-    },
-  },
 };
 
 export default class AboutMePage extends Component {
@@ -72,9 +54,9 @@ export default class AboutMePage extends Component {
     this.state = {
       projectModels: [],
       author: config.author,
-      showRepository: false,
+      // showRepository: false,
       showBlog: false,
-      showQQ: false,
+      // showQQ: false,
       showContact: false
     }
   }
@@ -105,8 +87,8 @@ export default class AboutMePage extends Component {
     switch (tab) {
       case FLAG.BLOG.items.CSDN:
       case FLAG.BLOG.items.GITHUB:
-      case FLAG.BLOG.items.JIANSHU:
-      case FLAG.BLOG.items.PERSONAL_BLOG:
+      case FLAG.BLOG.items.GITEE:
+      // case FLAG.BLOG.items.PERSONAL_BLOG:
         TargetComponent = 'WebViewPage';
         parame.title = tab.title;
         parame.url = tab.url;
@@ -121,15 +103,15 @@ export default class AboutMePage extends Component {
           }
         }).catch(err => console.error('An error occurred', err));
         break;
-      case FLAG.REPOSITORY:
-        this.updateState({showRepository: !this.state.showRepository});
-        break;
+      // case FLAG.REPOSITORY:
+      //   this.updateState({showRepository: !this.state.showRepository});
+      //   break;
       case FLAG.BLOG:
         this.updateState({showBlog: !this.state.showBlog});
         break;
-      case FLAG.QQ:
-        this.updateState({showQQ: !this.state.showQQ});
-        break;
+      // case FLAG.QQ:
+      //   this.updateState({showQQ: !this.state.showQQ});
+      //   break;
       case FLAG.CONTACT:
         this.updateState({showContact: !this.state.showContact});
         break;
@@ -137,11 +119,11 @@ export default class AboutMePage extends Component {
         Clipboard.setString(tab.account);
         this.toast.show('QQ:' + tab.account + '已复制到剪切板。');
         break;
-      case FLAG.QQ.items.MD:
-      case FLAG.QQ.items.RN:
-        Clipboard.setString(tab.account);
-        this.toast.show('群号:' + tab.account + '已复制到剪切板。');
-        break;
+      // case FLAG.QQ.items.MD:
+      // case FLAG.QQ.items.RN:
+      //   Clipboard.setString(tab.account);
+      //   this.toast.show('群号:' + tab.account + '已复制到剪切板。');
+      //   break;
     }
     if (TargetComponent) {
       this.props.navigation.navigate(TargetComponent, parame)
@@ -176,18 +158,18 @@ export default class AboutMePage extends Component {
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showBlog ? this.renderItems(FLAG.BLOG.items) : null}
-      {ViewUtils.getSettingItem(() => {
-          this.onClick(FLAG.REPOSITORY)
-        }, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)
-      )}
-      <View style={GlobalStyles.line}/>
+      {/*{ViewUtils.getSettingItem(() => {*/}
+          {/*this.onClick(FLAG.REPOSITORY)*/}
+        {/*}, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)*/}
+      {/*)}*/}
+      {/*<View style={GlobalStyles.line}/>*/}
       {/*{this.state.showRepository ? this.aboutCommon.renderRepository(this.state.projectModels) : null}*/}
-      {ViewUtils.getSettingItem(() => {
+      {/*{ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.QQ)
         }, require('../../assets/images/ic_computer.png'), FLAG.QQ.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showQQ)
-      )}
-      <View style={GlobalStyles.line}/>
-      {this.state.showQQ ? this.renderItems(FLAG.QQ.items, true) : null}
+      )}*/}
+      {/*<View style={GlobalStyles.line}/>*/}
+      {/*{this.state.showQQ ? this.renderItems(FLAG.QQ.items, true) : null}*/}
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.CONTACT)
         }, require('../../assets/images/ic_contacts.png'), FLAG.CONTACT.name, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showContact)

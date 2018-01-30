@@ -12,9 +12,9 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import TabNavigator from 'react-native-tab-navigator';
-import NavigationBar from './src/common/NavigationBar'
-import FlatListDemo from './js/FlatList/FlatList'
+// import TabNavigator from 'react-native-tab-navigator';
+// import NavigationBar from './src/common/NavigationBar'
+// import FlatListDemo from './js/FlatList/FlatList'
 // import FetchTest from './js/FetchTest/FetchTest'
 
 export default class App extends Component {

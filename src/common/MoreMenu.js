@@ -38,7 +38,7 @@ export default class MoreMenu extends BaseComponent {
   }
 
   static propTypes = {
-    contentStyle: View.propTypes.style,//样式
+    // contentStyle: View.propTypes.style,//样式
     menus: PropTypes.array.isRequired,//数组，必填
     anchorView: PropTypes.func,//位置
   };
