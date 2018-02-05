@@ -51,7 +51,6 @@ export default class WebViewPage extends Component {
 
   onNavigationStateChange(e) {
     this.setState({
-      url: e.url,
       canGoBack: e.canGoBack
     })
   }
