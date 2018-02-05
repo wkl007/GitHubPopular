@@ -4,11 +4,20 @@
 
 ## 目录
 
+* [下载](#下载预览)
+* [真机预览](#真机预览)
 * [功能与特性](#功能与特性)
 * [插件使用](#插件使用)
 * [运行调试](#运行调试)
-* [预览图](#预览图)
 * [ToDo](#ToDo)
+
+## 下载
+
+![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/tree/master/screenshot/GitHubPopular-twoCode.png)
+
+## 真机预览
+
+![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/tree/master/screenshot/GitHubPopular-1.jpg)
 
 ## 功能与特性
 
@@ -38,12 +47,6 @@
 3. 终端运行 `npm install`||`yarn install`。
 4. 然后运行 `react-native run-android` || `react-native run-ios`。
 5. Ok,有问题可以提[issues](https://gitee.com/wkl--007/GitHubPopular/issues/new)出来
-
-## 预览图
-
-![GitHub Popular](https://raw.githubusercontent.com/crazycodeboy/GitHubPopular/master/resource/screenshot/GitHubPopular-1.jpg)
-
-![GitHub Popular](https://raw.githubusercontent.com/crazycodeboy/GitHubPopular/master/resource/screenshot/GitHubPopular-2.jpg)
 
 ## ToDo
 
