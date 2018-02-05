@@ -13,11 +13,11 @@
 
 ## 下载
 
-![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/tree/master/screenshot/GitHubPopular-twoCode.png)
+![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/blob/master/screenshot/GitHubPopular-twoCode.png)
 
 ## 真机预览
 
-![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/tree/master/screenshot/GitHubPopular-1.jpg)
+![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/blob/master/screenshot/GitHubPopular-1.png)
 
 ## 功能与特性
 
