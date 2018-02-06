@@ -1,5 +1,6 @@
-'use strict'
-
+/**
+ * 按钮相关
+ */
 import React from 'react';
 import {
   Image,

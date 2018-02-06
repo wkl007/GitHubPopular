@@ -1,6 +1,5 @@
 import DataRepository, {FLAG_STORAGE} from "../expand/dao/DataRepository";
 
-
 export default class ActionUtils {
 
   /**

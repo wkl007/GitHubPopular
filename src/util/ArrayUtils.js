@@ -1,3 +1,6 @@
+/**
+ * 数组方法
+ */
 export default class ArrayUtils {
   /**
    * 更新数组，若item已存在则从数组中移除，否则添加到数组

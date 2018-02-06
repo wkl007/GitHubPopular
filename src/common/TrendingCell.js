@@ -1,3 +1,6 @@
+/**
+ * 趋势列表
+ */
 import React, {Component} from 'react';
 import {
   View,
