@@ -206,6 +206,7 @@ export default class SearchPage extends Component {
         projectModel: projectModel,
         flag: FLAG_STORAGE.flag_popular,
         onUpdateFavorite: () => this.onUpdateFavorite(),
+        theme: this.theme,
         ...this.props
       })}
       onFavorite={(item, isFavorite) => ActionUtils.onFavorite(this.favoriteDao, item, isFavorite)}
@@ -259,7 +260,7 @@ export default class SearchPage extends Component {
         size='large'
         animating={this.state.isLoading}
       /> : null;
-    let resultView = <View style={{flex: 1, paddingBottom: 50}}>
+    let resultView = <View style={{flex: 1, paddingBottom: this.state.showBottomButton ? 50 : 0}}>
       {indicatorView}
       {listView}
     </View>;
