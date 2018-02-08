@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -27,6 +30,8 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <meta-data android:value="5a6c7debf29d986f01000243" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="Default" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>
