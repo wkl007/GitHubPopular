@@ -1,5 +1,5 @@
 import {StackNavigator} from 'react-navigation'
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
+// import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import WelcomePage from './WelcomePage'
 import HomePage from './HomePage'
 import WebViewPage from './WebViewPage'
@@ -52,7 +52,7 @@ const App = StackNavigator({
     }
   },
   transitionConfig: () => ({
-    screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+    // screenInterpolator: CardStackStyleInterpolator.forHorizontal,
   })
 });
 

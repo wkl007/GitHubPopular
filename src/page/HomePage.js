@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
   Image,
   DeviceEventEmitter
 } from 'react-native'
-import {NavigationActions} from 'react-navigation'
-import TabNavigator from 'react-native-tab-navigator';
-import Toast, {DURATION} from 'react-native-easy-toast'
+import { StackActions, NavigationActions } from 'react-navigation'
+import TabNavigator from 'react-native-tab-navigator'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
@@ -20,33 +20,33 @@ export const FLAG_TAB = {
   flag_trendingTab: 'tb_trending',
   flag_favoriteTab: 'tb_favorite',
   flag_my: 'tb_my'
-};
+}
 
-export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_THEME: 'theme'};
+export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_THEME: 'theme'}
 export default class HomePage extends BaseComponent {
-  constructor(props) {
-    super(props);
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+  constructor (props) {
+    super(props)
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    let {params} = this.props.navigation.state;
-    let selectedTab = params.selectedTab ? params.selectedTab : 'tb_popular';
-    let theme = params.theme;
+    let {params} = this.props.navigation.state
+    let selectedTab = params.selectedTab ? params.selectedTab : 'tb_popular'
+    let theme = params.theme
     this.state = {
       selectedTab: selectedTab,
       theme: theme,
-    };
+    }
   }
 
-  componentDidMount() {
-    this.backPress.componentDidMount();
-    super.componentDidMount();
-    this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params));
+  componentDidMount () {
+    this.backPress.componentDidMount()
+    super.componentDidMount()
+    this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params))
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
-    super.componentWillUnmount();
-    this.listener && this.listener.remove();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
+    super.componentWillUnmount()
+    this.listener && this.listener.remove()
   }
 
   /**
@@ -54,14 +54,14 @@ export default class HomePage extends BaseComponent {
    * @param e
    * @returns {boolean}
    */
-  onBackPress(e) {
+  onBackPress (e) {
     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
       //最近2秒内按过back键，可以退出应用。
-      return false;
+      return false
     }
-    this.lastBackPressed = Date.now();
-    this.toast.show('再按一次退出应用', DURATION.LENGTH_LONG);
-    return true;
+    this.lastBackPressed = Date.now()
+    this.toast.show('再按一次退出应用', DURATION.LENGTH_LONG)
+    return true
   }
 
   /**
@@ -69,11 +69,11 @@ export default class HomePage extends BaseComponent {
    * @param action
    * @param params
    */
-  onAction(action, params) {
+  onAction (action, params) {
     if (ACTION_HOME.A_RESTART === action) {
       this.onRestart(params)
     } else if (ACTION_HOME.A_SHOW_TOAST === action) {
-      this.toast.show(params.text, DURATION.LENGTH_LONG);
+      this.toast.show(params.text, DURATION.LENGTH_LONG)
     }
   }
 
@@ -81,15 +81,15 @@ export default class HomePage extends BaseComponent {
    * 重启首页
    * @param jumpToTab
    */
-  onRestart(jumpToTab) {
-    let resetAction = NavigationActions.reset({
+  onRestart (jumpToTab) {
+    let resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({routeName: 'HomePage', params: {selectedTab: jumpToTab, theme: this.state.theme}})
       ]
-    });
+    })
 
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAction)
   }
 
   /**
@@ -101,7 +101,7 @@ export default class HomePage extends BaseComponent {
    * @returns {*}
    * @private
    */
-  _renderTab(Component, selectTab, title, renderIcon) {
+  _renderTab (Component, selectTab, title, renderIcon) {
     return (
       <TabNavigator.Item
         selected={this.state.selectedTab === selectTab}
@@ -117,7 +117,7 @@ export default class HomePage extends BaseComponent {
     )
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TabNavigator>
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
     width: 22,
     margin: 5
   }
-});
+})
