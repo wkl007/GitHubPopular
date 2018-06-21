@@ -8,7 +8,8 @@ import {
   Platform,
   StatusBar,
   Text,
-  View
+  View,
+  ViewPropTypes
 } from 'react-native'
 
 const NAV_BAR_HEIGHT_IOS = 44//ios bar高度
@@ -22,10 +23,10 @@ const StatusBarShape = {
 
 export default class NavigationBar extends Component {
   static propTypes = {
-    // style: View.propTypes.style,//样式
+    style: ViewPropTypes.style,//样式
     title: PropTypes.string,//标题
     titleView: PropTypes.element,//title dom
-    // titleLayoutStyle: View.propTypes.style,//
+    titleLayoutStyle: ViewPropTypes.style,//
     hide: PropTypes.bool,//是否隐藏
     statusBar: PropTypes.shape(StatusBarShape),
     rightButton: PropTypes.element,//右侧按钮

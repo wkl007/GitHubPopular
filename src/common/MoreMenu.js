@@ -8,6 +8,7 @@ import {
   Text,
   View,
   Linking,
+  ViewPropTypes
 } from 'react-native'
 import Popover from '../common/Popover'
 import BaseComponent from '../page/BaseComponent'
@@ -38,7 +39,7 @@ export default class MoreMenu extends BaseComponent {
   }
 
   static propTypes = {
-    // contentStyle: View.propTypes.style,//样式
+    contentStyle: ViewPropTypes.style,//样式
     menus: PropTypes.array.isRequired,//数组，必填
     anchorView: PropTypes.func,//位置
   }

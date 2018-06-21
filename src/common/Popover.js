@@ -8,10 +8,10 @@ import {
   StyleSheet,
   Dimensions,
   Animated,
-  Text,
   TouchableWithoutFeedback,
   View,
-  Easing
+  Easing,
+  ViewPropTypes
 } from 'react-native'
 
 var noop = () => {
@@ -41,7 +41,7 @@ var Popover = createReactClass({
   propTypes: {
     isVisible: PropTypes.bool,
     onClose: PropTypes.func,
-    // contentStyle: View.propTypes.style,
+    contentStyle: ViewPropTypes.style,
   },
   getInitialState () {
     return {
