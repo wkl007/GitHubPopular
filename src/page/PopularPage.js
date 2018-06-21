@@ -9,6 +9,7 @@ import {
   DeviceEventEmitter,
 } from 'react-native'
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
+import NavigatorUtil from '../util/NavigatorUtil'
 import NavigationBar from '../common/NavigationBar'
 import RepositoryCell from '../common/RepositoryCell'
 import MoreMenu, { MORE_MENU } from '../common/MoreMenu'
@@ -68,7 +69,7 @@ export default class PopularPage extends BaseComponent {
     return <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate('SearchPage', {theme: this.state.theme})
+          NavigatorUtil.goToSearchPage(this.props)
         }}
       >
         <View style={{padding: 5, marginRight: 8}}>
@@ -250,14 +251,6 @@ class PopularTab extends Component {
   //更新favorite
   onUpdateFavorite () {
     this.getFavoriteKeys()
-  }
-
-  onSelect (projectModel) {
-    this.props.navigation.navigate('RepositoryDetail', {
-      projectModel: projectModel,
-      flag: FLAG_STORAGE.flag_popular,
-      onUpdateFavorite: () => this.onUpdateFavorite(),
-    })
   }
 
   //处理收藏事件

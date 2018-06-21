@@ -6,6 +6,7 @@ import {
 import NavigationBar from '../../src/common/NavigationBar'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import ViewUtils from '../util/ViewUtils'
+import NavigatorUtil from '../util/NavigatorUtil'
 import BackPressComponent from '../common/BackPressComponent'
 
 export default class WebViewPage extends Component {
@@ -13,11 +14,11 @@ export default class WebViewPage extends Component {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)})
 
-    let {params} = this.props.navigation.state
+    this.params = this.props.navigation.state.params
     this.theme = params.theme
     this.state = {
-      url: params.url,
-      title: params.title,
+      url: this.params.url,
+      title: this.params.title,
       canGoBack: false,
     }
   }
@@ -44,7 +45,7 @@ export default class WebViewPage extends Component {
     if (this.state.canGoBack) {
       this.webView.goBack()
     } else {
-      this.props.navigation.goBack()
+      NavigatorUtil.goBack(this.props.navigation)
     }
   }
 
@@ -58,11 +59,10 @@ export default class WebViewPage extends Component {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
     }
-    let {params} = this.props.navigation.state
     return (
       <View style={GlobalStyles.root_container}>
         <NavigationBar
-          title={params.title}
+          title={this.params.title}
           leftButton={ViewUtils.getLeftButton(() => {
             this.onBackPress()
           })}

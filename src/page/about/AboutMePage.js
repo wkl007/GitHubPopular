@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
+  Text,
   Linking,
   Clipboard
 } from 'react-native'
@@ -11,6 +12,7 @@ import config from '../../assets/data/config'
 import Toast from 'react-native-easy-toast'
 import WebViewPage from '../../page/WebViewPage'
 import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
+import NavigatorUtil from '../../util/NavigatorUtil'
 
 const FLAG = {
   BLOG: {
@@ -48,25 +50,27 @@ const FLAG = {
 export default class AboutMePage extends Component {
   constructor (props) {
     super(props)
-    const {params} = this.props.navigation.state
-    this.aboutCommon = new AboutCommon(props, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config)
-    this.theme = params.theme
+    this.params = this.props.navigation.state.params
+    console.log(this.params)
+   /* this.aboutCommon = new AboutCommon({
+      ...this.params,
+      navigation: this.props.navigation
+    }, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config)*/
+    this.theme = this.params.theme
     this.state = {
       projectModels: [],
       author: config.author,
-      // showRepository: false,
       showBlog: false,
-      // showQQ: false,
       showContact: false
     }
   }
 
   componentDidMount () {
-    this.aboutCommon.componentDidMount()
+    // this.aboutCommon.componentDidMount()
   }
 
   componentWillUnmount () {
-    this.aboutCommon.componentWillUnmount()
+    // this.aboutCommon.componentWillUnmount()
   }
 
   updateState (dic) {
@@ -83,15 +87,15 @@ export default class AboutMePage extends Component {
   }
 
   onClick (tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.theme}
+    let TargetComponent, params = {menuType: tab, ...this.params}
     switch (tab) {
       case FLAG.BLOG.items.CSDN:
       case FLAG.BLOG.items.GITHUB:
       case FLAG.BLOG.items.GITEE:
         // case FLAG.BLOG.items.PERSONAL_BLOG:
         TargetComponent = 'WebViewPage'
-        parame.title = tab.title
-        parame.url = tab.url
+        params.title = tab.title
+        params.url = tab.url
         break
       case FLAG.CONTACT.items.Email:
         let url = 'mailto://' + tab.account
@@ -126,7 +130,7 @@ export default class AboutMePage extends Component {
       //   break;
     }
     if (TargetComponent) {
-      this.props.navigation.navigate(TargetComponent, parame)
+      NavigatorUtil.goToMenuPage(params, TargetComponent)
     }
   }
 
@@ -179,7 +183,10 @@ export default class AboutMePage extends Component {
     </View>
     return (
       <View style={styles.container}>
-        {this.aboutCommon.render(content, this.state.author)}
+        <Text>
+          222
+        </Text>
+       {/* {this.aboutCommon.render(content, this.state.author)}*/}
         <Toast ref={e => this.toast = e}/>
       </View>
     )

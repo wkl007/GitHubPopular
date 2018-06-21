@@ -17,6 +17,7 @@ import RepositoryCell from '../common/RepositoryCell'
 import BackPressComponent from '../common/BackPressComponent'
 import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
 import ActionUtils from '../util/ActionUtils'
+import NavigatorUtil from '../util/NavigatorUtil'
 import makeCancelable from '../util/Cancelable'
 import ProjectModel from '../model/ProjectModel'
 import Utils from '../util/Utils'
@@ -32,8 +33,7 @@ export default class SearchPage extends Component {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)})
 
-    let {params} = this.props.navigation.state
-    this.theme = params.theme
+    this.params = this.props.navigation.state.params
     this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
     this.favoriteKeys = []
     this.keys = []
@@ -76,7 +76,7 @@ export default class SearchPage extends Component {
   onBackPress () {
     //输入框失去焦点，输入法隐藏
     this.refs.input.blur()
-    this.props.navigation.goBack()
+    NavigatorUtil.goBack(this.props.navigation)
     return true
   }
 
@@ -200,13 +200,12 @@ export default class SearchPage extends Component {
     return <RepositoryCell
       key={projectModel.item.id}
       projectModel={projectModel}
-      theme={this.theme}
+      theme={this.params.theme}
       onSelect={() => ActionUtils.onSelectRepository({
         projectModel: projectModel,
         flag: FLAG_STORAGE.flag_popular,
         onUpdateFavorite: () => this.onUpdateFavorite(),
-        theme: this.theme,
-        ...this.props
+        ...this.params
       })}
       onFavorite={(item, isFavorite) => ActionUtils.onFavorite(this.favoriteDao, item, isFavorite)}
     />
@@ -233,7 +232,7 @@ export default class SearchPage extends Component {
       </View>
     </TouchableOpacity>
     return <View style={{
-      backgroundColor: this.theme.themeColor,
+      backgroundColor: this.params.theme.themeColor,
       flexDirection: 'row',
       alignItems: 'center',
       height: (Platform.OS === 'ios') ? GlobalStyles.nav_bar_height_ios : GlobalStyles.nav_bar_height_android,
@@ -247,7 +246,7 @@ export default class SearchPage extends Component {
   render () {
     let statusBar = null
     if (Platform.OS === 'ios') {
-      statusBar = <View style={[styles.statusBar, {backgroundColor: this.theme.themeColor}]}/>
+      statusBar = <View style={[styles.statusBar, {backgroundColor: this.params.theme.themeColor}]}/>
     }
     let listView = !this.state.isLoading ? <ListView
       dataSource={this.state.dataSource}
@@ -265,7 +264,7 @@ export default class SearchPage extends Component {
     </View>
     let bottomButton = this.state.showBottomButton ?
       <TouchableOpacity
-        style={[styles.bottomButton, {backgroundColor: this.theme.themeColor}]}
+        style={[styles.bottomButton, {backgroundColor: this.params.theme.themeColor}]}
         onPress={() => {
           this.saveKey()
         }}

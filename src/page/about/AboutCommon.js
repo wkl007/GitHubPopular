@@ -13,6 +13,7 @@ import ActionUtils from '../../util/ActionUtils'
 import { FLAG_STORAGE } from '../../expand/dao/DataRepository'
 import ViewUtils from '../../util/ViewUtils'
 import Utils from '../../util/Utils'
+import NavigatorUtil from '../../util/NavigatorUtil'
 import RepositoryUtils from '../../expand/dao/RepositoryUtils'
 import RepositoryCell from '../../common/RepositoryCell'
 import BackPressComponent from '../../common/BackPressComponent'
@@ -24,8 +25,8 @@ export default class AboutCommon {
     this.props = props
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    const {params} = this.props.navigation.state
-    this.theme = params.theme
+    this.params = this.props.navigation.state.params
+    this.theme = this.params.theme
     this.updateState = updateState
     this.flag_about = flag_about
     this.config = config
@@ -59,7 +60,7 @@ export default class AboutCommon {
    * @returns {boolean}
    */
   onBackPress (e) {
-    this.props.navigation.goBack()
+    NavigatorUtil.goBack(this.props.navigation)
     return true
   }
 
@@ -94,14 +95,6 @@ export default class AboutCommon {
   //更新favorite
   onUpdateFavorite () {
     this.componentDidMount()
-  }
-
-  onSelect (projectModel) {
-    this.props.navigation.navigate('RepositoryDetail', {
-      projectModel: projectModel,
-      flag: FLAG_STORAGE.flag_popular,
-      onUpdateFavorite: () => this.onUpdateFavorite(),
-    })
   }
 
   /**

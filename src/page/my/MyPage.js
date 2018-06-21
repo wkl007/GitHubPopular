@@ -15,6 +15,7 @@ import { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
 
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
+import NavigatorUtil from '../../util/NavigatorUtil'
 
 export default class MyPage extends BaseComponent {
   constructor (props) {
@@ -38,29 +39,28 @@ export default class MyPage extends BaseComponent {
 
   //点击事件
   onClick (tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.state.theme}
+    let TargetComponent, params = {menuType: tab, ...this.props}
     switch (tab) {
       case MORE_MENU.Custom_Language:
         TargetComponent = 'CustomKeyPage'
-        parame.flag = FLAG_LANGUAGE.flag_language
-
+        params.flag = FLAG_LANGUAGE.flag_language
         break
       case MORE_MENU.Custom_Key:
         TargetComponent = 'CustomKeyPage'
-        parame.flag = FLAG_LANGUAGE.flag_key
+        params.flag = FLAG_LANGUAGE.flag_key
         break
       case MORE_MENU.Remove_Key:
         TargetComponent = 'CustomKeyPage'
-        parame.flag = FLAG_LANGUAGE.flag_key
-        parame.isRemoveKey = true
+        params.flag = FLAG_LANGUAGE.flag_key
+        params.isRemoveKey = true
         break
       case MORE_MENU.Sort_Language:
         TargetComponent = 'SortKeyPage'
-        parame.flag = FLAG_LANGUAGE.flag_language
+        params.flag = FLAG_LANGUAGE.flag_language
         break
       case MORE_MENU.Sort_Key:
         TargetComponent = 'SortKeyPage'
-        parame.flag = FLAG_LANGUAGE.flag_key
+        params.flag = FLAG_LANGUAGE.flag_key
         break
       case MORE_MENU.Custom_Theme:
         this.setState({customThemeViewVisible: true})
@@ -76,7 +76,7 @@ export default class MyPage extends BaseComponent {
         break
     }
     if (TargetComponent) {
-      this.props.navigation.navigate(TargetComponent, parame)
+      NavigatorUtil.goToMenuPage({...params}, TargetComponent)
     }
   }
 

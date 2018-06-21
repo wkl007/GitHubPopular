@@ -5,9 +5,10 @@ import {
   Image,
   DeviceEventEmitter
 } from 'react-native'
-import { StackActions, NavigationActions } from 'react-navigation'
+import NavigatorUtil from '../util/NavigatorUtil'
 import TabNavigator from 'react-native-tab-navigator'
 import Toast, { DURATION } from 'react-native-easy-toast'
+import ThemeFactory, { ThemeFlags } from '../assets/styles/ThemeFactory'
 import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
 import FavoritePage from './FavoritePage'
@@ -28,11 +29,11 @@ export default class HomePage extends BaseComponent {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    let {navigation} = this.props
-    let selectedTab = navigation.getParam('selectedTab', 'tb_popular')
-    let theme = navigation.getParam('theme')
+    this.params = this.props.navigation.state.params;
+    let selectedTab = this.params.selectedTab || 'tb_popular'
+    let theme = this.params.theme || ThemeFactory.createTheme(ThemeFlags.Default)
     this.state = {
-      selectedTab: selectedTab ? selectedTab : 'tb_popular',
+      selectedTab: selectedTab,
       theme: theme,
     }
   }
@@ -82,14 +83,13 @@ export default class HomePage extends BaseComponent {
    * @param jumpToTab
    */
   onRestart (jumpToTab) {
-    let resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({routeName: 'HomePage', params: {selectedTab: jumpToTab, theme: this.state.theme}})
-      ]
+    const {navigation} = this.props
+    const theme = navigation.getParam('theme')
+    NavigatorUtil.resetToHomePage({
+      navigation: navigation,
+      ...this.params,
+      selectedTab: jumpToTab,
     })
-
-    this.props.navigation.dispatch(resetAction)
   }
 
   /**

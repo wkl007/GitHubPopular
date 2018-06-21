@@ -11,6 +11,7 @@ import NavigationBar from '../../common/NavigationBar'
 import BackPressComponent from '../../common/BackPressComponent'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
+import NavigatorUtil from '../../util/NavigatorUtil'
 import LanguageDao, { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
 import CheckBox from 'react-native-check-box'
 import { ACTION_HOME, FLAG_TAB } from '../HomePage'
@@ -20,11 +21,11 @@ export default class CustomKeyPage extends Component {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    const {params} = this.props.navigation.state
+    this.params = this.props.navigation.state.params
     this.languageDao = new LanguageDao(params.flag)
-    this.flag = params.flag
-    this.isRemoveKey = params.isRemoveKey
-    this.theme = params.theme
+    this.flag = this.params.flag
+    this.isRemoveKey = this.params.isRemoveKey
+    this.theme = this.params.theme
     this.changeValues = []
     this.state = {
       dataArray: []
@@ -59,7 +60,7 @@ export default class CustomKeyPage extends Component {
         [
           {
             text: '否', onPress: () => {
-              this.props.navigation.goBack()
+              NavigatorUtil.goBack(this.props.navigation);
             }
           },
           {
@@ -70,7 +71,7 @@ export default class CustomKeyPage extends Component {
         ]
       )
     } else {
-      this.props.navigation.goBack()
+      NavigatorUtil.goBack(this.props.navigation);
     }
   }
 
@@ -90,7 +91,7 @@ export default class CustomKeyPage extends Component {
   //保存
   onSave () {
     if (this.changeValues.length === 0) {
-      this.props.navigation.goBack()
+      NavigatorUtil.goBack(this.props.navigation);
       return
     }
     if (this.isRemoveKey) {

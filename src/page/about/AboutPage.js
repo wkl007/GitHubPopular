@@ -2,22 +2,24 @@ import React, { Component } from 'react'
 import {
   View,
   Linking,
+  Text
 } from 'react-native'
 
 import { MORE_MENU } from '../../common/MoreMenu'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
+import NavigatorUtil from '../../util/NavigatorUtil'
 import config from '../../assets/data/config'
 import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
 
 export default class AboutPage extends Component {
   constructor (props) {
     super(props)
-    let {params} = this.props.navigation.state
-    this.aboutCommon = new AboutCommon(props, (dic) => {
+    this.params = this.props.navigation.state.params
+    /*this.aboutCommon = new AboutCommon(...this.params, (dic) => {
       this.updateState(dic)
-    }, FLAG_ABOUT.flag_about, config)
-    this.theme = params.theme
+    }, FLAG_ABOUT.flag_about, config)*/
+    this.theme = this.params.theme
     this.state = {
       projectModels: [],
       author: config.author
@@ -25,11 +27,11 @@ export default class AboutPage extends Component {
   }
 
   componentDidMount () {
-    this.aboutCommon.componentDidMount()
+    // this.aboutCommon.componentDidMount()
   }
 
   componentWillUnmount () {
-    this.aboutCommon.componentWillUnmount()
+    // this.aboutCommon.componentWillUnmount()
   }
 
   updateState (dic) {
@@ -37,15 +39,15 @@ export default class AboutPage extends Component {
   }
 
   onClick (tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.theme}
+    let TargetComponent, params = {menuType: tab, ...this.params}
     switch (tab) {
       case MORE_MENU.About_Author:
         TargetComponent = 'AboutMePage'
         break
       case MORE_MENU.Website:
         TargetComponent = 'WebViewPage'
-        parame.title = 'GitHubPopular'
-        parame.url = 'https://gitee.com/wkl--007/GitHubPopular'
+        params.title = 'GitHubPopular'
+        params.url = 'https://gitee.com/wkl--007/GitHubPopular'
         break
       case MORE_MENU.Feedback:
         let url = 'mailto://499657357@qq.com'
@@ -59,7 +61,7 @@ export default class AboutPage extends Component {
         break
     }
     if (TargetComponent) {
-      this.props.navigation.navigate(TargetComponent, parame)
+      NavigatorUtil.goToMenuPage(params,TargetComponent)
     }
   }
 
@@ -82,12 +84,15 @@ export default class AboutPage extends Component {
       )}
     </View>
     return (
-      this.aboutCommon.render(content, {
-        name: 'GitHub Popular',
-        description: '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
-        avatar: this.state.author.avatar1,
-        backgroundImg: this.state.author.backgroundImg1
-      })
+      <View>
+        <Text>2222</Text>
+      </View>
+      // this.aboutCommon.render(content, {
+      //   name: 'GitHub Popular',
+      //   description: '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
+      //   avatar: this.state.author.avatar1,
+      //   backgroundImg: this.state.author.backgroundImg1
+      // })
     )
   }
 }

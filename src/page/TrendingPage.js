@@ -308,15 +308,6 @@ class TrendingTab extends Component {
     this.getFavoriteKeys()
   }
 
-  onSelect (projectModel) {
-    this.props.navigation.navigate('RepositoryDetail', {
-      projectModel: projectModel,
-      flag: FLAG_STORAGE.flag_trending,
-      theme: this.state.theme,
-      onUpdateFavorite: () => this.onUpdateFavorite(),
-    })
-  }
-
   //处理收藏事件
   onFavorite (item, isFavorite) {
 

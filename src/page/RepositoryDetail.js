@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import NavigationBar from '../common/NavigationBar'
 import ViewUtils from '../util/ViewUtils'
+import NavigatorUtil from '../util/NavigatorUtil'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import BackPressComponent from '../common/BackPressComponent'
 
@@ -18,13 +19,14 @@ export default class RepositoryDetail extends Component {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    let {params} = this.props.navigation.state
-    let projectModel = params.projectModel
+    this.params = this.props.navigation.state.params
+    let projectModel = this.params.projectModel
     let item = projectModel.item
     this.url = item.html_url ? item.html_url : TRENDING_URL + item.fullName
     let title = item.full_name ? item.full_name : item.fullName
-    this.favoriteDao = new FavoriteDao(params.flag)
-    this.theme = params.theme
+    this.favoriteDao = new FavoriteDao(this.params.flag)
+    console.log(projectModel.isFavorite)
+    this.theme = this.params.theme
     this.state = {
       url: this.url,
       title: title,
@@ -40,8 +42,7 @@ export default class RepositoryDetail extends Component {
 
   componentWillUnmount () {
     this.backPress.componentWillUnmount()
-    let {params} = this.props.navigation.state
-    if (params.onUpdateFavorite) params.onUpdateFavorite()
+    if (this.params.onUpdateFavorite) this.params.onUpdateFavorite()
   }
 
   /**
@@ -59,7 +60,7 @@ export default class RepositoryDetail extends Component {
     if (this.state.canGoBack) {
       this.webView.goBack()
     } else {
-      this.props.navigation.goBack()
+      NavigatorUtil.goBack(this.props.navigation)
     }
   }
 
@@ -79,7 +80,7 @@ export default class RepositoryDetail extends Component {
 
   //favoriteIcon单击回调函数
   onRightButtonClick () {
-    let projectModel = this.props.navigation.state.params.projectModel
+    let projectModel = this.params.projectModel
     this.setFavoriteState(projectModel.isFavorite = !projectModel.isFavorite)
     let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString()
     if (projectModel.isFavorite) {

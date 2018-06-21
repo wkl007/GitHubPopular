@@ -14,6 +14,7 @@ import BackPressComponent from '../../common/BackPressComponent'
 import SortableListView from 'react-native-sortable-listview'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
+import NavigatorUtil from '../../util/NavigatorUtil'
 import LanguageDao, { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
 import { ACTION_HOME, FLAG_TAB } from '../HomePage'
 
@@ -22,10 +23,10 @@ export default class SortKeyPage extends Component {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    const {params} = this.props.navigation.state
-    this.flag = params.flag
-    this.languageDao = new LanguageDao(params.flag)
-    this.theme = params.theme
+    this.params = this.props.navigation.state.params
+    this.flag = this.params.flag
+    this.theme = this.params.theme
+
     this.dataArray = []//原始数组
     this.originalCheckedArray = []//筛选后的数组
     this.sortResultArray = []//筛选后的数组应用到原始数组中
@@ -36,6 +37,7 @@ export default class SortKeyPage extends Component {
 
   componentDidMount () {
     this.backPress.componentDidMount()
+    this.languageDao = new LanguageDao(this.params.flag)
     this.loadData()
   }
 
@@ -62,7 +64,7 @@ export default class SortKeyPage extends Component {
         [
           {
             text: '否', onPress: () => {
-              this.props.navigation.goBack()
+              NavigatorUtil.goBack(this.props.navigation)
             }
           }, {
           text: '是', onPress: () => {
@@ -72,7 +74,7 @@ export default class SortKeyPage extends Component {
         ]
       )
     } else {
-      this.props.navigation.goBack()
+      NavigatorUtil.goBack(this.props.navigation)
     }
 
   }
@@ -93,7 +95,7 @@ export default class SortKeyPage extends Component {
     if (!isChecked) {
       //判断是否相等，相等直接返回
       if (ArrayUtils.isEqual(this.originalCheckedArray, this.state.checkedArray)) {
-        this.props.navigation.goBack()
+        NavigatorUtil.goBack(this.props.navigation)
         return
       }
     }
