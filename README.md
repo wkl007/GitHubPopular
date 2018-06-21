@@ -29,16 +29,16 @@
 
 ## 插件使用
 
-* [GitHubTrending](https://github.com/crazycodeboy/GitHubTrending)
-* [react-navigation](https://reactnavigation.org/)
-* [react-native-tab-navigator](https://github.com/happypancake/react-native-tab-navigator)
-* [react-native-scrollable-tab-view](https://github.com/skv-headless/react-native-scrollable-tab-view)
-* [react-native-easy-toast](https://github.com/crazycodeboy/react-native-easy-toast)
-* [react-native-check-box](https://github.com/crazycodeboy/react-native-check-box)
-* [react-native-htmlview](https://github.com/jsdf/react-native-htmlview)
-* [react-native-parallax-scroll-view](https://github.com/i6mi6/react-native-parallax-scroll-view)
-* [react-native-sortable-listview](https://github.com/deanmcpherson/react-native-sortable-listview)
-* [react-native-splash-screen](https://github.com/crazycodeboy/react-native-splash-screen)
+* [GitHubTrending ^3.0.0](https://github.com/crazycodeboy/GitHubTrending)
+* [react-navigation ^2.3.1](https://reactnavigation.org/)
+* [react-native-tab-navigator ^0.3.4](https://github.com/happypancake/react-native-tab-navigator)
+* [react-native-scrollable-tab-view ^0.2.8](https://github.com/skv-headless/react-native-scrollable-tab-view)
+* [react-native-easy-toast ^1.1.0](https://github.com/crazycodeboy/react-native-easy-toast)
+* [react-native-check-box ^2.1.0](https://github.com/crazycodeboy/react-native-check-box)
+* [react-native-htmlview ^0.12.1](https://github.com/jsdf/react-native-htmlview)
+* [react-native-parallax-scroll-view ^0.21.2](https://github.com/i6mi6/react-native-parallax-scroll-view)
+* [react-native-sortable-listview ^0.2.8](https://github.com/deanmcpherson/react-native-sortable-listview)
+* [react-native-splash-screen ^3.0.9](https://github.com/crazycodeboy/react-native-splash-screen)
 
 ## 运行调试
 
@@ -46,7 +46,6 @@
 2. Clone [GitHub Popular](https://gitee.com/wkl--007/GitHubPopular.git),然后终端进入项目根目录。
 3. 终端运行 `npm install`||`yarn install`。
 4. 然后运行 `react-native run-android` || `react-native run-ios`。
-5. Ok,有问题可以提[issues](https://gitee.com/wkl--007/GitHubPopular/issues/new)出来
 
 ## ToDo
 
