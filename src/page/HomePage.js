@@ -28,11 +28,11 @@ export default class HomePage extends BaseComponent {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    let {params} = this.props.navigation.state
-    let selectedTab = params.selectedTab ? params.selectedTab : 'tb_popular'
-    let theme = params.theme
+    let {navigation} = this.props
+    let selectedTab = navigation.getParam('selectedTab', 'tb_popular')
+    let theme = navigation.getParam('theme')
     this.state = {
-      selectedTab: selectedTab,
+      selectedTab: selectedTab ? selectedTab : 'tb_popular',
       theme: theme,
     }
   }

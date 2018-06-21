@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet
 } from 'react-native'
-import { StackActions, NavigationActions } from 'react-navigation'
+import NavigatorUtil from '../util/NavigatorUtil'
 import ThemeDao from '../expand/dao/ThemeDao'
 import SplashScreen from 'react-native-splash-screen'
 
@@ -17,13 +17,10 @@ export default class WelcomePage extends Component {
     })
     this.timer = setTimeout(() => {
       SplashScreen.hide()
-      let resetAction = StackActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({routeName: 'HomePage', params: {theme: this.theme}})
-        ]
+      NavigatorUtil.resetToHomePage({
+        navigation: this.props.navigation,
+        theme: this.theme
       })
-      this.props.navigation.dispatch(resetAction)
     }, 500)
   }
 

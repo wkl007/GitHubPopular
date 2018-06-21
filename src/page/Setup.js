@@ -1,5 +1,4 @@
-import { StackNavigator } from 'react-navigation'
-// import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
+import { createStackNavigator } from 'react-navigation'
 import WelcomePage from './WelcomePage'
 import HomePage from './HomePage'
 import WebViewPage from './WebViewPage'
@@ -11,7 +10,7 @@ import PopularPage from './PopularPage'
 import AboutPage from './about/AboutPage'
 import AboutMePage from './about/AboutMePage'
 
-const App = StackNavigator({
+const App = createStackNavigator({
   WelcomePage: {
     screen: WelcomePage,
   },
@@ -43,17 +42,9 @@ const App = StackNavigator({
     screen: AboutMePage,
   }
 }, {
-  mode: 'card',
-  headerMode: 'screen',
   navigationOptions: {
     header: null,
-    cardStack: {
-      gesturesEnabled: false
-    }
   },
-  transitionConfig: () => ({
-    // screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-  })
 })
 
 export default App
