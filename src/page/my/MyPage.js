@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -8,17 +8,17 @@ import {
   TouchableHighlight
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
-import {MORE_MENU} from "../../common/MoreMenu";
+import { MORE_MENU } from '../../common/MoreMenu'
 import BaseComponent from '../BaseComponent'
 import CustomTheme from './CustomTheme'
-import {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
+import { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
 
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 
 export default class MyPage extends BaseComponent {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       customThemeViewVisible: false,
       theme: this.props.theme,
@@ -26,7 +26,7 @@ export default class MyPage extends BaseComponent {
   }
 
   //主题view
-  renderCustomThemeView() {
+  renderCustomThemeView () {
     return (
       <CustomTheme
         visible={this.state.customThemeViewVisible}
@@ -37,64 +37,64 @@ export default class MyPage extends BaseComponent {
   }
 
   //点击事件
-  onClick(tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.state.theme};
+  onClick (tab) {
+    let TargetComponent, parame = {menuType: tab, theme: this.state.theme}
     switch (tab) {
       case MORE_MENU.Custom_Language:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_language;
+        TargetComponent = 'CustomKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_language
 
-        break;
+        break
       case MORE_MENU.Custom_Key:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        break;
+        TargetComponent = 'CustomKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_key
+        break
       case MORE_MENU.Remove_Key:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        parame.isRemoveKey = true;
-        break;
+        TargetComponent = 'CustomKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_key
+        parame.isRemoveKey = true
+        break
       case MORE_MENU.Sort_Language:
-        TargetComponent = 'SortKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_language;
-        break;
+        TargetComponent = 'SortKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_language
+        break
       case MORE_MENU.Sort_Key:
-        TargetComponent = 'SortKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        break;
+        TargetComponent = 'SortKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_key
+        break
       case MORE_MENU.Custom_Theme:
-        this.setState({customThemeViewVisible: true});
-        break;
+        this.setState({customThemeViewVisible: true})
+        break
       case MORE_MENU.About_Author:
-        TargetComponent = 'AboutMePage';
-        break;
+        TargetComponent = 'AboutMePage'
+        break
       case MORE_MENU.About:
-        TargetComponent = 'AboutPage';
-        break;
+        TargetComponent = 'AboutPage'
+        break
       case '更新':
-        this.update();
-        break;
+        this.update()
+        break
     }
     if (TargetComponent) {
       this.props.navigation.navigate(TargetComponent, parame)
     }
   }
 
-  getItem(tag, icon, text) {
+  getItem (tag, icon, text) {
     return ViewUtils.getSettingItem(() => {
       this.onClick(tag)
     }, icon, text, this.state.theme.styles.tabBarSelectedIcon, null)
   }
 
-  render() {
+  render () {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
-    };
+    }
     let navigationBar = <NavigationBar
       title='我的'
       statusBar={statusBar}
       style={this.state.theme.styles.navBar}
-    />;
+    />
     return (
       <View style={GlobalStyles.root_container}>
         {navigationBar}
@@ -173,4 +173,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'gray'
   },
-});
+})

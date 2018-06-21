@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -9,23 +9,23 @@ import NavigationBar from '../../src/common/NavigationBar'
 import HttpUtils from './HttpUtils'
 
 export default class FetchTest extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       result: []
-    };
+    }
   }
 
-  onLoad(url) {
+  onLoad (url) {
     HttpUtils.get(url)
       .then(res => {
         this.setState({
           result: res.details
-        });
-        console.log(res);
+        })
+        console.log(res)
       }).catch(err => {
       console.log(err)
-      })
+    })
     /*fetch(url)
       .then(res => res.json())
       .then(result => {
@@ -39,7 +39,7 @@ export default class FetchTest extends Component {
       })*/
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <NavigationBar title='Fetch的使用'
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   row: {
     height: 50
   }
-});
+})

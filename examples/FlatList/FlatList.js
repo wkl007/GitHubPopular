@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import NavigationBar from '../../src/common/NavigationBar'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 
 let data = [
   {
@@ -56,34 +56,34 @@ let data = [
     email: '499657357@qq.com',
     fullName: '王叔叔好'
   }
-];
+]
 export default class FlatListDemo extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isLoading: true,
       data: []
-    };
+    }
   }
 
-  componentDidMount() {
-    this.onLoad();
+  componentDidMount () {
+    this.onLoad()
   }
 
-  onLoad() {
+  onLoad () {
     this.setState({
       isLoading: true,
-    });
+    })
     setTimeout(() => {
       this.setState({
         isLoading: false,
         data: data
-      });
+      })
       this.refs.toast.show('数据获取成功！！！')
     }, 1000)
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <NavigationBar title='FlatList的使用'
@@ -103,8 +103,8 @@ export default class FlatListDemo extends Component {
           data={this.state.data}
           refreshing={this.state.isLoading}
           onRefresh={() => {
-            this.refs.toast.show('获取数据中...');
-            this.onLoad();
+            this.refs.toast.show('获取数据中...')
+            this.onLoad()
           }}
           renderItem={({item, index}) => <View key={index} style={styles.row}>
             <TouchableOpacity
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
   row: {
     height: 50
   }
-});
+})

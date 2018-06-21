@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
@@ -9,36 +9,36 @@ import {
   ListView,
   ActivityIndicator,
   DeviceEventEmitter
-} from "react-native";
-import Toast, {DURATION} from "react-native-easy-toast";
-import {ACTION_HOME} from "./HomePage";
+} from 'react-native'
+import Toast, { DURATION } from 'react-native-easy-toast'
+import { ACTION_HOME } from './HomePage'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import RepositoryCell from '../common/RepositoryCell'
 import BackPressComponent from '../common/BackPressComponent'
-import LanguageDao, {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
+import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
 import ActionUtils from '../util/ActionUtils'
 import makeCancelable from '../util/Cancelable'
 import ProjectModel from '../model/ProjectModel'
 import Utils from '../util/Utils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
-import {FLAG_STORAGE} from "../expand/dao/DataRepository";
+import { FLAG_STORAGE } from '../expand/dao/DataRepository'
 import ViewUtils from '../util/ViewUtils'
 
-const API_URL = 'https://api.github.com/search/repositories?q=';
-const QUERY_STR = '&sort=stars';
+const API_URL = 'https://api.github.com/search/repositories?q='
+const QUERY_STR = '&sort=stars'
 
 export default class SearchPage extends Component {
-  constructor(props) {
-    super(props);
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)});
+  constructor (props) {
+    super(props)
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)})
 
-    let {params} = this.props.navigation.state;
-    this.theme = params.theme;
-    this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
-    this.favoriteKeys = [];
-    this.keys = [];
-    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
-    this.isKeyChange = false;
+    let {params} = this.props.navigation.state
+    this.theme = params.theme
+    this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
+    this.favoriteKeys = []
+    this.keys = []
+    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key)
+    this.isKeyChange = false
     this.state = {
       rightButtonText: '搜索',
       isLoading: false,
@@ -49,17 +49,17 @@ export default class SearchPage extends Component {
     }
   }
 
-  componentDidMount() {
-    this.initKeys();
-    this.backPress.componentDidMount();
+  componentDidMount () {
+    this.initKeys()
+    this.backPress.componentDidMount()
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
     if (this.isKeyChange) {
-      DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART);
+      DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART)
     }
-    this.cancelable && this.cancelable.cancel();
+    this.cancelable && this.cancelable.cancel()
   }
 
   /**
@@ -67,35 +67,35 @@ export default class SearchPage extends Component {
    * @param e
    * @returns {boolean}
    */
-  onBack(e) {
-    this.onBackPress();
-    return true;
+  onBack (e) {
+    this.onBackPress()
+    return true
   }
 
   //返回
-  onBackPress() {
+  onBackPress () {
     //输入框失去焦点，输入法隐藏
-    this.refs.input.blur();
-    this.props.navigation.goBack();
-    return true;
+    this.refs.input.blur()
+    this.props.navigation.goBack()
+    return true
   }
 
   //加载数据
-  loadData() {
+  loadData () {
     this.updateState({
       isLoading: true,
-    });
-    this.cancelable = makeCancelable(fetch(this.genFetchUrl(this.inputkey)));
+    })
+    this.cancelable = makeCancelable(fetch(this.genFetchUrl(this.inputkey)))
     this.cancelable.promise
       .then(response => response.json())
       .then(result => {
         if (!this || !result || !result.items || result.items.length === 0) {
-          this.toast.show(`${this.inputkey}暂无结果`, DURATION.LENGTH_LONG);
-          this.updateState({isLoading: false, rightButtonText: '搜索'});
-          return;
+          this.toast.show(`${this.inputkey}暂无结果`, DURATION.LENGTH_LONG)
+          this.updateState({isLoading: false, rightButtonText: '搜索'})
+          return
         }
-        this.items = result.items;
-        this.getFavoriteKeys();
+        this.items = result.items
+        this.getFavoriteKeys()
         if (!this.checkKeyIsExist(this.keys, this.inputkey)) {
           this.updateState({showBottomButton: true})
         }
@@ -108,13 +108,13 @@ export default class SearchPage extends Component {
   }
 
   //搜索url路径
-  genFetchUrl(key) {
-    return API_URL + key + QUERY_STR;
+  genFetchUrl (key) {
+    return API_URL + key + QUERY_STR
   }
 
   //添加标签
-  saveKey() {
-    let key = this.inputkey;
+  saveKey () {
+    let key = this.inputkey
     if (this.checkKeyIsExist(this.keys, key)) {
       this.toast.show(`${key}已经存在`, DURATION.LENGTH_LONG)
     } else {
@@ -122,17 +122,17 @@ export default class SearchPage extends Component {
         path: key,
         name: key,
         checked: true
-      };
-      this.keys.unshift(key);
-      this.languageDao.save(this.keys);
-      this.toast.show(`${key.name}保存成功`, DURATION.LENGTH_LONG);
-      this.isKeyChange = true;
+      }
+      this.keys.unshift(key)
+      this.languageDao.save(this.keys)
+      this.toast.show(`${key.name}保存成功`, DURATION.LENGTH_LONG)
+      this.isKeyChange = true
     }
   }
 
   //获取所有标签
-  async initKeys() {
-    this.keys = await this.languageDao.fetch();
+  async initKeys () {
+    this.keys = await this.languageDao.fetch()
   }
 
   /**
@@ -141,30 +141,30 @@ export default class SearchPage extends Component {
    * @param key
    * @returns {boolean}
    */
-  checkKeyIsExist(keys, key) {
+  checkKeyIsExist (keys, key) {
     for (let i = 0, len = keys.length; i < len; i++) {
-      if (key.toLowerCase() === keys[i].name.toLowerCase()) return true;
+      if (key.toLowerCase() === keys[i].name.toLowerCase()) return true
     }
-    return false;
+    return false
   }
 
   //获取本地用户收藏的projectItem
-  getFavoriteKeys() {
+  getFavoriteKeys () {
     this.favoriteDao.getFavoriteKeys().then((keys) => {
-      this.favoriteKeys = keys || [];
-      this.flushFavoriteState();
+      this.favoriteKeys = keys || []
+      this.flushFavoriteState()
     }).catch((err) => {
-      this.flushFavoriteState();
-      console.log(err);
+      this.flushFavoriteState()
+      console.log(err)
     })
   }
 
   //更新ProjectItem的Favorite状态
-  flushFavoriteState() {
-    let projectModels = [];
-    let items = this.items;
+  flushFavoriteState () {
+    let projectModels = []
+    let items = this.items
     for (let i = 0, len = items.length; i < len; i++) {
-      projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i], this.favoriteKeys)));
+      projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i], this.favoriteKeys)))
     }
     this.updateState({
       isLoading: false,
@@ -173,31 +173,30 @@ export default class SearchPage extends Component {
     })
   }
 
-  getDataSource(items) {
-    return this.state.dataSource.cloneWithRows(items);
+  getDataSource (items) {
+    return this.state.dataSource.cloneWithRows(items)
   }
 
-
-  updateState(dic) {
+  updateState (dic) {
     this.setState(dic)
   }
 
   //右侧按钮单击
-  onRightButtonClick() {
+  onRightButtonClick () {
     if (this.state.rightButtonText === '搜索') {
-      this.updateState({rightButtonText: '取消'});
-      this.loadData();
+      this.updateState({rightButtonText: '取消'})
+      this.loadData()
     } else {
-      this.updateState({rightButtonText: '搜索', isLoading: false});
-      this.cancelable && this.cancelable.cancel();
+      this.updateState({rightButtonText: '搜索', isLoading: false})
+      this.cancelable && this.cancelable.cancel()
     }
   }
 
-  onUpdateFavorite() {
-    this.getFavoriteKeys();
+  onUpdateFavorite () {
+    this.getFavoriteKeys()
   }
 
-  renderRow(projectModel) {
+  renderRow (projectModel) {
     return <RepositoryCell
       key={projectModel.item.id}
       projectModel={projectModel}
@@ -214,25 +213,25 @@ export default class SearchPage extends Component {
   }
 
   //导航条
-  renderNavBar() {
+  renderNavBar () {
     let backButton = ViewUtils.getLeftButton(() => {
       this.onBackPress()
-    });
+    })
     let inputView = <TextInput
       ref='input'
       onChangeText={text => this.inputkey = text}
       style={styles.textInput}
-    />;
+    />
     let rightButton = <TouchableOpacity
       onPress={() => {
-        this.refs.input.blur();
-        this.onRightButtonClick();
+        this.refs.input.blur()
+        this.onRightButtonClick()
       }}
     >
       <View style={{marginRight: 10}}>
         <Text style={styles.title}>{this.state.rightButtonText}</Text>
       </View>
-    </TouchableOpacity>;
+    </TouchableOpacity>
     return <View style={{
       backgroundColor: this.theme.themeColor,
       flexDirection: 'row',
@@ -245,25 +244,25 @@ export default class SearchPage extends Component {
     </View>
   }
 
-  render() {
-    let statusBar = null;
+  render () {
+    let statusBar = null
     if (Platform.OS === 'ios') {
       statusBar = <View style={[styles.statusBar, {backgroundColor: this.theme.themeColor}]}/>
     }
     let listView = !this.state.isLoading ? <ListView
       dataSource={this.state.dataSource}
       renderRow={(e) => this.renderRow(e)}
-    /> : null;
+    /> : null
     let indicatorView = this.state.isLoading ?
       <ActivityIndicator
         style={styles.centering}
         size='large'
         animating={this.state.isLoading}
-      /> : null;
+      /> : null
     let resultView = <View style={{flex: 1, paddingBottom: this.state.showBottomButton ? 50 : 0}}>
       {indicatorView}
       {listView}
-    </View>;
+    </View>
     let bottomButton = this.state.showBottomButton ?
       <TouchableOpacity
         style={[styles.bottomButton, {backgroundColor: this.theme.themeColor}]}
@@ -274,7 +273,7 @@ export default class SearchPage extends Component {
         <View style={{justifyContent: 'center'}}>
           <Text style={styles.title}>添加标签</Text>
         </View>
-      </TouchableOpacity> : null;
+      </TouchableOpacity> : null
     return <View style={GlobalStyles.root_container}>
       {statusBar}
       {this.renderNavBar()}
@@ -297,7 +296,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: (Platform.OS === 'ios') ? 30 : 40,
     borderWidth: (Platform.OS === 'ios') ? 1 : 0,
-    borderColor: "#fff",
+    borderColor: '#fff',
     alignSelf: 'center',
     paddingLeft: 5,
     marginRight: 10,
@@ -308,7 +307,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: "#fff",
+    color: '#fff',
     fontWeight: '500'
   },
   centering: {
@@ -327,4 +326,4 @@ const styles = StyleSheet.create({
     right: 10,
     borderRadius: 3
   }
-});
+})

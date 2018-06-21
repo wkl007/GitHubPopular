@@ -1,8 +1,8 @@
 /**
  * 更多菜单
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
   TouchableOpacity,
   Text,
@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import Popover from '../common/Popover'
 import BaseComponent from '../page/BaseComponent'
-import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
+import { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
 
 export const MORE_MENU = {
   Custom_Language: '自定义语言',
@@ -25,11 +25,11 @@ export const MORE_MENU = {
   Website: 'Website',
   Feedback: '反馈',
   Share: '分享',
-};
+}
 
 export default class MoreMenu extends BaseComponent {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isVisible: false,//显示隐藏
       buttonRect: {},
@@ -41,16 +41,16 @@ export default class MoreMenu extends BaseComponent {
     // contentStyle: View.propTypes.style,//样式
     menus: PropTypes.array.isRequired,//数组，必填
     anchorView: PropTypes.func,//位置
-  };
-
-  //打开更多菜单
-  open() {
-    this.showPopover();
   }
 
-  showPopover() {
-    if (!this.props.anchorView) return;
-    let anchorView = this.props.anchorView();
+  //打开更多菜单
+  open () {
+    this.showPopover()
+  }
+
+  showPopover () {
+    if (!this.props.anchorView) return
+    let anchorView = this.props.anchorView()
     anchorView.measure((ox, oy, width, height, px, py) => {
       this.setState({
         isVisible: true,
@@ -61,68 +61,68 @@ export default class MoreMenu extends BaseComponent {
   }
 
   //关闭更多菜单
-  closePopover() {
-    this.setState({isVisible: false});
+  closePopover () {
+    this.setState({isVisible: false})
   }
 
   //菜单选择
-  onMoreMenuSelect(tab) {
-    this.closePopover();
-    if (typeof (this.props.onMoreMenuSelect) == 'function') this.props.onMoreMenuSelect(tab);
-    let TargetComponent, parame = {menuType: tab, theme: this.state.theme};
+  onMoreMenuSelect (tab) {
+    this.closePopover()
+    if (typeof (this.props.onMoreMenuSelect) == 'function') this.props.onMoreMenuSelect(tab)
+    let TargetComponent, parame = {menuType: tab, theme: this.state.theme}
     switch (tab) {
       case MORE_MENU.Custom_Language:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_language;
-        break;
+        TargetComponent = 'CustomKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_language
+        break
       case MORE_MENU.Custom_Key:
-        TargetComponent = 'CustomKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        break;
+        TargetComponent = 'CustomKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_key
+        break
       case MORE_MENU.Remove_Key:
-        TargetComponent = 'CustomKeyPage';
-        parame.isRemoveKey = true;
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        break;
+        TargetComponent = 'CustomKeyPage'
+        parame.isRemoveKey = true
+        parame.flag = FLAG_LANGUAGE.flag_key
+        break
       case MORE_MENU.Sort_Language:
-        TargetComponent = 'SortKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_language;
-        break;
+        TargetComponent = 'SortKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_language
+        break
       case MORE_MENU.Sort_Key:
-        TargetComponent = 'SortKeyPage';
-        parame.flag = FLAG_LANGUAGE.flag_key;
-        break;
+        TargetComponent = 'SortKeyPage'
+        parame.flag = FLAG_LANGUAGE.flag_key
+        break
       case MORE_MENU.Custom_Theme:
 
-        break;
+        break
       case MORE_MENU.About_Author:
-        TargetComponent = 'AboutMePage';
-        break;
+        TargetComponent = 'AboutMePage'
+        break
       case MORE_MENU.About:
-        TargetComponent = 'AboutPage';
-        break;
+        TargetComponent = 'AboutPage'
+        break
       case MORE_MENU.Feedback:
-        let url = '499657357@qq.com';
+        let url = '499657357@qq.com'
         Linking.canOpenURL(url).then(supported => {
           if (!supported) {
             console.log(`can\'t handle url:${url}`)
           } else {
-            return Linking.openURL(url);
+            return Linking.openURL(url)
           }
         }).catch(err => {
           console.log(`An error occurred ${err}`)
-        });
-        break;
+        })
+        break
       case MORE_MENU.Share:
 
-        break;
+        break
     }
     if (TargetComponent) {
       this.props.navigation.navigate(TargetComponent, parame)
     }
   }
 
-  renderMoreView() {
+  renderMoreView () {
     let view = <Popover
       isVisible={this.state.isVisible}
       fromRect={this.state.buttonRect}
@@ -143,11 +143,11 @@ export default class MoreMenu extends BaseComponent {
         })
         }
       </View>
-    </Popover>;
-    return view;
+    </Popover>
+    return view
   }
 
-  render() {
-    return this.renderMoreView();
+  render () {
+    return this.renderMoreView()
   }
 }

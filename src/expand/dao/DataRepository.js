@@ -1,13 +1,14 @@
 import {
   AsyncStorage,
-} from 'react-native';
-import Trending from 'GitHubTrending';
-export let FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'};
+} from 'react-native'
+import Trending from 'GitHubTrending'
+
+export let FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'}
 
 export default class DataRepository {
-  constructor(flag) {
-    this.flag = flag;
-    if (flag === FLAG_STORAGE.flag_trending) this.treding = new Trending();
+  constructor (flag) {
+    this.flag = flag
+    if (flag === FLAG_STORAGE.flag_trending) this.treding = new Trending()
   }
 
   /**
@@ -16,9 +17,9 @@ export default class DataRepository {
    * @param items
    * @param callback
    */
-  saveRepository(url, items, callback) {
-    if (!items || !url) return;
-    let wrapData;//本地存储网络数据
+  saveRepository (url, items, callback) {
+    if (!items || !url) return
+    let wrapData//本地存储网络数据
     if (this.flag === FLAG_STORAGE.flag_my) {
       wrapData = {item: items, update_date: new Date().getTime()}
     } else {
@@ -27,7 +28,7 @@ export default class DataRepository {
     AsyncStorage.setItem(url, JSON.stringify(wrapData), callback)
   }
 
-  fetchRepository(url) {
+  fetchRepository (url) {
     return new Promise((resolve, reject) => {
       //获取本地数据
       this.fetchLocalRepository(url).then((wrapData) => {
@@ -37,14 +38,14 @@ export default class DataRepository {
           this.fetchNetRepository(url).then((data) => {
             resolve(data)
           }).catch((error) => {
-            reject(error);
+            reject(error)
           })
         }
       }).catch((error) => {
         this.fetchNetRepository(url).then((data) => {
           resolve(data)
         }).catch((error) => {
-          reject(error);
+          reject(error)
         })
       })
     })
@@ -55,19 +56,19 @@ export default class DataRepository {
    * @param url
    * @returns {Promise<any>}
    */
-  fetchLocalRepository(url) {
+  fetchLocalRepository (url) {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(url, (error, result) => {
         if (!error) {
           try {
             resolve(JSON.parse(result))
           } catch (e) {
-            reject(e);
-            console.error(e);
+            reject(e)
+            console.error(e)
           }
         } else {
-          reject(error);
-          console.error(error);
+          reject(error)
+          console.error(error)
         }
       })
     })
@@ -78,7 +79,7 @@ export default class DataRepository {
    * @param url
    * @returns {Promise<any>}
    */
-  fetchNetRepository(url) {
+  fetchNetRepository (url) {
     return new Promise((resolve, reject) => {
       if (this.flag !== FLAG_STORAGE.flag_trending) {
         fetch(url)
@@ -88,13 +89,13 @@ export default class DataRepository {
           })
           .then(result => {
             if (this.flag === FLAG_STORAGE.flag_my && result) {
-              this.saveRepository(url, result);
+              this.saveRepository(url, result)
               resolve(result)
-            }else if(result&&result.items){
-              this.saveRepository(url, result.items);
-              resolve(result.items);
-            }else {
-              reject(new Error('responseData is null'));
+            } else if (result && result.items) {
+              this.saveRepository(url, result.items)
+              resolve(result.items)
+            } else {
+              reject(new Error('responseData is null'))
             }
           })
 
@@ -102,10 +103,10 @@ export default class DataRepository {
         this.treding.fetchTrending(url)
           .then((items) => {
             if (!items) {
-              reject(new Error('responseData is null'));
+              reject(new Error('responseData is null'))
             }
-            resolve(items);
-            this.saveRepository(url, items);
+            resolve(items)
+            this.saveRepository(url, items)
           })
           .catch((err) => {
             reject(err)

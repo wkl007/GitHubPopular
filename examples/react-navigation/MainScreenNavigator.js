@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Text,
   Button,
-} from 'react-native';
-import {TabNavigator} from 'react-navigation'
+} from 'react-native'
+import { TabNavigator } from 'react-navigation'
 
 class RecentChatsScreen extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     return (
       <View>
         <Text>王叔叔</Text>
@@ -25,11 +25,11 @@ class RecentChatsScreen extends Component {
 }
 
 class AllContactsScreen extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     return (
       <View>
         <Text>小瓶瓶</Text>
@@ -45,6 +45,6 @@ class AllContactsScreen extends Component {
 const MainScreenNavigator = TabNavigator({
   Recent: {screen: RecentChatsScreen},
   All: {screen: AllContactsScreen},
-});
+})
 
-export default MainScreenNavigator;
+export default MainScreenNavigator

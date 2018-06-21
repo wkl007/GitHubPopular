@@ -1,5 +1,5 @@
-'use strict';
-import React, {Component} from 'react';
+'use strict'
+import React, { Component } from 'react'
 import {
   Dimensions,
   Image,
@@ -11,18 +11,18 @@ import {
   View,
   Linking,
   TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
 
-import {MORE_MENU} from "../../common/MoreMenu";
+import { MORE_MENU } from '../../common/MoreMenu'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import config from '../../assets/data/config'
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import ParallaxScrollView from 'react-native-parallax-scroll-view'
 
 export default class AboutPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state =  {
+  constructor (props) {
+    super(props)
+    this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
       }).cloneWithRows([
@@ -38,20 +38,20 @@ export default class AboutPage extends Component {
         'Hammock Driven Development',
         'Value of Values'
       ])
-    };
+    }
   }
 
-  render() {
-    const { onScroll = () => {} } = this.props;
+  render () {
+    const {onScroll = () => {}} = this.props
     return (
       <ListView
         ref="ListView"
         style={styles.container}
-        dataSource={ this.state.dataSource }
+        dataSource={this.state.dataSource}
         renderRow={(rowData) => (
-          <View key={rowData} style={ styles.row }>
-            <Text style={ styles.rowText }>
-              { rowData }
+          <View key={rowData} style={styles.row}>
+            <Text style={styles.rowText}>
+              {rowData}
             </Text>
           </View>
         )}
@@ -60,34 +60,38 @@ export default class AboutPage extends Component {
             onScroll={onScroll}
 
             headerBackgroundColor="#333"
-            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
-            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+            stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+            parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
             backgroundSpeed={10}
 
             renderBackground={() => (
               <View key="background">
-                <Image source={{uri: 'https://i.ytimg.com/vi/P-NZei5ANaQ/maxresdefault.jpg',
+                <Image source={{
+                  uri: 'https://i.ytimg.com/vi/P-NZei5ANaQ/maxresdefault.jpg',
                   width: window.width,
-                  height: PARALLAX_HEADER_HEIGHT}}/>
-                <View style={{position: 'absolute',
+                  height: PARALLAX_HEADER_HEIGHT
+                }}/>
+                <View style={{
+                  position: 'absolute',
                   top: 0,
                   width: window.width,
                   backgroundColor: 'rgba(0,0,0,.4)',
-                  height: PARALLAX_HEADER_HEIGHT}}/>
+                  height: PARALLAX_HEADER_HEIGHT
+                }}/>
               </View>
             )}
 
             renderForeground={() => (
-              <View key="parallax-header" style={ styles.parallaxHeader }>
-                <Image style={ styles.avatar } source={{
+              <View key="parallax-header" style={styles.parallaxHeader}>
+                <Image style={styles.avatar} source={{
                   uri: 'https://pbs.twimg.com/profile_images/2694242404/5b0619220a92d391534b0cd89bf5adc1_400x400.jpeg',
                   width: AVATAR_SIZE,
                   height: AVATAR_SIZE
                 }}/>
-                <Text style={ styles.sectionSpeakerText }>
+                <Text style={styles.sectionSpeakerText}>
                   Talks by Rich Hickey
                 </Text>
-                <Text style={ styles.sectionTitleText }>
+                <Text style={styles.sectionTitleText}>
                   CTO of Cognitec, Creator of Clojure
                 </Text>
               </View>
@@ -102,23 +106,23 @@ export default class AboutPage extends Component {
             renderFixedHeader={() => (
               <View key="fixed-header" style={styles.fixedSection}>
                 <Text style={styles.fixedSectionText}
-                      onPress={() => this.refs.ListView.scrollTo({ x: 0, y: 0 })}>
+                      onPress={() => this.refs.ListView.scrollTo({x: 0, y: 0})}>
                   Scroll to top
                 </Text>
               </View>
             )}/>
         )}
       />
-    );
+    )
   }
 }
 
-const window = Dimensions.get('window');
+const window = Dimensions.get('window')
 
-const AVATAR_SIZE = 120;
-const ROW_HEIGHT = 60;
-const PARALLAX_HEADER_HEIGHT = 350;
-const STICKY_HEADER_HEIGHT = 70;
+const AVATAR_SIZE = 120
+const ROW_HEIGHT = 60
+const PARALLAX_HEADER_HEIGHT = 350
+const STICKY_HEADER_HEIGHT = 70
 
 const styles = StyleSheet.create({
   container: {
@@ -183,6 +187,6 @@ const styles = StyleSheet.create({
   rowText: {
     fontSize: 20
   }
-});
+})
 
 

@@ -6,7 +6,7 @@ import {
   Dimensions
 } from 'react-native'
 
-const {height, width} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window')
 module.exports = {
   line: {
     height: 0.4,
@@ -21,4 +21,4 @@ module.exports = {
   nav_bar_height_ios: 44,
   nav_bar_height_android: 50,
   window_height: height,
-};
+}

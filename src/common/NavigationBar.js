@@ -1,8 +1,8 @@
 /**
  * 自定义导航
  */
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   StyleSheet,
   Platform,
@@ -11,14 +11,14 @@ import {
   View
 } from 'react-native'
 
-const NAV_BAR_HEIGHT_IOS = 44;//ios bar高度
-const NAV_BAR_HEIGHT_ANDROID = 50;//android bar高度
-const STATUS_BAR_HEIGHT = 20;
+const NAV_BAR_HEIGHT_IOS = 44//ios bar高度
+const NAV_BAR_HEIGHT_ANDROID = 50//android bar高度
+const STATUS_BAR_HEIGHT = 20
 const StatusBarShape = {
   barStyle: PropTypes.oneOf(['light-content', 'default']),
   hidden: PropTypes.bool,
   backgroundColor: PropTypes.string,
-};
+}
 
 export default class NavigationBar extends Component {
   static propTypes = {
@@ -30,23 +30,23 @@ export default class NavigationBar extends Component {
     statusBar: PropTypes.shape(StatusBarShape),
     rightButton: PropTypes.element,//右侧按钮
     leftButton: PropTypes.element,//左侧按钮
-  };
+  }
   static defaultProps = {
     statusBar: {
       barStyle: 'line-content',
       hidden: false,
     }
-  };
+  }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       title: '',
       hide: false,
-    };
+    }
   }
 
-  getButtonElement(data) {
+  getButtonElement (data) {
     return (
       <View style={styles.navBarButton}>
         {data ? data : null}
@@ -54,12 +54,13 @@ export default class NavigationBar extends Component {
     )
   }
 
-  render() {
+  render () {
     let statusBar = !this.props.statusBar.hidden ? <View style={[styles.statusBar, this.props.statusBar]}>
       <StatusBar {...this.props.statusBar}/>
-    </View> : null;
+    </View> : null
 
-    let titleView = this.props.titleView ? this.props.titleView : <Text ellipsizeMode="tail" numberOfLines={1}  style={styles.title}>{this.props.title}</Text>;
+    let titleView = this.props.titleView ? this.props.titleView : <Text ellipsizeMode="tail" numberOfLines={1}
+                                                                        style={styles.title}>{this.props.title}</Text>
 
     let content = this.props.hide ? null :
       <View style={styles.navBar}>
@@ -68,7 +69,7 @@ export default class NavigationBar extends Component {
           {titleView}
         </View>
         {this.getButtonElement(this.props.rightButton)}
-      </View>;
+      </View>
 
     return (
       <View style={[styles.container, this.props.style]}>
@@ -108,4 +109,4 @@ const styles = StyleSheet.create({
   statusBar: {
     height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : 0,
   },
-});
+})

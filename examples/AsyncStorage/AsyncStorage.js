@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -7,49 +7,49 @@ import {
   AsyncStorage
 } from 'react-native'
 import NavigationBar from '../../src/common/NavigationBar'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 
-const KEY = 'text';
+const KEY = 'text'
 export default class AsyncStorageTest extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  onSave() {
+  onSave () {
     AsyncStorage.setItem(KEY, this.text, (error) => {
       if (!error) {
-        this.toast.show('保存成功！！！', DURATION.LENGTH_LONG);
+        this.toast.show('保存成功！！！', DURATION.LENGTH_LONG)
       } else {
-        this.toast.show('保存失败！！！', DURATION.LENGTH_LONG);
-      }
-    });
-  }
-
-  onRemove() {
-    AsyncStorage.removeItem(KEY, (error) => {
-      if (!error) {
-        this.toast.show('移除成功！！！', DURATION.LENGTH_LONG);
-      } else {
-        this.toast.show('移除失败！！！', DURATION.LENGTH_LONG);
+        this.toast.show('保存失败！！！', DURATION.LENGTH_LONG)
       }
     })
   }
 
-  onFetch() {
+  onRemove () {
+    AsyncStorage.removeItem(KEY, (error) => {
+      if (!error) {
+        this.toast.show('移除成功！！！', DURATION.LENGTH_LONG)
+      } else {
+        this.toast.show('移除失败！！！', DURATION.LENGTH_LONG)
+      }
+    })
+  }
+
+  onFetch () {
     AsyncStorage.getItem(KEY, (error, result) => {
       if (!error) {
         if (result) {
-          this.toast.show(`取出的内容为：${result}`);
+          this.toast.show(`取出的内容为：${result}`)
         } else {
-          this.toast.show(`取出的内容为不存在`);
+          this.toast.show(`取出的内容为不存在`)
         }
       } else {
-        this.toast.show('取出失败！！！');
+        this.toast.show('取出失败！！！')
       }
     })
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <NavigationBar title='AsyncStorage的使用'
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   row: {
     height: 50
   }
-});
+})

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   WebView,
@@ -9,12 +9,12 @@ import ViewUtils from '../util/ViewUtils'
 import BackPressComponent from '../common/BackPressComponent'
 
 export default class WebViewPage extends Component {
-  constructor(props) {
-    super(props);
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)});
+  constructor (props) {
+    super(props)
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)})
 
-    let {params} = this.props.navigation.state;
-    this.theme = params.theme;
+    let {params} = this.props.navigation.state
+    this.theme = params.theme
     this.state = {
       url: params.url,
       title: params.title,
@@ -22,12 +22,12 @@ export default class WebViewPage extends Component {
     }
   }
 
-  componentDidMount() {
-    this.backPress.componentDidMount();
+  componentDidMount () {
+    this.backPress.componentDidMount()
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
   }
 
   /**
@@ -35,31 +35,30 @@ export default class WebViewPage extends Component {
    * @param e
    * @returns {boolean}
    */
-  onBack(e) {
-    this.onBackPress();
-    return true;
+  onBack (e) {
+    this.onBackPress()
+    return true
   }
 
-  onBackPress() {
+  onBackPress () {
     if (this.state.canGoBack) {
-      this.webView.goBack();
+      this.webView.goBack()
     } else {
-      this.props.navigation.goBack();
+      this.props.navigation.goBack()
     }
   }
 
-
-  onNavigationStateChange(e) {
+  onNavigationStateChange (e) {
     this.setState({
       canGoBack: e.canGoBack
     })
   }
 
-  render() {
+  render () {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-    };
-    let {params} = this.props.navigation.state;
+    }
+    let {params} = this.props.navigation.state
     return (
       <View style={GlobalStyles.root_container}>
         <NavigationBar

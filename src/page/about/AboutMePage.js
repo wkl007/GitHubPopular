@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
   Linking,
   Clipboard
-} from 'react-native';
+} from 'react-native'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import config from '../../assets/data/config'
 import Toast from 'react-native-easy-toast'
 import WebViewPage from '../../page/WebViewPage'
-import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
+import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
 
 const FLAG = {
   BLOG: {
@@ -43,14 +43,14 @@ const FLAG = {
       },
     }
   },
-};
+}
 
 export default class AboutMePage extends Component {
-  constructor(props) {
-    super(props);
-    const {params} = this.props.navigation.state;
-    this.aboutCommon = new AboutCommon(props, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config);
-    this.theme = params.theme;
+  constructor (props) {
+    super(props)
+    const {params} = this.props.navigation.state
+    this.aboutCommon = new AboutCommon(props, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config)
+    this.theme = params.theme
     this.state = {
       projectModels: [],
       author: config.author,
@@ -61,16 +61,16 @@ export default class AboutMePage extends Component {
     }
   }
 
-  componentDidMount() {
-    this.aboutCommon.componentDidMount();
+  componentDidMount () {
+    this.aboutCommon.componentDidMount()
   }
 
-  componentWillUnmount() {
-    this.aboutCommon.componentWillUnmount();
+  componentWillUnmount () {
+    this.aboutCommon.componentWillUnmount()
   }
 
-  updateState(dic) {
-    this.setState(dic);
+  updateState (dic) {
+    this.setState(dic)
   }
 
   /**
@@ -78,47 +78,47 @@ export default class AboutMePage extends Component {
    * @param isShow
    * @returns {*}
    */
-  getClickIcon(isShow) {
+  getClickIcon (isShow) {
     return isShow ? require('../../assets/images/ic_tiaozhuan.png') : require('../../assets/images/ic_tiaozhuan_down.png')
   }
 
-  onClick(tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.theme};
+  onClick (tab) {
+    let TargetComponent, parame = {menuType: tab, theme: this.theme}
     switch (tab) {
       case FLAG.BLOG.items.CSDN:
       case FLAG.BLOG.items.GITHUB:
       case FLAG.BLOG.items.GITEE:
-      // case FLAG.BLOG.items.PERSONAL_BLOG:
-        TargetComponent = 'WebViewPage';
-        parame.title = tab.title;
-        parame.url = tab.url;
-        break;
+        // case FLAG.BLOG.items.PERSONAL_BLOG:
+        TargetComponent = 'WebViewPage'
+        parame.title = tab.title
+        parame.url = tab.url
+        break
       case FLAG.CONTACT.items.Email:
-        let url = 'mailto://' + tab.account;
+        let url = 'mailto://' + tab.account
         Linking.canOpenURL(url).then(supported => {
           if (!supported) {
-            console.log('Can\'t handle url: ' + url);
+            console.log('Can\'t handle url: ' + url)
           } else {
-            return Linking.openURL(url);
+            return Linking.openURL(url)
           }
-        }).catch(err => console.error('An error occurred', err));
-        break;
+        }).catch(err => console.error('An error occurred', err))
+        break
       // case FLAG.REPOSITORY:
       //   this.updateState({showRepository: !this.state.showRepository});
       //   break;
       case FLAG.BLOG:
-        this.updateState({showBlog: !this.state.showBlog});
-        break;
+        this.updateState({showBlog: !this.state.showBlog})
+        break
       // case FLAG.QQ:
       //   this.updateState({showQQ: !this.state.showQQ});
       //   break;
       case FLAG.CONTACT:
-        this.updateState({showContact: !this.state.showContact});
-        break;
+        this.updateState({showContact: !this.state.showContact})
+        break
       case FLAG.CONTACT.items.QQ:
-        Clipboard.setString(tab.account);
-        this.toast.show('QQ:' + tab.account + '已复制到剪切板。');
-        break;
+        Clipboard.setString(tab.account)
+        this.toast.show('QQ:' + tab.account + '已复制到剪切板。')
+        break
       // case FLAG.QQ.items.MD:
       // case FLAG.QQ.items.RN:
       //   Clipboard.setString(tab.account);
@@ -135,11 +135,11 @@ export default class AboutMePage extends Component {
    * @param dic
    * @param isShowAccount
    */
-  renderItems(dic, isShowAccount) {
-    if (!dic) return null;
-    let views = [];
+  renderItems (dic, isShowAccount) {
+    if (!dic) return null
+    let views = []
     for (let i in dic) {
-      let title = isShowAccount ? `${dic[i].title}:${dic[i].account}` : dic[i].title;
+      let title = isShowAccount ? `${dic[i].title}:${dic[i].account}` : dic[i].title
       views.push(
         <View key={i}>
           {ViewUtils.getSettingItem(() => this.onClick(dic[i]), '', title, this.theme.styles.tabBarSelectedIcon)}
@@ -147,10 +147,10 @@ export default class AboutMePage extends Component {
         </View>
       )
     }
-    return views;
+    return views
   }
 
-  render() {
+  render () {
     let content = <View>
       {ViewUtils.getSettingItem(() => {
           this.onClick(FLAG.BLOG)
@@ -159,8 +159,8 @@ export default class AboutMePage extends Component {
       <View style={GlobalStyles.line}/>
       {this.state.showBlog ? this.renderItems(FLAG.BLOG.items) : null}
       {/*{ViewUtils.getSettingItem(() => {*/}
-          {/*this.onClick(FLAG.REPOSITORY)*/}
-        {/*}, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)*/}
+      {/*this.onClick(FLAG.REPOSITORY)*/}
+      {/*}, require('../../assets/images/ic_code.png'), FLAG.REPOSITORY, this.theme.styles.tabBarSelectedIcon, this.getClickIcon(this.state.showRepository)*/}
       {/*)}*/}
       {/*<View style={GlobalStyles.line}/>*/}
       {/*{this.state.showRepository ? this.aboutCommon.renderRepository(this.state.projectModels) : null}*/}
@@ -176,7 +176,7 @@ export default class AboutMePage extends Component {
       )}
       <View style={GlobalStyles.line}/>
       {this.state.showContact ? this.renderItems(FLAG.CONTACT.items, true) : null}
-    </View>;
+    </View>
     return (
       <View style={styles.container}>
         {this.aboutCommon.render(content, this.state.author)}
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   }
-});
+})
 
 
 

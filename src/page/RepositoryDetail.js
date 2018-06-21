@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   Image,
   StyleSheet,
@@ -11,20 +11,20 @@ import ViewUtils from '../util/ViewUtils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import BackPressComponent from '../common/BackPressComponent'
 
-const TRENDING_URL = 'https://github.com/';
+const TRENDING_URL = 'https://github.com/'
 
 export default class RepositoryDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+  constructor (props) {
+    super(props)
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    let {params} = this.props.navigation.state;
-    let projectModel = params.projectModel;
-    let item = projectModel.item;
-    this.url = item.html_url ? item.html_url : TRENDING_URL + item.fullName;
-    let title = item.full_name ? item.full_name : item.fullName;
-    this.favoriteDao = new FavoriteDao(params.flag);
-    this.theme = params.theme;
+    let {params} = this.props.navigation.state
+    let projectModel = params.projectModel
+    let item = projectModel.item
+    this.url = item.html_url ? item.html_url : TRENDING_URL + item.fullName
+    let title = item.full_name ? item.full_name : item.fullName
+    this.favoriteDao = new FavoriteDao(params.flag)
+    this.theme = params.theme
     this.state = {
       url: this.url,
       title: title,
@@ -34,14 +34,14 @@ export default class RepositoryDetail extends Component {
     }
   }
 
-  componentDidMount() {
-    this.backPress.componentDidMount();
+  componentDidMount () {
+    this.backPress.componentDidMount()
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
-    let {params} = this.props.navigation.state;
-    if (params.onUpdateFavorite) params.onUpdateFavorite();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
+    let {params} = this.props.navigation.state
+    if (params.onUpdateFavorite) params.onUpdateFavorite()
   }
 
   /**
@@ -49,28 +49,28 @@ export default class RepositoryDetail extends Component {
    * @param e
    * @returns {boolean}
    */
-  onBackPress(e) {
-    this.onBack();
-    return true;
+  onBackPress (e) {
+    this.onBack()
+    return true
   }
 
   //返回
-  onBack() {
+  onBack () {
     if (this.state.canGoBack) {
-      this.webView.goBack();
+      this.webView.goBack()
     } else {
-      this.props.navigation.goBack();
+      this.props.navigation.goBack()
     }
   }
 
-  onNavigationStateChange(e) {
+  onNavigationStateChange (e) {
     this.setState({
       canGoBack: e.canGoBack
     })
   }
 
   //设置favorite
-  setFavoriteState(isFavorite) {
+  setFavoriteState (isFavorite) {
     this.setState({
       isFavorite: isFavorite,
       favoriteIcon: isFavorite ? require('../assets/images/ic_star.png') : require('../assets/images/ic_star_navbar.png'),
@@ -78,19 +78,19 @@ export default class RepositoryDetail extends Component {
   }
 
   //favoriteIcon单击回调函数
-  onRightButtonClick() {
-    let projectModel = this.props.navigation.state.params.projectModel;
-    this.setFavoriteState(projectModel.isFavorite = !projectModel.isFavorite);
-    let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString();
+  onRightButtonClick () {
+    let projectModel = this.props.navigation.state.params.projectModel
+    this.setFavoriteState(projectModel.isFavorite = !projectModel.isFavorite)
+    let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString()
     if (projectModel.isFavorite) {
-      this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item));
+      this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item))
     } else {
-      this.favoriteDao.removeFavoriteItem(key);
+      this.favoriteDao.removeFavoriteItem(key)
     }
   }
 
   //右侧按钮
-  renderRightButton() {
+  renderRightButton () {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -104,11 +104,11 @@ export default class RepositoryDetail extends Component {
     )
   }
 
-  render() {
-    let titleLayoutStyle = this.state.title.length > 20 ? {paddingRight: 30} : null;
+  render () {
+    let titleLayoutStyle = this.state.title.length > 20 ? {paddingRight: 30} : null
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-    };
+    }
     return (
       <View style={{flex: 1}}>
         <NavigationBar
@@ -139,4 +139,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   }
-});
+})

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   Alert,
   View,
@@ -14,33 +14,33 @@ import BackPressComponent from '../../common/BackPressComponent'
 import SortableListView from 'react-native-sortable-listview'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
-import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
-import {ACTION_HOME, FLAG_TAB} from "../HomePage";
+import LanguageDao, { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
+import { ACTION_HOME, FLAG_TAB } from '../HomePage'
 
 export default class SortKeyPage extends Component {
-  constructor(props) {
-    super(props);
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+  constructor (props) {
+    super(props)
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    const {params} = this.props.navigation.state;
-    this.flag = params.flag;
-    this.languageDao = new LanguageDao(params.flag);
-    this.theme = params.theme;
-    this.dataArray = [];//原始数组
-    this.originalCheckedArray = [];//筛选后的数组
-    this.sortResultArray = [];//筛选后的数组应用到原始数组中
+    const {params} = this.props.navigation.state
+    this.flag = params.flag
+    this.languageDao = new LanguageDao(params.flag)
+    this.theme = params.theme
+    this.dataArray = []//原始数组
+    this.originalCheckedArray = []//筛选后的数组
+    this.sortResultArray = []//筛选后的数组应用到原始数组中
     this.state = {
       checkedArray: [],//筛选后数组排序
     }
   }
 
-  componentDidMount() {
-    this.backPress.componentDidMount();
-    this.loadData();
+  componentDidMount () {
+    this.backPress.componentDidMount()
+    this.loadData()
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
   }
 
   /**
@@ -48,14 +48,13 @@ export default class SortKeyPage extends Component {
    * @param e
    * @returns {boolean}
    */
-  onBackPress(e) {
-    this.onBack();
-    return true;
+  onBackPress (e) {
+    this.onBack()
+    return true
   }
 
-
   //返回
-  onBack() {
+  onBack () {
     if (!ArrayUtils.isEqual(this.originalCheckedArray, this.state.checkedArray)) {
       Alert.alert(
         '提示',
@@ -63,89 +62,87 @@ export default class SortKeyPage extends Component {
         [
           {
             text: '否', onPress: () => {
-              this.props.navigation.goBack();
+              this.props.navigation.goBack()
             }
           }, {
           text: '是', onPress: () => {
-            this.onSave(true);
+            this.onSave(true)
           }
         }
         ]
       )
     } else {
-      this.props.navigation.goBack();
+      this.props.navigation.goBack()
     }
 
   }
 
   //加载本地存储的数据
-  loadData() {
+  loadData () {
     this.languageDao.fetch()
       .then(result => {
-        this.getCheckedItems(result);
+        this.getCheckedItems(result)
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
       })
   }
 
-
-
   //保存
-  onSave(isChecked) {
+  onSave (isChecked) {
     if (!isChecked) {
       //判断是否相等，相等直接返回
       if (ArrayUtils.isEqual(this.originalCheckedArray, this.state.checkedArray)) {
-        this.props.navigation.goBack();
-        return;
+        this.props.navigation.goBack()
+        return
       }
     }
-    this.getSortResult();
-    this.languageDao.save(this.sortResultArray);
-    let jumpToTab = this.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab;
+    this.getSortResult()
+    this.languageDao.save(this.sortResultArray)
+    let jumpToTab = this.flag === FLAG_LANGUAGE.flag_key ? FLAG_TAB.flag_popularTab : FLAG_TAB.flag_trendingTab
     DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART, jumpToTab)
   }
 
   //获取排序后的数组
-  getSortResult() {
-    this.sortResultArray = ArrayUtils.clone(this.dataArray);
+  getSortResult () {
+    this.sortResultArray = ArrayUtils.clone(this.dataArray)
     for (let i = 0, j = this.originalCheckedArray.length; i < j; i++) {
-      let item = this.originalCheckedArray[i];
-      let index = this.dataArray.indexOf(item);
+      let item = this.originalCheckedArray[i]
+      let index = this.dataArray.indexOf(item)
       this.sortResultArray.splice(index, 1, this.state.checkedArray[i])
     }
   }
 
   //获取用户已订阅的标签
-  getCheckedItems(result) {
-    this.dataArray = result;
-    let checkedArray = [];
+  getCheckedItems (result) {
+    this.dataArray = result
+    let checkedArray = []
     for (let i = 0, len = this.dataArray.length; i < len; i++) {
-      let data = result[i];
+      let data = result[i]
       if (data.checked) {
-        checkedArray.push(data);
+        checkedArray.push(data)
       }
       this.setState({
         checkedArray: checkedArray
-      });
-      this.originalCheckedArray = ArrayUtils.clone(checkedArray);
+      })
+      this.originalCheckedArray = ArrayUtils.clone(checkedArray)
     }
   }
 
-  render() {
+  render () {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
-    };
+    }
     let rightButton = <TouchableOpacity
       onPress={() => {
-        this.onSave();
+        this.onSave()
       }}
     >
       <View style={{marginRight: 10}}>
         <Text style={styles.title}>保存</Text>
       </View>
-    </TouchableOpacity>;
-    let title = this.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序';
+    </TouchableOpacity>
+    let title = this.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序'
 
     return (
       <View style={styles.container}>
@@ -162,8 +159,8 @@ export default class SortKeyPage extends Component {
           data={this.state.checkedArray}
           order={Object.keys(this.state.checkedArray)}
           onRowMoved={(e) => {
-            this.state.checkedArray.splice(e.to, 0, this.state.checkedArray.splice(e.from, 1)[0]);
-            this.forceUpdate();
+            this.state.checkedArray.splice(e.to, 0, this.state.checkedArray.splice(e.from, 1)[0])
+            this.forceUpdate()
           }}
           renderRow={row => <SortCell data={row} theme={this.theme}/>}
         />
@@ -173,7 +170,7 @@ export default class SortKeyPage extends Component {
 }
 
 class SortCell extends Component {
-  render() {
+  render () {
     return (
       <TouchableHighlight
         underlayColor={'#eee'}
@@ -214,4 +211,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#eee'
   }
-});
+})

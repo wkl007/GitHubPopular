@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -9,35 +9,35 @@ import {
   TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native'
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import NavigationBar from '../common/NavigationBar'
 import TrendingCell from '../common/TrendingCell'
 import Popover from '../common/Popover'
-import MoreMenu, {MORE_MENU} from "../common/MoreMenu";
+import MoreMenu, { MORE_MENU } from '../common/MoreMenu'
 import CustomTheme from './my/CustomTheme'
 import BaseComponent from './BaseComponent'
-import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
+import DataRepository, { FLAG_STORAGE } from '../expand/dao/DataRepository'
 //获取AsyncStorage中的数据
-import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
+import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
 import TimeSpan from '../model/TimeSpan'
-import ProjectModel from "../model/ProjectModel";
+import ProjectModel from '../model/ProjectModel'
 //工具函数，检查该Item是否被收藏
 import Utils from '../util/Utils'
 import ActionUtils from '../util/ActionUtils'
-import FavoriteDao from "../expand/dao/FavoriteDao";
-import {FLAG_TAB} from "./HomePage";
-import ViewUtils from "../util/ViewUtils";
+import FavoriteDao from '../expand/dao/FavoriteDao'
+import { FLAG_TAB } from './HomePage'
+import ViewUtils from '../util/ViewUtils'
 //接口路径
-const API_URL = 'https://github.com/trending/';
+const API_URL = 'https://github.com/trending/'
 
 let timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
-  new TimeSpan('本 周', 'since=weekly'), new TimeSpan('本 月', 'since=monthly')];
-let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending);
-let dataRepository = new DataRepository(FLAG_STORAGE.flag_trending);
+  new TimeSpan('本 周', 'since=weekly'), new TimeSpan('本 月', 'since=monthly')]
+let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending)
+let dataRepository = new DataRepository(FLAG_STORAGE.flag_trending)
 export default class TrendingPage extends BaseComponent {
-  constructor(props) {
-    super(props);
-    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_language);
+  constructor (props) {
+    super(props)
+    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_language)
     this.state = {
       languages: [],//数据
       isVisible: false,
@@ -45,19 +45,19 @@ export default class TrendingPage extends BaseComponent {
       timeSpan: timeSpanTextArray[0],
       theme: this.props.theme,
       customThemeViewVisible: false,
-    };
+    }
   }
 
-  componentDidMount() {
-    super.componentDidMount();
-    this.loadData();
+  componentDidMount () {
+    super.componentDidMount()
+    this.loadData()
   }
 
-  componentWillUnmount() {
-    super.componentWillUnmount();
+  componentWillUnmount () {
+    super.componentWillUnmount()
   }
 
-  loadData() {
+  loadData () {
     this.languageDao.fetch()
       .then(result => {
         this.setState({
@@ -65,38 +65,38 @@ export default class TrendingPage extends BaseComponent {
         })
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
       })
   }
 
   //显示下拉框
-  showPopover() {
+  showPopover () {
     this.refs.button.measure((ox, oy, width, height, px, py) => {
       this.setState({
         isVisible: true,
         buttonRect: {x: px, y: py, width: width, height: height}
-      });
-    });
+      })
+    })
   }
 
   //关闭下拉框
-  closePopover() {
+  closePopover () {
     this.setState({
       isVisible: false
-    });
+    })
   }
 
   //选择某一项
-  onSelectTimeSpan(timeSpan) {
-    this.closePopover();
+  onSelectTimeSpan (timeSpan) {
+    this.closePopover()
     this.setState({
       timeSpan: timeSpan
     })
   }
 
   //更多菜单
-  renderMoreView() {
-    let params = {...this.props, fromPage: FLAG_TAB.flag_popularTab};
+  renderMoreView () {
+    let params = {...this.props, fromPage: FLAG_TAB.flag_popularTab}
     return <MoreMenu
       ref='moreMenu'
       {...params}
@@ -113,7 +113,7 @@ export default class TrendingPage extends BaseComponent {
   }
 
   //主题view
-  renderCustomThemeView() {
+  renderCustomThemeView () {
     return (
       <CustomTheme
         visible={this.state.customThemeViewVisible}
@@ -124,11 +124,11 @@ export default class TrendingPage extends BaseComponent {
   }
 
   //渲染标题
-  renderTitleView() {
+  renderTitleView () {
     return (
       <View>
         <TouchableOpacity ref='button' onPress={() => {
-          this.showPopover();
+          this.showPopover()
         }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text
@@ -142,17 +142,17 @@ export default class TrendingPage extends BaseComponent {
     )
   }
 
-  render() {
+  render () {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
-    };
+    }
     let navigationBar =
       <NavigationBar
         titleView={this.renderTitleView()}
         statusBar={statusBar}
         style={this.state.theme.styles.navBar}
         rightButton={ViewUtils.getMoreButton(() => this.refs.moreMenu.open())}
-      />;
+      />
     let content = this.state.languages.length > 0 ? <ScrollableTabView
       tabBarBackgroundColor={this.state.theme.themeColor}
       tabBarActiveTextColor='#fff'
@@ -161,11 +161,11 @@ export default class TrendingPage extends BaseComponent {
       renderTabBar={() => <ScrollableTabBar/>}
     >
       {this.state.languages.map((result, i, arr) => {
-        let item = arr[i];
+        let item = arr[i]
         return item.checked ?
           <TrendingTab {...this.props} key={i} tabLabel={item.name} timeSpan={this.state.timeSpan}/> : null
       })}
-    </ScrollableTabView> : null;
+    </ScrollableTabView> : null
     let timeSpanView = <Popover
       contentStyle={{backgroundColor: '#343434', opacity: 0.82}}
       isVisible={this.state.isVisible}
@@ -184,7 +184,7 @@ export default class TrendingPage extends BaseComponent {
           </TouchableOpacity>
         )
       })}
-    </Popover>;
+    </Popover>
     return (
       <View style={styles.container}>
         {navigationBar}
@@ -198,42 +198,42 @@ export default class TrendingPage extends BaseComponent {
 }
 
 class TrendingTab extends Component {
-  constructor(props) {
-    super(props);
-    this.isFavoriteChanged = false;
+  constructor (props) {
+    super(props)
+    this.isFavoriteChanged = false
     this.state = {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       isLoading: false,
       favoriteKeys: [],//收藏的列表
       theme: this.props.theme,
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.listener = DeviceEventEmitter.addListener('favoriteChanged_trending', () => {
-      this.isFavoriteChanged = true;
-    });
-    this.loadData(this.props.timeSpan, true);
+      this.isFavoriteChanged = true
+    })
+    this.loadData(this.props.timeSpan, true)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.timeSpan !== this.props.timeSpan) {
-      this.loadData(nextProps.timeSpan);
+      this.loadData(nextProps.timeSpan)
     } else if (this.isFavoriteChanged) {
-      this.isFavoriteChanged = false;
-      this.getFavoriteKeys();
+      this.isFavoriteChanged = false
+      this.getFavoriteKeys()
     } else if (nextProps.theme !== this.state.theme) {
-      this.updateState({theme: nextProps.theme});
-      this.flushFavoriteState();
+      this.updateState({theme: nextProps.theme})
+      this.flushFavoriteState()
     }
   }
 
   //更新project每一项收藏的状态
-  flushFavoriteState() {
-    let projectModels = [];
-    let items = this.items;
+  flushFavoriteState () {
+    let projectModels = []
+    let items = this.items
     for (let i = 0, len = items.length; i < len; i++) {
-      projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i], this.state.favoriteKeys)));
+      projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i], this.state.favoriteKeys)))
     }
     this.updateState({
       isLoading: false,
@@ -242,73 +242,73 @@ class TrendingTab extends Component {
   }
 
   //获取本地用户收藏的ProjectItem
-  getFavoriteKeys() {
+  getFavoriteKeys () {
     favoriteDao.getFavoriteKeys().then((keys) => {
       if (keys) {
-        this.updateState({favoriteKeys: keys});
+        this.updateState({favoriteKeys: keys})
       }
-      this.flushFavoriteState();
+      this.flushFavoriteState()
     }).catch((error) => {
-      this.flushFavoriteState();
-      console.log(error);
-    });
+      this.flushFavoriteState()
+      console.log(error)
+    })
   }
 
-  getDataSource(items) {
-    return this.state.dataSource.cloneWithRows(items);
+  getDataSource (items) {
+    return this.state.dataSource.cloneWithRows(items)
   }
 
   //加载数据
-  loadData(timeSpan, isRefresh) {
+  loadData (timeSpan, isRefresh) {
     this.updateState({
       isLoading: true
-    });
-    let url = this.genFetchUrl(timeSpan, this.props.tabLabel);
+    })
+    let url = this.genFetchUrl(timeSpan, this.props.tabLabel)
     dataRepository.fetchRepository(url)
       .then(result => {
-        this.items = result && result.items ? result.items : result ? result : [];
-        this.getFavoriteKeys();
+        this.items = result && result.items ? result.items : result ? result : []
+        this.getFavoriteKeys()
         if (!this.items || isRefresh && result && result.update_date && !Utils.checkDate(result.update_date)) {
-          DeviceEventEmitter.emit('showToast', '数据过时');
-          return dataRepository.fetchNetRepository(url);
+          DeviceEventEmitter.emit('showToast', '数据过时')
+          return dataRepository.fetchNetRepository(url)
         } else {
-          DeviceEventEmitter.emit('showToast', '显示缓存数据');
+          DeviceEventEmitter.emit('showToast', '显示缓存数据')
         }
       })
       .then((items) => {
-        if (!items || items.length === 0) return;
-        this.items = items;
-        this.getFavoriteKeys();
+        if (!items || items.length === 0) return
+        this.items = items
+        this.getFavoriteKeys()
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
         this.updateState({
           isLoading: false
-        });
+        })
       })
   }
 
-  genFetchUrl(timeSpan, category) {
-    return API_URL + category + '?' + timeSpan.searchText;
+  genFetchUrl (timeSpan, category) {
+    return API_URL + category + '?' + timeSpan.searchText
   }
 
   //重新加载数据
-  onRefresh() {
-    this.loadData(this.props.timeSpan, true);
+  onRefresh () {
+    this.loadData(this.props.timeSpan, true)
   }
 
   //重新加载data
-  updateState(dic) {
-    if (!this) return;
-    this.setState(dic);
+  updateState (dic) {
+    if (!this) return
+    this.setState(dic)
   }
 
   //更新favorite
-  onUpdateFavorite() {
-    this.getFavoriteKeys();
+  onUpdateFavorite () {
+    this.getFavoriteKeys()
   }
 
-  onSelect(projectModel) {
+  onSelect (projectModel) {
     this.props.navigation.navigate('RepositoryDetail', {
       projectModel: projectModel,
       flag: FLAG_STORAGE.flag_trending,
@@ -318,7 +318,7 @@ class TrendingTab extends Component {
   }
 
   //处理收藏事件
-  onFavorite(item, isFavorite) {
+  onFavorite (item, isFavorite) {
 
     if (isFavorite) {
       favoriteDao.saveFavoriteItem(item.fullName.toString(), JSON.stringify(item))
@@ -327,7 +327,7 @@ class TrendingTab extends Component {
     }
   }
 
-  renderRow(projectModel) {
+  renderRow (projectModel) {
     return <TrendingCell
       key={projectModel.item.id}
       projectModel={projectModel}
@@ -342,7 +342,7 @@ class TrendingTab extends Component {
     />
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <ListView
@@ -371,4 +371,4 @@ const styles = StyleSheet.create({
   tips: {
     fontSize: 29
   }
-});
+})

@@ -4,28 +4,28 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   Image,
   View,
   TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
 // import TabNavigator from 'react-native-tab-navigator';
 // import NavigationBar from './src/common/NavigationBar'
 // import FlatListDemo from './js/FlatList/FlatList'
 // import FetchTest from './js/FetchTest/FetchTest'
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       selectedTab: 'tb_popular'
     }
   }
 
-  renderButton(image) {
+  renderButton (image) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -39,7 +39,7 @@ export default class App extends Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <FetchTest/>
@@ -123,7 +123,7 @@ export default class App extends Component {
 
         </Navigator>*/}
       </View>
-    );
+    )
   }
 }
 
@@ -145,5 +145,5 @@ const styles = StyleSheet.create({
     width: 22,
     margin: 5
   }
-});
+})
 

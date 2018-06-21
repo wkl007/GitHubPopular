@@ -1,4 +1,4 @@
-import {StackNavigator} from 'react-navigation'
+import { StackNavigator } from 'react-navigation'
 // import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import WelcomePage from './WelcomePage'
 import HomePage from './HomePage'
@@ -54,6 +54,6 @@ const App = StackNavigator({
   transitionConfig: () => ({
     // screenInterpolator: CardStackStyleInterpolator.forHorizontal,
   })
-});
+})
 
-export default App;
+export default App

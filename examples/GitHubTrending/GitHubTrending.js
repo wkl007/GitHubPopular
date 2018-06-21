@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -8,31 +8,31 @@ import {
 import NavigationBar from '../../src/common/NavigationBar'
 import GitHubTrending from 'GitHubTrending'
 
-const URL = 'https://github.com/trending/';
+const URL = 'https://github.com/trending/'
 
 export default class GitHubTrendingDemo extends Component {
-  constructor(props) {
-    super(props);
-    this.githubTrending = new GitHubTrending();
+  constructor (props) {
+    super(props)
+    this.githubTrending = new GitHubTrending()
     this.state = {
       data: ''
     }
   }
 
-  onLoad() {
-    let url = URL + this.text;
+  onLoad () {
+    let url = URL + this.text
     this.githubTrending.fetchTrending(url)
       .then(result => {
         this.setState({
           data: JSON.stringify(result)
         })
       }).catch(err => {
-      console.log(err);
+      console.log(err)
     })
 
   }
 
-  render() {
+  render () {
     return (
       <View style={{flex: 1}}>
         <NavigationBar title='GitHubTrending的使用'
@@ -47,13 +47,13 @@ export default class GitHubTrendingDemo extends Component {
           ></TextInput>
           <Text
             onPress={() => {
-              this.onLoad();
+              this.onLoad()
             }}
           >
             加载
           </Text>
         </View>
-        <Text style={{flex:1}}>{this.state.data}</Text>
+        <Text style={{flex: 1}}>{this.state.data}</Text>
       </View>
     )
   }

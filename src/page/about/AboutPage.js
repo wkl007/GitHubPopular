@@ -1,69 +1,69 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Linking,
-} from 'react-native';
+} from 'react-native'
 
-import {MORE_MENU} from "../../common/MoreMenu";
+import { MORE_MENU } from '../../common/MoreMenu'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import config from '../../assets/data/config'
-import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
+import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
 
 export default class AboutPage extends Component {
-  constructor(props) {
-    super(props);
-    let {params} = this.props.navigation.state;
+  constructor (props) {
+    super(props)
+    let {params} = this.props.navigation.state
     this.aboutCommon = new AboutCommon(props, (dic) => {
       this.updateState(dic)
-    }, FLAG_ABOUT.flag_about, config);
-    this.theme = params.theme;
+    }, FLAG_ABOUT.flag_about, config)
+    this.theme = params.theme
     this.state = {
       projectModels: [],
       author: config.author
     }
   }
 
-  componentDidMount() {
-    this.aboutCommon.componentDidMount();
+  componentDidMount () {
+    this.aboutCommon.componentDidMount()
   }
 
-  componentWillUnmount() {
-    this.aboutCommon.componentWillUnmount();
+  componentWillUnmount () {
+    this.aboutCommon.componentWillUnmount()
   }
 
-  updateState(dic) {
-    this.setState(dic);
+  updateState (dic) {
+    this.setState(dic)
   }
 
-  onClick(tab) {
-    let TargetComponent, parame = {menuType: tab, theme: this.theme};
+  onClick (tab) {
+    let TargetComponent, parame = {menuType: tab, theme: this.theme}
     switch (tab) {
       case MORE_MENU.About_Author:
-        TargetComponent = 'AboutMePage';
-        break;
+        TargetComponent = 'AboutMePage'
+        break
       case MORE_MENU.Website:
-        TargetComponent = 'WebViewPage';
-        parame.title = 'GitHubPopular';
-        parame.url = 'https://gitee.com/wkl--007/GitHubPopular';
-        break;
+        TargetComponent = 'WebViewPage'
+        parame.title = 'GitHubPopular'
+        parame.url = 'https://gitee.com/wkl--007/GitHubPopular'
+        break
       case MORE_MENU.Feedback:
-        let url = 'mailto://499657357@qq.com';
+        let url = 'mailto://499657357@qq.com'
         Linking.canOpenURL(url).then(supported => {
           if (!supported) {
             console.log(`can\'t handle url:${url}`)
           } else {
             return Linking.openURL(url)
           }
-        });
-        break;
+        })
+        break
     }
     if (TargetComponent) {
       this.props.navigation.navigate(TargetComponent, parame)
     }
   }
 
-  render() {
+  render () {
     let content = <View>
       {/*{this.aboutCommon.renderRepository(this.state.projectModels)}*/}
       {ViewUtils.getSettingItem(() => {
@@ -80,7 +80,7 @@ export default class AboutPage extends Component {
           this.onClick(MORE_MENU.Feedback)
         }, require('../../assets/images/ic_feedback.png'), MORE_MENU.Feedback, this.theme.styles.tabBarSelectedIcon
       )}
-    </View>;
+    </View>
     return (
       this.aboutCommon.render(content, {
         name: 'GitHub Popular',

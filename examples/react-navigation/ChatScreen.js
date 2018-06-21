@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -9,15 +9,15 @@ import {
 import NavigationBar from '../../src/common/NavigationBar'
 
 export default class ChatScreen extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  renderButton(image) {
+  renderButton (image) {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.goBack();
+          this.props.navigation.goBack()
         }}
       >
         <Image
@@ -29,10 +29,10 @@ export default class ChatScreen extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: `Chat with ${navigation.state.params.user}`
-  });
+  })
 
-  render() {
-    const {params} = this.props.navigation.state;
+  render () {
+    const {params} = this.props.navigation.state
     return (
       <View>
         <NavigationBar title={'标题222'}
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
     width: 22,
     margin: 5
   }
-});
+})

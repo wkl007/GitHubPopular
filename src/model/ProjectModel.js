@@ -4,7 +4,7 @@
  * @param isFavorite
  * @constructor
  */
-export default function ProjectModel(item, isFavorite) {
-  this.item = item;
-  this.isFavorite = isFavorite;
+export default function ProjectModel (item, isFavorite) {
+  this.item = item
+  this.isFavorite = isFavorite
 }

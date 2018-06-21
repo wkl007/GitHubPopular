@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Dimensions,
   Image,
@@ -6,37 +6,37 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
+} from 'react-native'
+import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import FavoriteDao from '../../expand/dao/FavoriteDao'
 import ActionUtils from '../../util/ActionUtils'
-import {FLAG_STORAGE} from "../../expand/dao/DataRepository";
+import { FLAG_STORAGE } from '../../expand/dao/DataRepository'
 import ViewUtils from '../../util/ViewUtils'
-import Utils from "../../util/Utils";
+import Utils from '../../util/Utils'
 import RepositoryUtils from '../../expand/dao/RepositoryUtils'
-import RepositoryCell from "../../common/RepositoryCell";
+import RepositoryCell from '../../common/RepositoryCell'
 import BackPressComponent from '../../common/BackPressComponent'
 
-export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'};
+export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'}
 
 export default class AboutCommon {
-  constructor(props, updateState, flag_about, config) {
-    this.props = props;
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)});
+  constructor (props, updateState, flag_about, config) {
+    this.props = props
+    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    const {params} = this.props.navigation.state;
-    this.theme = params.theme;
-    this.updateState = updateState;
-    this.flag_about = flag_about;
-    this.config = config;
-    this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
-    this.repositories = [];
-    this.repositoryUtils = new RepositoryUtils(this);
-    this.favoriteKeys = null;
+    const {params} = this.props.navigation.state
+    this.theme = params.theme
+    this.updateState = updateState
+    this.flag_about = flag_about
+    this.config = config
+    this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
+    this.repositories = []
+    this.repositoryUtils = new RepositoryUtils(this)
+    this.favoriteKeys = null
   }
 
-  componentDidMount() {
-    this.backPress.componentDidMount();
+  componentDidMount () {
+    this.backPress.componentDidMount()
     /*if (this.flag_about === FLAG_ABOUT.flag_about) {
       this.repositoryUtils.fetchRepository(this.config.info.currentRepoUrl);
     } else {
@@ -49,8 +49,8 @@ export default class AboutCommon {
     }*/
   }
 
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
+  componentWillUnmount () {
+    this.backPress.componentWillUnmount()
   }
 
   /**
@@ -58,29 +58,29 @@ export default class AboutCommon {
    * @param e
    * @returns {boolean}
    */
-  onBackPress(e) {
-    this.props.navigation.goBack();
-    return true;
+  onBackPress (e) {
+    this.props.navigation.goBack()
+    return true
   }
 
   /**
    * 通知数据发生改变
    * @param items 改变的数据
    */
-  onNotifyDataChanged(items) {
-    this.updateFavorite(items);
+  onNotifyDataChanged (items) {
+    this.updateFavorite(items)
   }
 
-  async updateFavorite(repositories) {
-    if (repositories) this.repositories = repositories;
-    if (!this.repositories) return;
+  async updateFavorite (repositories) {
+    if (repositories) this.repositories = repositories
+    if (!this.repositories) return
     if (!this.favoriteKeys) {
-      this.favoriteKeys = await this.favoriteDao.getFavoriteKeys();
+      this.favoriteKeys = await this.favoriteDao.getFavoriteKeys()
     }
-    let projectModels = [];
+    let projectModels = []
     for (let i = 0, len = this.repositories.length; i < len; i++) {
-      let data = this.repositories[i];
-      let item = data.item ? data.item : data;
+      let data = this.repositories[i]
+      let item = data.item ? data.item : data
       projectModels.push({
         isFavorite: Utils.checkFavorite(item, this.favoriteKeys ? this.favoriteKeys : []),
         item: item,
@@ -92,11 +92,11 @@ export default class AboutCommon {
   }
 
   //更新favorite
-  onUpdateFavorite() {
-    this.componentDidMount();
+  onUpdateFavorite () {
+    this.componentDidMount()
   }
 
-  onSelect(projectModel) {
+  onSelect (projectModel) {
     this.props.navigation.navigate('RepositoryDetail', {
       projectModel: projectModel,
       flag: FLAG_STORAGE.flag_popular,
@@ -109,11 +109,11 @@ export default class AboutCommon {
    * @param projectModels
    * @returns {null}
    */
-  renderRepository(projectModels) {
-    if (!projectModels || projectModels.length === 0) return null;
-    let views = [];
+  renderRepository (projectModels) {
+    if (!projectModels || projectModels.length === 0) return null
+    let views = []
     for (let i = 0, len = projectModels.length; i < len; i++) {
-      let projectModel = projectModels[i];
+      let projectModel = projectModels[i]
       views.push(
         <RepositoryCell
           key={projectModel.item.id}
@@ -128,11 +128,11 @@ export default class AboutCommon {
         />
       )
     }
-    return views;
+    return views
   }
 
-  getParallaxRenderConfig(params) {
-    let config = {};
+  getParallaxRenderConfig (params) {
+    let config = {}
     config.renderBackground = () => (
       <View key="background">
         <Image source={{
@@ -148,7 +148,7 @@ export default class AboutCommon {
           height: PARALLAX_HEADER_HEIGHT
         }}/>
       </View>
-    );
+    )
     config.renderForeground = () => (
       <View key="parallax-header" style={styles.parallaxHeader}>
         <Image style={styles.avatar} source={{
@@ -163,24 +163,24 @@ export default class AboutCommon {
           {params.description}
         </Text>
       </View>
-    );
+    )
     config.renderStickyHeader = () => (
       <View key="sticky-header" style={styles.stickySection}>
         <Text style={styles.stickySectionText}>{params.name}</Text>
       </View>
-    );
+    )
     config.renderFixedHeader = () => (
       <View key="fixed-header" style={styles.fixedSection}>
         {ViewUtils.getLeftButton(() => {
-          this.props.navigation.goBack();
+          this.props.navigation.goBack()
         })}
       </View>
-    );
-    return config;
+    )
+    return config
   }
 
-  render(contentView, params) {
-    let renderConfig = this.getParallaxRenderConfig(params);
+  render (contentView, params) {
+    let renderConfig = this.getParallaxRenderConfig(params)
     return (
       <ParallaxScrollView
         headerBackgroundColor="#333"
@@ -192,15 +192,15 @@ export default class AboutCommon {
       >
         {contentView}
       </ParallaxScrollView>
-    );
+    )
   }
 }
 
-const window = Dimensions.get('window');
-const AVATAR_SIZE = 120;
-const ROW_HEIGHT = 60;
-const PARALLAX_HEADER_HEIGHT = 350;
-const STICKY_HEADER_HEIGHT = 70;
+const window = Dimensions.get('window')
+const AVATAR_SIZE = 120
+const ROW_HEIGHT = 60
+const PARALLAX_HEADER_HEIGHT = 350
+const STICKY_HEADER_HEIGHT = 70
 
 const styles = StyleSheet.create({
   container: {
@@ -273,4 +273,4 @@ const styles = StyleSheet.create({
   rowText: {
     fontSize: 20
   }
-});
+})

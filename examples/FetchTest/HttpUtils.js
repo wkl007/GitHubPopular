@@ -1,7 +1,7 @@
-let qs = require('qs');
+let qs = require('qs')
 
 export default class HttpUtils {
-  static get(url) {
+  static get (url) {
     return new Promise((resolve, reject) => {
       fetch(url, {
         credentials: 'include',
@@ -19,7 +19,7 @@ export default class HttpUtils {
     })
   }
 
-  static post(url, data) {
+  static post (url, data) {
     return new Promise((resolve, reject) => {
       fetch(url, {
         method: 'POST',

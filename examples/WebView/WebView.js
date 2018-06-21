@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -9,10 +9,10 @@ import {
 } from 'react-native'
 import NavigationBar from '../../src/common/NavigationBar'
 
-const URL = 'http://www.baidu.com';
+const URL = 'http://www.baidu.com'
 export default class WebViewDemo extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       url: URL,
       title: '',
@@ -21,28 +21,28 @@ export default class WebViewDemo extends Component {
     }
   }
 
-  goBack() {
+  goBack () {
     if (this.state.canGoBack) {
-      this.webView.goBack();
-    }else {
-      DeviceEventEmitter.emit('showToast','到顶了！！！')
+      this.webView.goBack()
+    } else {
+      DeviceEventEmitter.emit('showToast', '到顶了！！！')
     }
   }
 
-  go() {
+  go () {
     this.setState({
       url: this.text
     })
   }
 
-  onNavigationStateChange(e) {
+  onNavigationStateChange (e) {
     this.setState({
       title: e.title,
       canGoBack: e.canGoBack
     })
   }
 
-  render() {
+  render () {
     return (
       <View style={{flex: 1}}>
         <NavigationBar title='WebView的使用'
@@ -53,7 +53,7 @@ export default class WebViewDemo extends Component {
         <View style={{flexDirection: 'row', alignItems: 'center', margin: 10, justifyContent: 'space-between'}}>
           <Text
             onPress={() => {
-              this.goBack();
+              this.goBack()
             }}
           >返回</Text>
           <TextInput
@@ -63,7 +63,7 @@ export default class WebViewDemo extends Component {
           />
           <Text
             onPress={() => {
-              this.go();
+              this.go()
             }}
           >
             前进

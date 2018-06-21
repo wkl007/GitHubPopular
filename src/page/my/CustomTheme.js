@@ -1,7 +1,7 @@
 /*
 * 自定义主题
 * */
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -11,26 +11,26 @@ import {
   TouchableHighlight,
   Modal,
   DeviceEventEmitter
-} from 'react-native';
-import GlobalStyles from '../../assets/styles/GlobalStyles';
-import ThemeFactory, {ThemeFlags} from "../../assets/styles/ThemeFactory";
+} from 'react-native'
+import GlobalStyles from '../../assets/styles/GlobalStyles'
+import ThemeFactory, { ThemeFlags } from '../../assets/styles/ThemeFactory'
 import ThemeDao from '../../expand/dao/ThemeDao'
-import {ACTION_HOME} from "../HomePage";
+import { ACTION_HOME } from '../HomePage'
 
 export default class CustomTheme extends Component {
-  constructor(props) {
-    super(props);
-    this.themeDao = new ThemeDao();
+  constructor (props) {
+    super(props)
+    this.themeDao = new ThemeDao()
   }
 
   /**
    * 选择主题
    * @param themeKey
    */
-  onSelectTheme(themeKey) {
-    this.props.onClose();
-    this.themeDao.save(ThemeFlags[themeKey]);
-    DeviceEventEmitter.emit('ACTION_BASE', ACTION_HOME.A_THEME, ThemeFactory.createTheme(ThemeFlags[themeKey]));
+  onSelectTheme (themeKey) {
+    this.props.onClose()
+    this.themeDao.save(ThemeFlags[themeKey])
+    DeviceEventEmitter.emit('ACTION_BASE', ACTION_HOME.A_THEME, ThemeFactory.createTheme(ThemeFlags[themeKey]))
   }
 
   /**
@@ -38,7 +38,7 @@ export default class CustomTheme extends Component {
    * @param themeKey
    * @returns {*}
    */
-  getThemeItem(themeKey) {
+  getThemeItem (themeKey) {
     return <TouchableHighlight
       style={{flex: 1}}
       underlayColor='white'
@@ -54,10 +54,10 @@ export default class CustomTheme extends Component {
    * 创建主题列表
    * @returns {Array}
    */
-  renderThemeItems() {
-    let views = [];
+  renderThemeItems () {
+    let views = []
     for (let i = 0, keys = Object.keys(ThemeFlags), len = keys.length; i < len; i += 3) {
-      let key1 = keys[i], key2 = keys[i + 1], key3 = keys[i + 2];
+      let key1 = keys[i], key2 = keys[i + 1], key3 = keys[i + 2]
       views.push(
         <View key={i} style={{flexDirection: 'row'}}>
           {this.getThemeItem(key1)}
@@ -66,11 +66,11 @@ export default class CustomTheme extends Component {
         </View>
       )
     }
-    return views;
+    return views
   }
 
   //内容区域
-  renderContentView() {
+  renderContentView () {
     return (
       <Modal
         animationType={'slide'}
@@ -89,11 +89,11 @@ export default class CustomTheme extends Component {
     )
   }
 
-  render() {
+  render () {
     let view = this.props.visible ? <View style={GlobalStyles.root_container}>
       {this.renderContentView()}
-    </View> : null;
-    return view;
+    </View> : null
+    return view
   }
 }
 
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16
   }
-});
+})

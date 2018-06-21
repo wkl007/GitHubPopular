@@ -1,7 +1,7 @@
 /**
  * 列表
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   View,
   StyleSheet,
@@ -11,8 +11,8 @@ import {
 } from 'react-native'
 
 export default class RepositoryCell extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isFavorite: this.props.projectModel.isFavorite,
       favoriteIcon: this.props.projectModel.isFavorite ? require('../assets/images/ic_star.png') : require('../assets/images/ic_unstar_transparent.png'),
@@ -20,11 +20,11 @@ export default class RepositoryCell extends Component {
   }
 
   //组件刷新
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     this.setFavoriteState(nextProps.projectModel.isFavorite)
   }
 
-  setFavoriteState(isFavorite) {
+  setFavoriteState (isFavorite) {
     this.setState({
       isFavorite: isFavorite,
       favoriteIcon: isFavorite ? require('../assets/images/ic_star.png') : require('../assets//images/ic_unstar_transparent.png')
@@ -32,13 +32,13 @@ export default class RepositoryCell extends Component {
   }
 
   //收藏
-  onPressFavorite() {
-    this.setFavoriteState(!this.state.isFavorite);
-    this.props.onFavorite(this.props.projectModel.item, !this.state.isFavorite);
+  onPressFavorite () {
+    this.setFavoriteState(!this.state.isFavorite)
+    this.props.onFavorite(this.props.projectModel.item, !this.state.isFavorite)
   }
 
-  render() {
-    let item = this.props.projectModel.item ? this.props.projectModel.item : this.props.projectModel;
+  render () {
+    let item = this.props.projectModel.item ? this.props.projectModel.item : this.props.projectModel
     let favoriteButton = <TouchableOpacity
       onPress={() => {
         this.onPressFavorite()
@@ -46,7 +46,7 @@ export default class RepositoryCell extends Component {
     >
       <Image style={[{width: 22, height: 22}, this.props.theme.styles.tabBarSelectedIcon]}
              source={this.state.favoriteIcon}/>
-    </TouchableOpacity>;
+    </TouchableOpacity>
     return (
       <TouchableOpacity
         onPress={this.props.onSelect}
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     color: '#757575'
   },
-});
+})

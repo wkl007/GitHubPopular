@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet
 } from 'react-native'
@@ -25,7 +25,7 @@ export const ThemeFlags = {
   Grey: '#9E9E9E',
   BlueGrey: '#607D8B',
   Black: '#000000'
-};
+}
 
 export default class ThemeFactory {
   /**
@@ -33,7 +33,7 @@ export default class ThemeFactory {
    * @param themeFlag 主题标识
    * @returns {{themeColor: *, styles: any}}
    */
-  static createTheme(themeFlag) {
+  static createTheme (themeFlag) {
     return {
       themeColor: themeFlag,
       styles: StyleSheet.create({

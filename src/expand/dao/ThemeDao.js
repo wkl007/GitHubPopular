@@ -3,28 +3,28 @@
  */
 import {
   AsyncStorage,
-} from 'react-native';
-import ThemeFactory, {ThemeFlags} from "../../assets/styles/ThemeFactory";
+} from 'react-native'
+import ThemeFactory, { ThemeFlags } from '../../assets/styles/ThemeFactory'
 
-const THEME_KEY = 'theme_key';
+const THEME_KEY = 'theme_key'
 
 export default class ThemeDao {
   /**
    * 获取当前的主题
    * @returns {Promise<any>}
    */
-  getTheme() {
+  getTheme () {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(THEME_KEY, (error, result) => {
         if (error) {
-          reject(error);
-          return;
+          reject(error)
+          return
         }
         if (!result) {
-          this.save(ThemeFlags.Default);
-          result = ThemeFlags.Default;
+          this.save(ThemeFlags.Default)
+          result = ThemeFlags.Default
         }
-        resolve(ThemeFactory.createTheme(result));
+        resolve(ThemeFactory.createTheme(result))
       })
     })
   }
@@ -33,7 +33,7 @@ export default class ThemeDao {
    * 保存主题标识
    * @param themeFlag
    */
-  save(themeFlag) {
+  save (themeFlag) {
     AsyncStorage.setItem(THEME_KEY, themeFlag, (error => {
     }))
   }
