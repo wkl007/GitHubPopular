@@ -4539,9 +4539,9 @@ react-native-htmlview@^0.12.1:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.2"
 
-react-native-parallax-scroll-view@^0.21.2:
-  version "0.21.2"
-  resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.21.2.tgz#07d5a28389a88abf66c7a1321cb002ff33e99087"
+react-native-parallax-scroll-view@^0.21.3:
+  version "0.21.3"
+  resolved "http://registry.npm.taobao.org/react-native-parallax-scroll-view/download/react-native-parallax-scroll-view-0.21.3.tgz#d956ad224ce3b0a2725b80574bcbf688bbeda14e"
   dependencies:
     prop-types "^15.6.0"
 

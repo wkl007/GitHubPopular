@@ -16,9 +16,11 @@ export default class AboutPage extends Component {
   constructor (props) {
     super(props)
     this.params = this.props.navigation.state.params
-    /*this.aboutCommon = new AboutCommon(...this.params, (dic) => {
-      this.updateState(dic)
-    }, FLAG_ABOUT.flag_about, config)*/
+    this.aboutCommon = new AboutCommon(
+      {...this.params, navigation: this.props.navigation},
+      (dic) => {this.updateState(dic)},
+      FLAG_ABOUT.flag_about,
+      config)
     this.theme = this.params.theme
     this.state = {
       projectModels: [],
@@ -27,11 +29,11 @@ export default class AboutPage extends Component {
   }
 
   componentDidMount () {
-    // this.aboutCommon.componentDidMount()
+    this.aboutCommon.componentDidMount()
   }
 
   componentWillUnmount () {
-    // this.aboutCommon.componentWillUnmount()
+    this.aboutCommon.componentWillUnmount()
   }
 
   updateState (dic) {
@@ -61,7 +63,7 @@ export default class AboutPage extends Component {
         break
     }
     if (TargetComponent) {
-      NavigatorUtil.goToMenuPage(params,TargetComponent)
+      NavigatorUtil.goToMenuPage(params, TargetComponent)
     }
   }
 
@@ -84,15 +86,12 @@ export default class AboutPage extends Component {
       )}
     </View>
     return (
-      <View>
-        <Text>2222</Text>
-      </View>
-      // this.aboutCommon.render(content, {
-      //   name: 'GitHub Popular',
-      //   description: '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
-      //   avatar: this.state.author.avatar1,
-      //   backgroundImg: this.state.author.backgroundImg1
-      // })
+      this.aboutCommon.render(content, {
+        name: 'GitHub Popular',
+        description: '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
+        avatar: this.state.author.avatar1,
+        backgroundImg: this.state.author.backgroundImg1
+      })
     )
   }
 }

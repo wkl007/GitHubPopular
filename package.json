@@ -16,7 +16,7 @@
     "react-native-code-push": "^5.3.4",
     "react-native-easy-toast": "^1.1.0",
     "react-native-htmlview": "^0.12.1",
-    "react-native-parallax-scroll-view": "^0.21.2",
+    "react-native-parallax-scroll-view": "^0.21.3",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-sortable-listview": "^0.2.8",
     "react-native-splash-screen": "^3.0.9",

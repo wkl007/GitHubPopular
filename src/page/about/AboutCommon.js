@@ -25,8 +25,7 @@ export default class AboutCommon {
     this.props = props
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    this.params = this.props.navigation.state.params
-    this.theme = this.params.theme
+    this.theme = this.props.theme
     this.updateState = updateState
     this.flag_about = flag_about
     this.config = config
@@ -93,9 +92,9 @@ export default class AboutCommon {
   }
 
   //更新favorite
-  onUpdateFavorite () {
+  /*onUpdateFavorite () {
     this.componentDidMount()
-  }
+  }*/
 
   /**
    * 创建项目视图
@@ -126,6 +125,7 @@ export default class AboutCommon {
 
   getParallaxRenderConfig (params) {
     let config = {}
+    let avatar = typeof (params.avatar) === 'string' ? {uri: params.avatar} : params.avatar
     config.renderBackground = () => (
       <View key="background">
         <Image source={{
@@ -144,11 +144,7 @@ export default class AboutCommon {
     )
     config.renderForeground = () => (
       <View key="parallax-header" style={styles.parallaxHeader}>
-        <Image style={styles.avatar} source={{
-          uri: params.avatar,
-          width: AVATAR_SIZE,
-          height: AVATAR_SIZE
-        }}/>
+        <Image style={styles.avatar} source={avatar}/>
         <Text style={styles.sectionSpeakerText}>
           {params.name}
         </Text>
@@ -165,7 +161,7 @@ export default class AboutCommon {
     config.renderFixedHeader = () => (
       <View key="fixed-header" style={styles.fixedSection}>
         {ViewUtils.getLeftButton(() => {
-          this.props.navigation.goBack()
+          NavigatorUtil.goBack(this.props.navigation)
         })}
       </View>
     )
@@ -241,7 +237,9 @@ const styles = StyleSheet.create({
     paddingTop: 100
   },
   avatar: {
-    marginBottom: 10,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    marginBottom: 5,
     borderRadius: AVATAR_SIZE / 2
   },
   sectionSpeakerText: {

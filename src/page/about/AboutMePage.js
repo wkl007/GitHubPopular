@@ -51,11 +51,12 @@ export default class AboutMePage extends Component {
   constructor (props) {
     super(props)
     this.params = this.props.navigation.state.params
-    console.log(this.params)
-   /* this.aboutCommon = new AboutCommon({
-      ...this.params,
-      navigation: this.props.navigation
-    }, (dic) => this.updateState(dic), FLAG_ABOUT.flag_about_me, config)*/
+    this.aboutCommon = new AboutCommon(
+      {...this.params, navigation: this.props.navigation},
+      (dic) => this.updateState(dic),
+      FLAG_ABOUT.flag_about_me,
+      config
+    )
     this.theme = this.params.theme
     this.state = {
       projectModels: [],
@@ -66,11 +67,11 @@ export default class AboutMePage extends Component {
   }
 
   componentDidMount () {
-    // this.aboutCommon.componentDidMount()
+    this.aboutCommon.componentDidMount()
   }
 
   componentWillUnmount () {
-    // this.aboutCommon.componentWillUnmount()
+    this.aboutCommon.componentWillUnmount()
   }
 
   updateState (dic) {
@@ -183,10 +184,7 @@ export default class AboutMePage extends Component {
     </View>
     return (
       <View style={styles.container}>
-        <Text>
-          222
-        </Text>
-       {/* {this.aboutCommon.render(content, this.state.author)}*/}
+         {this.aboutCommon.render(content, this.state.author)}
         <Toast ref={e => this.toast = e}/>
       </View>
     )
