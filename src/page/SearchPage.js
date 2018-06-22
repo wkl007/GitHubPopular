@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-  ListView,
+  FlatList,
   ActivityIndicator,
   DeviceEventEmitter
 } from 'react-native'
@@ -43,9 +43,7 @@ export default class SearchPage extends Component {
       rightButtonText: '搜索',
       isLoading: false,
       showBottomButton: false,
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-      })
+      projectModels: []
     }
   }
 
@@ -168,13 +166,9 @@ export default class SearchPage extends Component {
     }
     this.updateState({
       isLoading: false,
-      dataSource: this.getDataSource(projectModels),
+      projectModels: projectModels,
       rightButtonText: '搜索'
     })
-  }
-
-  getDataSource (items) {
-    return this.state.dataSource.cloneWithRows(items)
   }
 
   updateState (dic) {
@@ -196,7 +190,8 @@ export default class SearchPage extends Component {
     this.getFavoriteKeys()
   }
 
-  renderRow (projectModel) {
+  renderRow (data) {
+    const projectModel = data.item
     return <RepositoryCell
       key={projectModel.item.id}
       projectModel={projectModel}
@@ -248,9 +243,10 @@ export default class SearchPage extends Component {
     if (Platform.OS === 'ios') {
       statusBar = <View style={[styles.statusBar, {backgroundColor: this.params.theme.themeColor}]}/>
     }
-    let listView = !this.state.isLoading ? <ListView
-      dataSource={this.state.dataSource}
-      renderRow={(e) => this.renderRow(e)}
+    let flatList = !this.state.isLoading ? <FlatList
+      data={this.state.projectModels}
+      renderItem={(e) => this.renderRow(e)}
+      keyExtractor={item => "" + (item.item.id || item.item.fullName)}
     /> : null
     let indicatorView = this.state.isLoading ?
       <ActivityIndicator
@@ -260,7 +256,7 @@ export default class SearchPage extends Component {
       /> : null
     let resultView = <View style={{flex: 1, paddingBottom: this.state.showBottomButton ? 50 : 0}}>
       {indicatorView}
-      {listView}
+      {flatList}
     </View>
     let bottomButton = this.state.showBottomButton ?
       <TouchableOpacity

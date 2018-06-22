@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
-  ListView,
+  FlatList,
   RefreshControl,
   DeviceEventEmitter,
 } from 'react-native'
@@ -102,7 +102,7 @@ class FavoriteTab extends Component {
     this.unFavoriteItems = []//取消收藏的项目
     this.favoriteDao = new FavoriteDao(this.props.flag)
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      projectModels: [],
       isLoading: false,
       theme: this.props.theme
     }
@@ -130,7 +130,7 @@ class FavoriteTab extends Component {
       }
       this.setState({
         isLoading: false,
-        dataSource: this.getDataSource(resultData),
+        projectModels: resultData,
       })
     }).catch((error) => {
       this.setState({
@@ -141,10 +141,6 @@ class FavoriteTab extends Component {
 
   onRefresh () {
     this.loadData(true)
-  }
-
-  getDataSource (items) {
-    return this.state.dataSource.cloneWithRows(items)
   }
 
   updateState (dic) {
@@ -187,7 +183,8 @@ class FavoriteTab extends Component {
     }
   }
 
-  renderRow (projectModel, sectionID, rowID) {
+  renderRow (data) {
+    const projectModel = data.item
     let CellComponent = this.props.flag === FLAG_STORAGE.flag_popular ? RepositoryCell : TrendingCell
     return (
       <CellComponent
@@ -210,15 +207,12 @@ class FavoriteTab extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <ListView
+        <FlatList
           ref='listView'
           style={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={(data) => this.renderRow(data)}
-          renderFooter={() => {
-            return <View style={{height: 50}}/>
-          }}
-          enableEmptySections={true}
+          data={this.state.projectModels}
+          renderItem={(data) => this.renderRow(data)}
+          keyExtractor={item => '' + (item.item.id || item.item.fullName)}
           refreshControl={
             <RefreshControl
               title='Loading...'

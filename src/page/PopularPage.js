@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
-  ListView,
-  RefreshControl,
   Image,
+  FlatList,
+  RefreshControl,
   TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native'
@@ -152,7 +152,7 @@ class PopularTab extends Component {
     this.isFavoriteChanged = false
     this.dataRepository = new DataRepository()
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      projectModels: [],
       isLoading: false,
       favoriteKeys: [],//收藏的列表
       theme: this.props.theme,
@@ -221,7 +221,7 @@ class PopularTab extends Component {
     }
     this.updateState({
       isLoading: false,
-      dataSource: this.getDataSource(projectModels),
+      projectModels: projectModels,
     })
   }
 
@@ -236,10 +236,6 @@ class PopularTab extends Component {
       this.flushFavoriteState()
       console.log(error)
     })
-  }
-
-  getDataSource (items) {
-    return this.state.dataSource.cloneWithRows(items)
   }
 
   updateState (dic) {
@@ -261,7 +257,8 @@ class PopularTab extends Component {
     }
   }
 
-  renderRow (projectModel) {
+  renderRow (data) {
+    const projectModel = data.item
     return <RepositoryCell
       key={projectModel.item.id}
       projectModel={projectModel}
@@ -279,21 +276,10 @@ class PopularTab extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {/*<FlatList
-          data={this.state.result}
-          refreshing={this.state.isLoading}
-          onRefresh={() => {
-            this.loadData()
-          }}
-          colors:{['#2196f3']}
-          tintColor={'#2196f3'}
-          title='Loading...'
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => this.renderRow(item)}
-        />*/}
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(data) => this.renderRow(data)}
+        <FlatList
+          data={this.state.projectModels}
+          renderItem={(data) => this.renderRow(data)}
+          keyExtractor={item => '' + item.item.id}
           refreshControl={
             <RefreshControl
               title='Loading...'
@@ -304,7 +290,6 @@ class PopularTab extends Component {
               tintColor={this.props.theme.themeColor}
             />
           }
-
         />
       </View>
     )

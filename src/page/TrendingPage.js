@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  ListView,
+  FlatList,
   Image,
   RefreshControl,
   TouchableOpacity,
@@ -45,14 +45,14 @@ export default class TrendingPage extends BaseComponent {
     this.loadData()
   }
 
-/*  componentDidMount () {
-    super.componentDidMount()
+  /*  componentDidMount () {
+      super.componentDidMount()
 
-  }
+    }
 
-  componentWillUnmount () {
-    super.componentWillUnmount()
-  }*/
+    componentWillUnmount () {
+      super.componentWillUnmount()
+    }*/
 
   loadData () {
     this.languageDao.fetch()
@@ -183,7 +183,7 @@ class TrendingTab extends Component {
     super(props)
     this.isFavoriteChanged = false
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      projectModels: [],
       isLoading: false,
       favoriteKeys: [],//收藏的列表
       theme: this.props.theme,
@@ -230,7 +230,7 @@ class TrendingTab extends Component {
     }
     this.updateState({
       isLoading: false,
-      dataSource: this.getDataSource(projectModels),
+      projectModels: projectModels,
     })
   }
 
@@ -245,10 +245,6 @@ class TrendingTab extends Component {
       this.flushFavoriteState()
       console.log(error)
     })
-  }
-
-  getDataSource (items) {
-    return this.state.dataSource.cloneWithRows(items)
   }
 
   //加载数据
@@ -311,7 +307,8 @@ class TrendingTab extends Component {
     }
   }
 
-  renderRow (projectModel) {
+  renderRow (data) {
+    const projectModel = data.item
     return <TrendingCell
       key={projectModel.item.id}
       projectModel={projectModel}
@@ -329,9 +326,10 @@ class TrendingTab extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(data) => this.renderRow(data)}
+        <FlatList
+          data={this.state.projectModels}
+          renderItem={(data) => this.renderRow(data)}
+          keyExtractor={item => '' + (item.item.id || item.item.fullName)}
           refreshControl={
             <RefreshControl
               title='Loading...'
