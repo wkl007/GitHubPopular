@@ -22,7 +22,7 @@ export default class CustomKeyPage extends Component {
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
     this.params = this.props.navigation.state.params
-    this.languageDao = new LanguageDao(params.flag)
+    this.languageDao = new LanguageDao(this.params.flag)
     this.flag = this.params.flag
     this.isRemoveKey = this.params.isRemoveKey
     this.theme = this.params.theme
@@ -60,7 +60,7 @@ export default class CustomKeyPage extends Component {
         [
           {
             text: '否', onPress: () => {
-              NavigatorUtil.goBack(this.props.navigation);
+              NavigatorUtil.goBack(this.props.navigation)
             }
           },
           {
@@ -71,7 +71,7 @@ export default class CustomKeyPage extends Component {
         ]
       )
     } else {
-      NavigatorUtil.goBack(this.props.navigation);
+      NavigatorUtil.goBack(this.props.navigation)
     }
   }
 
@@ -91,7 +91,7 @@ export default class CustomKeyPage extends Component {
   //保存
   onSave () {
     if (this.changeValues.length === 0) {
-      NavigatorUtil.goBack(this.props.navigation);
+      NavigatorUtil.goBack(this.props.navigation)
       return
     }
     if (this.isRemoveKey) {

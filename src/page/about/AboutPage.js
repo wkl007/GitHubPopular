@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   View,
   Linking,
-  Text
 } from 'react-native'
 
 import { MORE_MENU } from '../../common/MoreMenu'

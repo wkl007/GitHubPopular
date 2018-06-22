@@ -135,15 +135,6 @@ export default class SortKeyPage extends Component {
     let statusBar = {
       backgroundColor: this.theme.themeColor,
     }
-    let rightButton = <TouchableOpacity
-      onPress={() => {
-        this.onSave()
-      }}
-    >
-      <View style={{marginRight: 10}}>
-        <Text style={styles.title}>保存</Text>
-      </View>
-    </TouchableOpacity>
     let title = this.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序'
 
     return (
@@ -155,7 +146,9 @@ export default class SortKeyPage extends Component {
           leftButton={ViewUtils.getLeftButton(() => {
             this.onBack()
           })}
-          rightButton={rightButton}
+          rightButton={ViewUtils.getRightButton('保存', () => {
+            this.onSave()
+          })}
         />
         <SortableListView
           data={this.state.checkedArray}
@@ -176,17 +169,19 @@ class SortCell extends Component {
     return (
       <TouchableHighlight
         underlayColor={'#eee'}
-        delayLongPress={500}
-        style={styles.item}
+        style={this.props.data.checked ? styles.item : styles.hidden}
         {...this.props.sortHandlers}
       >
         <View style={styles.row}>
-          <Image style={[{
-            opacity: 1,
-            width: 16,
-            height: 16,
-            marginRight: 10,
-          }, this.props.theme.styles.tabBarSelectedIcon]} source={require('./images/ic_sort.png')}/>
+          <Image style={
+            [{
+              opacity: 1,
+              width: 16,
+              height: 16,
+              marginRight: 10,
+            }, this.props.theme.styles.tabBarSelectedIcon]}
+            resizeMode='stretch'
+            source={require('./images/ic_sort.png')}/>
           <Text>{this.props.data.name}</Text>
         </View>
       </TouchableHighlight>
@@ -203,14 +198,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  title: {
-    fontSize: 20,
-    color: '#fff',
-  },
   item: {
     padding: 15,
     backgroundColor: '#f8f8f8',
     borderBottomWidth: 1,
     borderColor: '#eee'
-  }
+  },
+  hidden: {
+    height: 0
+  },
 })
