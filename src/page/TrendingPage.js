@@ -12,14 +12,13 @@ import {
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import NavigationBar from '../common/NavigationBar'
 import TrendingCell from '../common/TrendingCell'
-import Popover from '../common/Popover'
+import TrendingDialog, { TimeSpans } from '../common/TrendingDialog'
 import MoreMenu, { MORE_MENU } from '../common/MoreMenu'
 import CustomTheme from './my/CustomTheme'
 import BaseComponent from './BaseComponent'
 import DataRepository, { FLAG_STORAGE } from '../expand/dao/DataRepository'
 //获取AsyncStorage中的数据
 import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
-import TimeSpan from '../model/TimeSpan'
 import ProjectModel from '../model/ProjectModel'
 //工具函数，检查该Item是否被收藏
 import Utils from '../util/Utils'
@@ -29,9 +28,7 @@ import { FLAG_TAB } from './HomePage'
 import ViewUtils from '../util/ViewUtils'
 //接口路径
 const API_URL = 'https://github.com/trending/'
-
-let timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
-  new TimeSpan('本 周', 'since=weekly'), new TimeSpan('本 月', 'since=monthly')]
+const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE'
 let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending)
 let dataRepository = new DataRepository(FLAG_STORAGE.flag_trending)
 export default class TrendingPage extends BaseComponent {
@@ -41,21 +38,21 @@ export default class TrendingPage extends BaseComponent {
     this.state = {
       languages: [],//数据
       isVisible: false,
-      buttonRect: {},
-      timeSpan: timeSpanTextArray[0],
+      timeSpan: TimeSpans[0],
       theme: this.props.theme,
       customThemeViewVisible: false,
     }
+    this.loadData()
   }
 
-  componentDidMount () {
+/*  componentDidMount () {
     super.componentDidMount()
-    this.loadData()
+
   }
 
   componentWillUnmount () {
     super.componentWillUnmount()
-  }
+  }*/
 
   loadData () {
     this.languageDao.fetch()
@@ -71,24 +68,18 @@ export default class TrendingPage extends BaseComponent {
 
   //显示下拉框
   showPopover () {
-    this.refs.button.measure((ox, oy, width, height, px, py) => {
-      this.setState({
-        isVisible: true,
-        buttonRect: {x: px, y: py, width: width, height: height}
-      })
-    })
+    this.dialog.show()
   }
 
   //关闭下拉框
   closePopover () {
-    this.setState({
-      isVisible: false
-    })
+    this.dialog.dismiss()
   }
 
   //选择某一项
   onSelectTimeSpan (timeSpan) {
     this.closePopover()
+    DeviceEventEmitter.emit(EVENT_TYPE_TIME_SPAN_CHANGE, this.state.timeSpan, timeSpan)
     this.setState({
       timeSpan: timeSpan
     })
@@ -101,7 +92,6 @@ export default class TrendingPage extends BaseComponent {
       ref='moreMenu'
       {...params}
       menus={[MORE_MENU.Custom_Language, MORE_MENU.Sort_Language, MORE_MENU.Share, MORE_MENU.Custom_Theme, MORE_MENU.About_Author, MORE_MENU.About]}
-      anchorView={() => this.refs.moreMenuButton}
       onMoreMenuSelect={(e) => {
         if (e === MORE_MENU.Custom_Theme) {
           this.setState({
@@ -142,6 +132,16 @@ export default class TrendingPage extends BaseComponent {
     )
   }
 
+  //标题弹框
+  renderTrendingDialog () {
+    return (
+      <TrendingDialog
+        ref={dialog => this.dialog = dialog}
+        onSelect={(tab) => this.onSelectTimeSpan(tab)}
+      />
+    )
+  }
+
   render () {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
@@ -166,32 +166,13 @@ export default class TrendingPage extends BaseComponent {
           <TrendingTab {...this.props} key={i} tabLabel={item.name} timeSpan={this.state.timeSpan}/> : null
       })}
     </ScrollableTabView> : null
-    let timeSpanView = <Popover
-      contentStyle={{backgroundColor: '#343434', opacity: 0.82}}
-      isVisible={this.state.isVisible}
-      fromRect={this.state.buttonRect}
-      onClose={() => this.closePopover()}
-      placement='bottom'
-    >
-      {timeSpanTextArray.map((result, i, arr) => {
-        return (
-          <TouchableOpacity
-            key={i} onPress={() => this.onSelectTimeSpan(arr[i])}
-            underlayColor='transparent'>
-            <Text
-              style={{fontSize: 18, padding: 8, color: '#fff', fontWeight: '400'}}
-            >{arr[i].showText}</Text>
-          </TouchableOpacity>
-        )
-      })}
-    </Popover>
     return (
       <View style={styles.container}>
         {navigationBar}
         {content}
         {this.renderMoreView()}
-        {timeSpanView}
         {this.renderCustomThemeView()}
+        {this.renderTrendingDialog()}
       </View>
     )
   }
@@ -213,7 +194,19 @@ class TrendingTab extends Component {
     this.listener = DeviceEventEmitter.addListener('favoriteChanged_trending', () => {
       this.isFavoriteChanged = true
     })
-    this.loadData(this.props.timeSpan, true)
+    this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE, (from, to) => {
+      this.loadData(to)
+    })
+    this.loadData(this.props.timeSpan)
+  }
+
+  componentWillUnmount () {
+    if (this.listener) {
+      this.listener.remove()
+    }
+    if (this.timeSpanChangeListener) {
+      this.timeSpanChangeListener.remove()
+    }
   }
 
   componentWillReceiveProps (nextProps) {

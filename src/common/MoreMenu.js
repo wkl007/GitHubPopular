@@ -10,7 +10,6 @@ import {
   Linking,
   ViewPropTypes
 } from 'react-native'
-import Popover from '../common/Popover'
 import MenuDialog from '../common/MenuDialog'
 import BaseComponent from '../page/BaseComponent'
 import NavigatorUtil from '../util/NavigatorUtil'
@@ -43,7 +42,6 @@ export default class MoreMenu extends BaseComponent {
   static propTypes = {
     contentStyle: ViewPropTypes.style,//样式
     menus: PropTypes.array.isRequired,//数组，必填
-    anchorView: PropTypes.func,//位置
   }
 
   //打开更多菜单
@@ -53,19 +51,10 @@ export default class MoreMenu extends BaseComponent {
 
   showPopover () {
     this.dialog.show()
-    /*if (!this.props.anchorView) return
-    let anchorView = this.props.anchorView()
-    anchorView.measure((ox, oy, width, height, px, py) => {
-      this.setState({
-        isVisible: true,
-        buttonRect: {x: px, y: py, width: width, height: height}
-      })
-    })*/
   }
 
   //关闭更多菜单
   closePopover () {
-    // this.setState({isVisible: false})
     this.dialog.dismiss()
   }
 
@@ -73,7 +62,7 @@ export default class MoreMenu extends BaseComponent {
   onMoreMenuSelect (tab) {
     this.closePopover()
     if (typeof (this.props.onMoreMenuSelect) == 'function') this.props.onMoreMenuSelect(tab)
-    let TargetComponent, params = {menuType: tab, theme: this.state.theme}
+    let TargetComponent, params = {menuType: tab, ...this.props}
     switch (tab) {
       case MORE_MENU.Custom_Language:
         TargetComponent = 'CustomKeyPage'
@@ -128,27 +117,6 @@ export default class MoreMenu extends BaseComponent {
 
   renderMoreView () {
     const {theme, menus} = this.props
-    /* let view = <Popover
-       isVisible={this.state.isVisible}
-       fromRect={this.state.buttonRect}
-       placement="bottom"
-       contentMarginRight={20}
-       onClose={() => this.closePopover()}
-       contentStyle={{opacity: 0.82, backgroundColor: '#343434'}}
-       style={{backgroundColor: 'red'}}>
-       <View style={{alignItems: 'center'}}>
-         {this.props.menus.map((result, i, arr) => {
-           return <TouchableOpacity key={i} onPress={() => this.onMoreMenuSelect(arr[i])}
-                                    underlayColor='transparent'>
-             <Text
-               style={{fontSize: 18, color: 'white', padding: 8, fontWeight: '400'}}>
-               {arr[i]}
-             </Text>
-           </TouchableOpacity>
-         })
-         }
-       </View>
-     </Popover>*/
     return <MenuDialog
       ref={dialog => this.dialog = dialog}
       menus={menus}

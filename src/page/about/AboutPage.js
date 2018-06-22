@@ -71,17 +71,17 @@ export default class AboutPage extends Component {
       {/*{this.aboutCommon.renderRepository(this.state.projectModels)}*/}
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Website)
-        }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website, this.theme.styles.tabBarSelectedIcon
+        }, require('../../assets/images/ic_computer.png'), MORE_MENU.Website.name, this.theme.styles.tabBarSelectedIcon
       )}
       <View style={GlobalStyles.line}/>
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.About_Author)
-        }, require('../my/images/ic_insert_emoticon.png'), MORE_MENU.About_Author, this.theme.styles.tabBarSelectedIcon
+        }, require('../my/images/ic_insert_emoticon.png'), MORE_MENU.About_Author.name, this.theme.styles.tabBarSelectedIcon
       )}
       <View style={GlobalStyles.line}/>
       {ViewUtils.getSettingItem(() => {
           this.onClick(MORE_MENU.Feedback)
-        }, require('../../assets/images/ic_feedback.png'), MORE_MENU.Feedback, this.theme.styles.tabBarSelectedIcon
+        }, require('../../assets/images/ic_feedback.png'), MORE_MENU.Feedback.name, this.theme.styles.tabBarSelectedIcon
       )}
     </View>
     return (

@@ -15,7 +15,7 @@ export default class WebViewPage extends Component {
     this.backPress = new BackPressComponent({backPress: (e) => this.onBack(e)})
 
     this.params = this.props.navigation.state.params
-    this.theme = params.theme
+    this.theme = this.params.theme
     this.state = {
       url: this.params.url,
       title: this.params.title,
