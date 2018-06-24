@@ -30,6 +30,7 @@ const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
 
 let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
+console.log(favoriteDao)
 let dataRepository = new DataRepository(FLAG_STORAGE.flag_popular)
 export default class PopularPage extends BaseComponent {
   constructor (props) {
@@ -167,7 +168,7 @@ class PopularTab extends BaseComponent {
   onTabSelected (from, to) {
     console.log(from, to)
     if (to === FLAG_TAB.flag_popularTab && this.isFavoriteChanged) {
-      this.isFavoriteChanged = favoriteDao
+      this.isFavoriteChanged = false
       this.getFavoriteKeys()
     }
   }
@@ -183,7 +184,6 @@ class PopularTab extends BaseComponent {
         this.items = result && result.items ? result.items : result ? result : []
         this.getFavoriteKeys()
         if (result && result.update_date && !Utils.checkDate(result.update_date)) {
-
           return dataRepository.fetchNetRepository(url)
         } else {
           DeviceEventEmitter.emit('showToast', '显示缓存数据')

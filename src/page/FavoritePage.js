@@ -96,7 +96,7 @@ export default class FavoritePage extends BaseComponent {
   }
 }
 
-class FavoriteTab extends Component {
+class FavoriteTab extends BaseComponent {
   constructor (props) {
     super(props)
     this.unFavoriteItems = []//取消收藏的项目
@@ -109,12 +109,23 @@ class FavoriteTab extends Component {
   }
 
   componentDidMount () {
+    super.componentDidMount()
     this.loadData(true)
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.loadData(false)
+  componentWillUnmount () {
+    super.componentWillUnmount()
   }
+
+  onTabSelected (from, to) {
+    if (to === FLAG_TAB.flag_favoriteTab) {
+      this.loadData(false)
+    }
+  }
+
+  /*componentWillReceiveProps (nextProps) {
+    this.loadData(false)
+  }*/
 
   //加载数据
   loadData (isShowLoading) {

@@ -178,7 +178,7 @@ export default class TrendingPage extends BaseComponent {
   }
 }
 
-class TrendingTab extends Component {
+class TrendingTab extends BaseComponent {
   constructor (props) {
     super(props)
     this.isFavoriteChanged = false
@@ -191,6 +191,7 @@ class TrendingTab extends Component {
   }
 
   componentDidMount () {
+    super.componentDidMount()
     this.listener = DeviceEventEmitter.addListener('favoriteChanged_trending', () => {
       this.isFavoriteChanged = true
     })
@@ -201,6 +202,7 @@ class TrendingTab extends Component {
   }
 
   componentWillUnmount () {
+    super.componentWillUnmount()
     if (this.listener) {
       this.listener.remove()
     }
@@ -209,7 +211,15 @@ class TrendingTab extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  onTabSelected (from, to) {
+    console.log(from, to)
+    if (to === FLAG_TAB.flag_trendingTab && this.isFavoriteChanged) {
+      this.isFavoriteChanged = false
+      this.getFavoriteKeys()
+    }
+  }
+
+  /*componentWillReceiveProps (nextProps) {
     if (nextProps.timeSpan !== this.props.timeSpan) {
       this.loadData(nextProps.timeSpan)
     } else if (this.isFavoriteChanged) {
@@ -219,7 +229,7 @@ class TrendingTab extends Component {
       this.updateState({theme: nextProps.theme})
       this.flushFavoriteState()
     }
-  }
+  }*/
 
   //更新project每一项收藏的状态
   flushFavoriteState () {
@@ -299,7 +309,6 @@ class TrendingTab extends Component {
 
   //处理收藏事件
   onFavorite (item, isFavorite) {
-
     if (isFavorite) {
       favoriteDao.saveFavoriteItem(item.fullName.toString(), JSON.stringify(item))
     } else {

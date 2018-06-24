@@ -16,19 +16,29 @@ export default class TrendingCell extends Component {
     super(props)
     this.state = {
       isFavorite: this.props.projectModel.isFavorite,
-      favoriteIcon: this.props.projectModel.isFavorite ? require('../assets/images/ic_star.png') : require('../assets/images/ic_unstar_transparent.png'),
+      favoriteIcon: TrendingCell.getIcon(this.props.projectModel.isFavorite)
     }
   }
 
-  //组件刷新
-  componentWillReceiveProps (nextProps) {
-    this.setFavoriteState(nextProps.projectModel.isFavorite)
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const isFavorite = nextProps.projectModel.isFavorite
+    if (prevState.isFavorite !== isFavorite) {
+      return {
+        isFavorite: isFavorite,
+        favoriteIcon: TrendingCell.getIcon(isFavorite)
+      }
+    }
+    return null
+  }
+
+  static getIcon (isFavorite) {
+    return isFavorite ? require('../assets/images/ic_star.png') : require('../assets/images/ic_unstar_transparent.png')
   }
 
   setFavoriteState (isFavorite) {
     this.setState({
       isFavorite: isFavorite,
-      favoriteIcon: isFavorite ? require('../assets/images/ic_star.png') : require('../assets//images/ic_unstar_transparent.png')
+      favoriteIcon: TrendingCell.getIcon(isFavorite)
     })
   }
 
