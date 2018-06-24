@@ -4,6 +4,7 @@ import {
   Image,
   Platform,
   StyleSheet,
+  DeviceInfo,
   Text,
   View,
 } from 'react-native'
@@ -17,6 +18,7 @@ import NavigatorUtil from '../../util/NavigatorUtil'
 import RepositoryUtils from '../../expand/dao/RepositoryUtils'
 import RepositoryCell from '../../common/RepositoryCell'
 import BackPressComponent from '../../common/BackPressComponent'
+import GlobalStyles from '../../assets/styles/GlobalStyles'
 
 export let FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'}
 
@@ -172,7 +174,8 @@ export default class AboutCommon {
     let renderConfig = this.getParallaxRenderConfig(params)
     return (
       <ParallaxScrollView
-        headerBackgroundColor="#333"
+        contentBackgroundColor={GlobalStyles.backgroundColor}
+        headerBackgroundColor='#333'
         backgroundColor={this.theme.themeColor}
         stickyHeaderHeight={STICKY_HEADER_HEIGHT}
         parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
@@ -186,23 +189,13 @@ export default class AboutCommon {
 }
 
 const window = Dimensions.get('window')
-const AVATAR_SIZE = 120
-const ROW_HEIGHT = 60
-const PARALLAX_HEADER_HEIGHT = 350
-const STICKY_HEADER_HEIGHT = 70
+const AVATAR_SIZE = 90
+const PARALLAX_HEADER_HEIGHT = 270
+const STICKY_HEADER_HEIGHT = (Platform.OS === 'ios')
+  ? GlobalStyles.nav_bar_height_ios + 20 + (DeviceInfo.isIPhoneX_deprecated ? 24 : 0)
+  : GlobalStyles.nav_bar_height_android
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black'
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: window.width,
-    height: PARALLAX_HEADER_HEIGHT
-  },
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     justifyContent: 'center',
@@ -223,7 +216,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: (Platform.OS == 'ios') ? 20 : 0,
+    paddingTop:(Platform.OS === 'ios') ? 20+(DeviceInfo.isIPhoneX_deprecated?24:0) : 0,
     justifyContent: 'space-between'
   },
   fixedSectionText: {
@@ -234,7 +227,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 100
+    paddingTop: 60
   },
   avatar: {
     width: AVATAR_SIZE,
@@ -249,19 +242,8 @@ const styles = StyleSheet.create({
   },
   sectionTitleText: {
     color: 'white',
-    fontSize: 18,
-    paddingVertical: 5
+    fontSize: 16,
+    marginLeft: 10,
+    marginRight: 10,
   },
-  row: {
-    overflow: 'hidden',
-    paddingHorizontal: 10,
-    height: ROW_HEIGHT,
-    backgroundColor: 'white',
-    borderColor: '#ccc',
-    borderBottomWidth: 1,
-    justifyContent: 'center'
-  },
-  rowText: {
-    fontSize: 20
-  }
 })

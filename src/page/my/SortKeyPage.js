@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
 import BackPressComponent from '../../common/BackPressComponent'
+import SafeAreaViewPlus from '../../common/SafeAreaViewPlus'
 import SortableListView from 'react-native-sortable-listview'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
@@ -138,7 +139,10 @@ export default class SortKeyPage extends Component {
     let title = this.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序'
 
     return (
-      <View style={styles.container}>
+      <SafeAreaViewPlus
+        style={styles.container}
+        topColor={this.theme.themeColor}
+      >
         <NavigationBar
           title={title}
           statusBar={statusBar}
@@ -159,7 +163,7 @@ export default class SortKeyPage extends Component {
           }}
           renderRow={row => <SortCell data={row} theme={this.theme}/>}
         />
-      </View>
+      </SafeAreaViewPlus>
     )
   }
 }
@@ -180,8 +184,8 @@ class SortCell extends Component {
               height: 16,
               marginRight: 10,
             }, this.props.theme.styles.tabBarSelectedIcon]}
-            resizeMode='stretch'
-            source={require('./images/ic_sort.png')}/>
+                 resizeMode='stretch'
+                 source={require('./images/ic_sort.png')}/>
           <Text>{this.props.data.name}</Text>
         </View>
       </TouchableHighlight>

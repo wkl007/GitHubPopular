@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   FlatList,
+  DeviceInfo,
   ActivityIndicator,
   DeviceEventEmitter
 } from 'react-native'
@@ -15,6 +16,7 @@ import { ACTION_HOME } from './HomePage'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import RepositoryCell from '../common/RepositoryCell'
 import BackPressComponent from '../common/BackPressComponent'
+import SafeAreaViewPlus from '../common/SafeAreaViewPlus'
 import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao'
 import ActionUtils from '../util/ActionUtils'
 import NavigatorUtil from '../util/NavigatorUtil'
@@ -240,13 +242,13 @@ export default class SearchPage extends Component {
 
   render () {
     let statusBar = null
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' && !DeviceInfo.isIPhoneX_deprecated) {
       statusBar = <View style={[styles.statusBar, {backgroundColor: this.params.theme.themeColor}]}/>
     }
     let flatList = !this.state.isLoading ? <FlatList
       data={this.state.projectModels}
       renderItem={(e) => this.renderRow(e)}
-      keyExtractor={item => "" + (item.item.id || item.item.fullName)}
+      keyExtractor={item => '' + (item.item.id || item.item.fullName)}
     /> : null
     let indicatorView = this.state.isLoading ?
       <ActivityIndicator
@@ -269,13 +271,16 @@ export default class SearchPage extends Component {
           <Text style={styles.title}>添加标签</Text>
         </View>
       </TouchableOpacity> : null
-    return <View style={GlobalStyles.root_container}>
+    return <SafeAreaViewPlus
+      topColor={this.params.theme.themeColor}
+      style={GlobalStyles.root_container}
+    >
       {statusBar}
       {this.renderNavBar()}
       {resultView}
       {bottomButton}
       <Toast ref={toast => this.toast = toast}/>
-    </View>
+    </SafeAreaViewPlus>
   }
 }
 
@@ -317,7 +322,7 @@ const styles = StyleSheet.create({
     height: 40,
     position: 'absolute',
     left: 10,
-    top: GlobalStyles.window_height - 70,
+    top: GlobalStyles.window_height - 45 - (DeviceInfo.isIPhoneX_deprecated ? 34 : 0) - (Platform.OS === 'ios' ? 0 : 25),
     right: 10,
     borderRadius: 3
   }

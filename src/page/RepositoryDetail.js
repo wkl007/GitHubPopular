@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native'
 import NavigationBar from '../common/NavigationBar'
+import SafeAreaViewPlus from '../common/SafeAreaViewPlus'
 import ViewUtils from '../util/ViewUtils'
 import NavigatorUtil from '../util/NavigatorUtil'
 import FavoriteDao from '../expand/dao/FavoriteDao'
@@ -111,7 +112,9 @@ export default class RepositoryDetail extends Component {
       backgroundColor: this.theme.themeColor,
     }
     return (
-      <View style={{flex: 1}}>
+      <SafeAreaViewPlus
+        topColor={this.theme.themeColor}
+      >
         <NavigationBar
           title={this.state.title}
           titleLayoutStyle={titleLayoutStyle}
@@ -130,7 +133,7 @@ export default class RepositoryDetail extends Component {
           }}
           source={{uri: this.state.url}}
         />
-      </View>
+      </SafeAreaViewPlus>
     )
   }
 }

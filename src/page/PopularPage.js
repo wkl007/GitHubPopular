@@ -106,6 +106,7 @@ export default class PopularPage extends BaseComponent {
   render () {
     let statusBar = {
       backgroundColor: this.state.theme.themeColor,
+
     }
     let navigationBar = <NavigationBar
       title='最热'

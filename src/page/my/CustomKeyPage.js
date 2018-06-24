@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
 import BackPressComponent from '../../common/BackPressComponent'
+import SafeAreaViewPlus from '../../common/SafeAreaViewPlus'
 import ViewUtils from '../../util/ViewUtils'
 import ArrayUtils from '../../util/ArrayUtils'
 import NavigatorUtil from '../../util/NavigatorUtil'
@@ -163,7 +164,10 @@ export default class CustomKeyPage extends Component {
     let title = this.isRemoveKey ? '标签移除' : '自定义标签'
     title = this.flag === FLAG_LANGUAGE.flag_language ? '自定义语言' : title
     return (
-      <View style={styles.container}>
+      <SafeAreaViewPlus
+        style={styles.container}
+        topColor={this.theme.themeColor}
+      >
         <NavigationBar
           title={title}
           statusBar={statusBar}
@@ -176,7 +180,7 @@ export default class CustomKeyPage extends Component {
         <ScrollView>
           {this.renderView()}
         </ScrollView>
-      </View>
+      </SafeAreaViewPlus>
     )
   }
 }

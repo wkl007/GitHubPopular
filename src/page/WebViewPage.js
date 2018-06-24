@@ -4,6 +4,7 @@ import {
   WebView,
 } from 'react-native'
 import NavigationBar from '../../src/common/NavigationBar'
+import SafeAreaViewPlus from '../../src/common/SafeAreaViewPlus'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import ViewUtils from '../util/ViewUtils'
 import NavigatorUtil from '../util/NavigatorUtil'
@@ -60,7 +61,10 @@ export default class WebViewPage extends Component {
       backgroundColor: this.theme.themeColor,
     }
     return (
-      <View style={GlobalStyles.root_container}>
+      <SafeAreaViewPlus
+        style={GlobalStyles.root_container}
+        topColor={this.theme.themeColor}
+      >
         <NavigationBar
           title={this.params.title}
           leftButton={ViewUtils.getLeftButton(() => {
@@ -79,7 +83,8 @@ export default class WebViewPage extends Component {
             uri: this.state.url
           }}
         />
-      </View>
+      </SafeAreaViewPlus>
+
     )
   }
 }

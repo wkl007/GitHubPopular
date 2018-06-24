@@ -184,7 +184,7 @@ export default class AboutMePage extends Component {
     </View>
     return (
       <View style={styles.container}>
-         {this.aboutCommon.render(content, this.state.author)}
+        {this.aboutCommon.render(content, this.state.author)}
         <Toast ref={e => this.toast = e}/>
       </View>
     )
@@ -194,6 +194,9 @@ export default class AboutMePage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  content: {
+    paddingTop: 100
   }
 })
 

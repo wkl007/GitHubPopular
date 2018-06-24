@@ -15,6 +15,7 @@ import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import BaseComponent from './BaseComponent'
 import BackPressComponent from '../common/BackPressComponent'
+import SafeAreaViewPlus from '../common/SafeAreaViewPlus'
 
 export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',
@@ -130,17 +131,19 @@ export default class HomePage extends BaseComponent {
   }
 
   render () {
-    return (
-      <View style={styles.container}>
-        <TabNavigator>
-          {this._renderTab(PopularPage, FLAG_TAB.flag_popularTab, '最热', require('../assets/images/ic_polular.png'))}
-          {this._renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, '趋势', require('../assets/images/ic_trending.png'))}
-          {this._renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, '收藏', require('../assets/images/ic_favorite.png'))}
-          {this._renderTab(MyPage, FLAG_TAB.flag_my, '我的', require('../assets/images/ic_my.png'))}
-        </TabNavigator>
-        <Toast ref={toast => this.toast = toast}/>
-      </View>
-    )
+    const Root = <SafeAreaViewPlus
+      topColor={this.state.theme.themeColor}
+      bottomInset={false}
+    >
+      <TabNavigator>
+        {this._renderTab(PopularPage, FLAG_TAB.flag_popularTab, '最热', require('../assets/images/ic_polular.png'))}
+        {this._renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, '趋势', require('../assets/images/ic_trending.png'))}
+        {this._renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, '收藏', require('../assets/images/ic_favorite.png'))}
+        {this._renderTab(MyPage, FLAG_TAB.flag_my, '我的', require('../assets/images/ic_my.png'))}
+      </TabNavigator>
+      <Toast ref={toast => this.toast = toast}/>
+    </SafeAreaViewPlus>
+    return Root
   }
 }
 
