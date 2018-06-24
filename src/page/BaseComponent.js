@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   DeviceEventEmitter
 } from 'react-native'
-import { ACTION_HOME } from './HomePage'
+import { ACTION_HOME, EVENT_TYPE_HOME_TAB_SELECT } from './HomePage'
 
 export default class BaseComponent extends Component {
   constructor (props) {
@@ -14,10 +14,13 @@ export default class BaseComponent extends Component {
 
   componentDidMount () {
     this.baseListener = DeviceEventEmitter.addListener('ACTION_BASE', (action, params) => this.onBaseAction(action, params))
+    this.homeTabSelectListener = DeviceEventEmitter.addListener('EVENT_TYPE_HOME_TAB_SELECT', (from, to) => this.onTabSelected(from, to))
+
   }
 
   componentWillUnmount () {
     this.baseListener && this.baseListener.remove()
+    this.homeTabSelectListener && this.homeTabSelectListener.remove()
   }
 
   /**
@@ -40,5 +43,8 @@ export default class BaseComponent extends Component {
     this.setState({
       theme: theme
     })
+  }
+
+  onTabSelected (from, to) {
   }
 }

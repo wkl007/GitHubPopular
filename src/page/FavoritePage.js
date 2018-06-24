@@ -167,12 +167,7 @@ class FavoriteTab extends Component {
 
   //处理收藏事件
   onFavorite (item, isFavorite) {
-    let key = this.props.flag === FLAG_STORAGE.flag_popular ? item.id.toString() : item.fullName
-    if (isFavorite) {
-      this.favoriteDao.saveFavoriteItem(key, JSON.stringify(item))
-    } else {
-      this.favoriteDao.removeFavoriteItem(key)
-    }
+    ActionUtils.onFavorite(this.favoriteDao, item, isFavorite, this.props.flag)
     ArrayUtils.updateArray(this.unFavoriteItems, item)
     if (this.unFavoriteItems.length > 0) {
       if (this.props.flag === FLAG_STORAGE.flag_popular) {

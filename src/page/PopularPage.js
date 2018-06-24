@@ -30,26 +30,17 @@ const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
 
 let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
-
+let dataRepository = new DataRepository(FLAG_STORAGE.flag_popular)
 export default class PopularPage extends BaseComponent {
   constructor (props) {
     super(props)
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key)
-    this.dataRepository = new DataRepository(FLAG_STORAGE.flag_popular)
     this.state = {
       dataArray: [],
       theme: this.props.theme,
       customThemeViewVisible: false,
     }
-  }
-
-  componentDidMount () {
-    super.componentDidMount()
     this.loadData()
-  }
-
-  componentWillUnmount () {
-    super.componentWillUnmount()
   }
 
   loadData () {
@@ -146,11 +137,10 @@ export default class PopularPage extends BaseComponent {
   }
 }
 
-class PopularTab extends Component {
+class PopularTab extends BaseComponent {
   constructor (props) {
     super(props)
     this.isFavoriteChanged = false
-    this.dataRepository = new DataRepository()
     this.state = {
       projectModels: [],
       isLoading: false,
@@ -160,6 +150,7 @@ class PopularTab extends Component {
   }
 
   componentDidMount () {
+    super.componentDidMount()
     this.listener = DeviceEventEmitter.addListener('favoriteChanged_popular', () => {
       this.isFavoriteChanged = true
     })
@@ -167,34 +158,33 @@ class PopularTab extends Component {
   }
 
   componentWillUnmount () {
+    super.componentWillUnmount()
     if (this.listener) {
       this.listener.remove()
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.isFavoriteChanged) {
-      this.isFavoriteChanged = false
+  onTabSelected (from, to) {
+    console.log(from, to)
+    if (to === FLAG_TAB.flag_popularTab && this.isFavoriteChanged) {
+      this.isFavoriteChanged = favoriteDao
       this.getFavoriteKeys()
-    } else if (nextProps.theme !== this.state.theme) {
-      this.updateState({theme: nextProps.theme})
-      this.flushFavoriteState()
     }
   }
 
   //加载数据
   loadData () {
-    this.setState({
+    this.updateState({
       isLoading: true
     })
     let url = URL + this.props.tabLabel + QUERY_STR
-    this.dataRepository.fetchRepository(url)
+    dataRepository.fetchRepository(url)
       .then(result => {
         this.items = result && result.items ? result.items : result ? result : []
         this.getFavoriteKeys()
         if (result && result.update_date && !Utils.checkDate(result.update_date)) {
 
-          return this.dataRepository.fetchNetRepository(url)
+          return dataRepository.fetchNetRepository(url)
         } else {
           DeviceEventEmitter.emit('showToast', '显示缓存数据')
         }
@@ -246,15 +236,6 @@ class PopularTab extends Component {
   //更新favorite
   onUpdateFavorite () {
     this.getFavoriteKeys()
-  }
-
-  //处理收藏事件
-  onFavorite (item, isFavorite) {
-    if (isFavorite) {
-      favoriteDao.saveFavoriteItem(item.id.toString(), JSON.stringify(item))
-    } else {
-      favoriteDao.removeFavoriteItem(item.id.toString())
-    }
   }
 
   renderRow (data) {

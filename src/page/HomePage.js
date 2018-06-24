@@ -23,13 +23,20 @@ export const FLAG_TAB = {
   flag_my: 'tb_my'
 }
 
-export const ACTION_HOME = {A_SHOW_TOAST: 'showToast', A_RESTART: 'restart', A_THEME: 'theme'}
+export const ACTION_HOME = {
+  A_SHOW_TOAST: 'showToast',
+  A_RESTART: 'restart',
+  A_THEME: 'theme',
+  A_HOME_TAB_SELECT: 'home_tab_select'
+}
+export const EVENT_TYPE_HOME_TAB_SELECT = 'home_tab_select'
+
 export default class HomePage extends BaseComponent {
   constructor (props) {
     super(props)
     this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
 
-    this.params = this.props.navigation.state.params;
+    this.params = this.props.navigation.state.params
     let selectedTab = this.params.selectedTab || 'tb_popular'
     let theme = this.params.theme || ThemeFactory.createTheme(ThemeFlags.Default)
     this.state = {
@@ -92,6 +99,11 @@ export default class HomePage extends BaseComponent {
     })
   }
 
+  onTabClick (from, to) {
+    this.setState({selectedTab: to})
+    DeviceEventEmitter.emit(EVENT_TYPE_HOME_TAB_SELECT, from, to)
+  }
+
   /**
    * 遍历tab
    * @param Component
@@ -110,7 +122,7 @@ export default class HomePage extends BaseComponent {
         renderIcon={() => <Image style={styles.image} source={renderIcon}/>}
         renderSelectedIcon={() => <Image style={[styles.image, this.state.theme.styles.tabBarSelectedIcon]}
                                          source={renderIcon}/>}
-        onPress={() => this.setState({selectedTab: selectTab})}
+        onPress={() => this.onTabClick(this.state.selectedTab, selectTab)}
       >
         <Component {...this.props} theme={this.state.theme}/>
       </TabNavigator.Item>
@@ -121,10 +133,10 @@ export default class HomePage extends BaseComponent {
     return (
       <View style={styles.container}>
         <TabNavigator>
-          {this._renderTab(PopularPage, 'tb_popular', '最热', require('../assets/images/ic_polular.png'))}
-          {this._renderTab(TrendingPage, 'tb_trending', '趋势', require('../assets/images/ic_trending.png'))}
-          {this._renderTab(FavoritePage, 'tb_favorite', '收藏', require('../assets/images/ic_favorite.png'))}
-          {this._renderTab(MyPage, 'tb_my', '我的', require('../assets/images/ic_my.png'))}
+          {this._renderTab(PopularPage, FLAG_TAB.flag_popularTab, '最热', require('../assets/images/ic_polular.png'))}
+          {this._renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, '趋势', require('../assets/images/ic_trending.png'))}
+          {this._renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, '收藏', require('../assets/images/ic_favorite.png'))}
+          {this._renderTab(MyPage, FLAG_TAB.flag_my, '我的', require('../assets/images/ic_my.png'))}
         </TabNavigator>
         <Toast ref={toast => this.toast = toast}/>
       </View>
