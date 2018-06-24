@@ -31,7 +31,6 @@ export default class RepositoryCell extends Component {
   }
 
   static getIcon (isFavorite) {
-    console.log(222)
     return isFavorite ? require('../assets/images/ic_star.png') : require('../assets/images/ic_unstar_transparent.png')
   }
 

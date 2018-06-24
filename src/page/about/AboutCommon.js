@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     height: STICKY_HEADER_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: (Platform.OS == 'ios') ? 20 : 0,
+    paddingTop: (Platform.OS === 'ios') ? 20 : 0,
   },
   stickySectionText: {
     color: 'white',

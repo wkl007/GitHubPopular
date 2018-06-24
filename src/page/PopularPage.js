@@ -30,7 +30,6 @@ const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
 
 let favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
-console.log(favoriteDao)
 let dataRepository = new DataRepository(FLAG_STORAGE.flag_popular)
 export default class PopularPage extends BaseComponent {
   constructor (props) {
@@ -167,7 +166,6 @@ class PopularTab extends BaseComponent {
   }
 
   onTabSelected (from, to) {
-    console.log(from, to)
     if (to === FLAG_TAB.flag_popularTab && this.isFavoriteChanged) {
       this.isFavoriteChanged = false
       this.getFavoriteKeys()
