@@ -7,12 +7,12 @@ import {
   ScrollView,
   TouchableHighlight
 } from 'react-native'
+import codePush from 'react-native-code-push'
 import NavigationBar from '../../common/NavigationBar'
 import { MORE_MENU } from '../../common/MoreMenu'
 import BaseComponent from '../BaseComponent'
 import CustomTheme from './CustomTheme'
 import { FLAG_LANGUAGE } from '../../expand/dao/LanguageDao'
-
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import NavigatorUtil from '../../util/NavigatorUtil'
@@ -35,6 +35,22 @@ export default class MyPage extends BaseComponent {
         onClose={() => this.setState({customThemeViewVisible: false})}
       />
     )
+  }
+
+  update () {
+    codePush.sync({
+      updateDialog: {
+        title: '更新',
+        appendReleaseDescription: true,
+        descriptionPrefix: '更新内容：\n',
+        mandatoryContinueButtonLabel: '更新',
+        mandatoryUpdateMessage: '卧槽，牛逼呀',
+        optionalIgnoreButtonLabel: '忽略',
+        optionalInstallButtonLabel: '更新',
+        optionalUpdateMessage: '卧槽，真牛逼\n',
+      },
+      mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+    })
   }
 
   //点击事件
@@ -141,7 +157,6 @@ export default class MyPage extends BaseComponent {
           {/*语言排序*/}
           <View style={GlobalStyles.line}/>
           {this.getItem(MORE_MENU.Sort_Language, require('./images/ic_swap_vert.png'), '语言排序')}
-
           {/*设置*/}
           <Text style={styles.groupTitle}>设置</Text>
           {/*自定义主题*/}
@@ -150,6 +165,9 @@ export default class MyPage extends BaseComponent {
           {/*关于作者*/}
           <View style={GlobalStyles.line}/>
           {this.getItem(MORE_MENU.About_Author, require('./images/ic_insert_emoticon.png'), '关于作者')}
+          {/*检查更新*/}
+          <View style={GlobalStyles.line}/>
+          {this.getItem('更新', require('./images/ic_insert_emoticon.png'), '检查更新')}
           <View style={GlobalStyles.line}/>
         </ScrollView>
         {this.renderCustomThemeView()}
