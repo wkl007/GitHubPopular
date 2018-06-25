@@ -44,10 +44,10 @@ export default class MyPage extends BaseComponent {
         appendReleaseDescription: true,
         descriptionPrefix: '更新内容：\n',
         mandatoryContinueButtonLabel: '更新',
-        mandatoryUpdateMessage: '卧槽，牛逼呀',
+        mandatoryUpdateMessage: '',
         optionalIgnoreButtonLabel: '忽略',
         optionalInstallButtonLabel: '更新',
-        optionalUpdateMessage: '卧槽，真牛逼\n',
+        optionalUpdateMessage: '',
       },
       mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
     })

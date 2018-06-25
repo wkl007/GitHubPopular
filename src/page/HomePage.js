@@ -5,9 +5,10 @@ import {
   Image,
   DeviceEventEmitter,
 } from 'react-native'
-import NavigatorUtil from '../util/NavigatorUtil'
+import codePush from 'react-native-code-push'
 import TabNavigator from 'react-native-tab-navigator'
 import Toast, { DURATION } from 'react-native-easy-toast'
+import NavigatorUtil from '../util/NavigatorUtil'
 import ThemeFactory, { ThemeFlags } from '../assets/styles/ThemeFactory'
 import PopularPage from './PopularPage'
 import TrendingPage from './TrendingPage'
@@ -40,7 +41,7 @@ export default class HomePage extends BaseComponent {
 
     this.params = this.props.navigation.state.params
     let selectedTab = this.params.selectedTab || 'tb_popular'
-    let theme = this.params.theme
+    let theme = this.params.theme || ThemeFactory.createTheme(ThemeFlags.Default)
     this.state = {
       selectedTab: selectedTab,
       theme: theme,
@@ -48,6 +49,7 @@ export default class HomePage extends BaseComponent {
   }
 
   componentDidMount () {
+    this.update()
     this.backPress.componentDidMount()
     super.componentDidMount()
     this.listener = DeviceEventEmitter.addListener('ACTION_HOME',
@@ -59,6 +61,23 @@ export default class HomePage extends BaseComponent {
     this.backPress.componentWillUnmount()
     super.componentWillUnmount()
     this.listener && this.listener.remove()
+  }
+
+  //更新
+  update () {
+    codePush.sync({
+      updateDialog: {
+        title: '更新',
+        appendReleaseDescription: true,
+        descriptionPrefix: '更新内容：\n',
+        mandatoryContinueButtonLabel: '更新',
+        mandatoryUpdateMessage: '',
+        optionalIgnoreButtonLabel: '忽略',
+        optionalInstallButtonLabel: '更新',
+        optionalUpdateMessage: '',
+      },
+      mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+    })
   }
 
   /**
