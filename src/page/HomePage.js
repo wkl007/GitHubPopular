@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Image,
-  DeviceEventEmitter
+  DeviceEventEmitter,
 } from 'react-native'
 import NavigatorUtil from '../util/NavigatorUtil'
 import TabNavigator from 'react-native-tab-navigator'
@@ -21,25 +21,26 @@ export const FLAG_TAB = {
   flag_popularTab: 'tb_popular',
   flag_trendingTab: 'tb_trending',
   flag_favoriteTab: 'tb_favorite',
-  flag_my: 'tb_my'
+  flag_my: 'tb_my',
 }
 
 export const ACTION_HOME = {
   A_SHOW_TOAST: 'showToast',
   A_RESTART: 'restart',
   A_THEME: 'theme',
-  A_HOME_TAB_SELECT: 'home_tab_select'
+  A_HOME_TAB_SELECT: 'home_tab_select',
 }
 export const EVENT_TYPE_HOME_TAB_SELECT = 'home_tab_select'
 
 export default class HomePage extends BaseComponent {
   constructor (props) {
     super(props)
-    this.backPress = new BackPressComponent({backPress: (e) => this.onBackPress(e)})
+    this.backPress = new BackPressComponent(
+      {backPress: (e) => this.onBackPress(e)})
 
     this.params = this.props.navigation.state.params
     let selectedTab = this.params.selectedTab || 'tb_popular'
-    let theme = this.params.theme || ThemeFactory.createTheme(ThemeFlags.Default)
+    let theme = this.params.theme
     this.state = {
       selectedTab: selectedTab,
       theme: theme,
@@ -49,7 +50,9 @@ export default class HomePage extends BaseComponent {
   componentDidMount () {
     this.backPress.componentDidMount()
     super.componentDidMount()
-    this.listener = DeviceEventEmitter.addListener('ACTION_HOME', (action, params) => this.onAction(action, params))
+    this.listener = DeviceEventEmitter.addListener('ACTION_HOME',
+      (action, params) => this.onAction(action, params),
+    )
   }
 
   componentWillUnmount () {
@@ -92,11 +95,12 @@ export default class HomePage extends BaseComponent {
    */
   onRestart (jumpToTab) {
     const {navigation} = this.props
-    const theme = navigation.getParam('theme')
+    const {theme} = this.state
     NavigatorUtil.resetToHomePage({
-      navigation: navigation,
       ...this.params,
+      navigation: navigation,
       selectedTab: jumpToTab,
+      theme: theme,
     })
   }
 
@@ -121,8 +125,9 @@ export default class HomePage extends BaseComponent {
         selectedTitleStyle={this.state.theme.styles.selectedTitleStyle}
         title={title}
         renderIcon={() => <Image style={styles.image} source={renderIcon}/>}
-        renderSelectedIcon={() => <Image style={[styles.image, this.state.theme.styles.tabBarSelectedIcon]}
-                                         source={renderIcon}/>}
+        renderSelectedIcon={() => <Image
+          style={[styles.image, this.state.theme.styles.tabBarSelectedIcon]}
+          source={renderIcon}/>}
         onPress={() => this.onTabClick(this.state.selectedTab, selectTab)}
       >
         <Component {...this.props} theme={this.state.theme}/>
@@ -136,10 +141,14 @@ export default class HomePage extends BaseComponent {
       bottomInset={false}
     >
       <TabNavigator>
-        {this._renderTab(PopularPage, FLAG_TAB.flag_popularTab, '最热', require('../assets/images/ic_polular.png'))}
-        {this._renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, '趋势', require('../assets/images/ic_trending.png'))}
-        {this._renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, '收藏', require('../assets/images/ic_favorite.png'))}
-        {this._renderTab(MyPage, FLAG_TAB.flag_my, '我的', require('../assets/images/ic_my.png'))}
+        {this._renderTab(PopularPage, FLAG_TAB.flag_popularTab, '最热',
+          require('../assets/images/ic_polular.png'))}
+        {this._renderTab(TrendingPage, FLAG_TAB.flag_trendingTab, '趋势',
+          require('../assets/images/ic_trending.png'))}
+        {this._renderTab(FavoritePage, FLAG_TAB.flag_favoriteTab, '收藏',
+          require('../assets/images/ic_favorite.png'))}
+        {this._renderTab(MyPage, FLAG_TAB.flag_my, '我的',
+          require('../assets/images/ic_my.png'))}
       </TabNavigator>
       <Toast ref={toast => this.toast = toast}/>
     </SafeAreaViewPlus>
@@ -150,7 +159,7 @@ export default class HomePage extends BaseComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5fcff'
+    backgroundColor: '#f5fcff',
   },
   page1: {
     flex: 1,
@@ -163,6 +172,6 @@ const styles = StyleSheet.create({
   image: {
     height: 22,
     width: 22,
-    margin: 5
-  }
+    margin: 5,
+  },
 })

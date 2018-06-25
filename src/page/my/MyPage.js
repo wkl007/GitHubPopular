@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native'
 import codePush from 'react-native-code-push'
 import NavigationBar from '../../common/NavigationBar'
@@ -123,17 +123,20 @@ export default class MyPage extends BaseComponent {
             <View style={[styles.item, {height: 90}]}>
               <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Image source={require('../../assets/images/ic_trending.png')}
-                       style={[{width: 40, height: 40, marginRight: 10}, this.state.theme.styles.tabBarSelectedIcon]}/>
+                       style={[
+                         {width: 40, height: 40, marginRight: 10},
+                         this.state.theme.styles.tabBarSelectedIcon]}/>
                 <Text>GitHub Popular</Text>
               </View>
               <Image source={require('../../assets/images/ic_tiaozhuan.png')}
-                     style={[{
-                       opacity: 1,
-                       marginLeft: 10,
-                       height: 22,
-                       width: 22,
-                       alignSelf: 'center'
-                     }, this.state.theme.styles.tabBarSelectedIcon]}
+                     style={[
+                       {
+                         opacity: 1,
+                         marginLeft: 10,
+                         height: 22,
+                         width: 22,
+                         alignSelf: 'center',
+                       }, this.state.theme.styles.tabBarSelectedIcon]}
               />
             </View>
           </TouchableHighlight>
@@ -142,32 +145,40 @@ export default class MyPage extends BaseComponent {
           <Text style={styles.groupTitle}>最热管理</Text>
           {/*自定义标签*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Custom_Key, require('./images/ic_custom_language.png'), '自定义标签')}
+          {this.getItem(MORE_MENU.Custom_Key,
+            require('../../assets/images/ic_custom_language.png'), '自定义标签')}
           {/*标签排序*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Sort_Key, require('./images/ic_swap_vert.png'), '标签排序')}
+          {this.getItem(MORE_MENU.Sort_Key,
+            require('../../assets/images/ic_swap_vert.png'), '标签排序')}
           {/*标签移除*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Remove_Key, require('./images/ic_remove.png'), '标签移除')}
+          {this.getItem(MORE_MENU.Remove_Key,
+            require('../../assets/images/ic_remove.png'), '标签移除')}
           {/*趋势管理*/}
           <Text style={styles.groupTitle}>趋势管理</Text>
           {/*自定义语言*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Custom_Language, require('./images/ic_custom_language.png'), '自定义语言')}
+          {this.getItem(MORE_MENU.Custom_Language,
+            require('../../assets/images/ic_custom_language.png'), '自定义语言')}
           {/*语言排序*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Sort_Language, require('./images/ic_swap_vert.png'), '语言排序')}
+          {this.getItem(MORE_MENU.Sort_Language,
+            require('../../assets/images/ic_swap_vert.png'), '语言排序')}
           {/*设置*/}
           <Text style={styles.groupTitle}>设置</Text>
           {/*自定义主题*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.Custom_Theme, require('./images/ic_view_quilt.png'), '自定义主题')}
+          {this.getItem(MORE_MENU.Custom_Theme,
+            require('../../assets/images/ic_view_quilt.png'), '自定义主题')}
           {/*关于作者*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem(MORE_MENU.About_Author, require('./images/ic_insert_emoticon.png'), '关于作者')}
+          {this.getItem(MORE_MENU.About_Author,
+            require('../../assets/images/ic_insert_emoticon.png'), '关于作者')}
           {/*检查更新*/}
           <View style={GlobalStyles.line}/>
-          {this.getItem('更新', require('./images/ic_insert_emoticon.png'), '检查更新')}
+          {this.getItem('更新', require('../../assets/images/ic_update.png'),
+            '检查更新')}
           <View style={GlobalStyles.line}/>
         </ScrollView>
         {this.renderCustomThemeView()}
@@ -182,13 +193,13 @@ const styles = StyleSheet.create({
     padding: 10, height: 60,
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   groupTitle: {
     marginLeft: 10,
     marginTop: 10,
     marginBottom: 5,
     fontSize: 12,
-    color: 'gray'
+    color: 'gray',
   },
 })
