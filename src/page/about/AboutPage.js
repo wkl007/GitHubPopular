@@ -48,10 +48,10 @@ export default class AboutPage extends Component {
       case MORE_MENU.Website:
         TargetComponent = 'WebViewPage'
         params.title = 'GitHubPopular'
-        params.url = 'https://gitee.com/wkl--007/GitHubPopular'
+        params.url = 'https://github.com/wkl007/GitHubPopular'
         break
       case MORE_MENU.Feedback:
-        let url = 'mailto://499657357@qq.com'
+        let url = 'mailto://18404969231@163.com'
         Linking.canOpenURL(url).then(supported => {
           if (!supported) {
             console.log(`can\'t handle url:${url}`)

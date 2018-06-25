@@ -13,11 +13,11 @@
 
 ## 下载
 
-![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/raw/master/screenshot/GitHubPopular-twoCode.png)
+![GitHub Popular](https://raw.githubusercontent.com/wkl007/GitHubPopular/master/screenshot/GitHubPopular-twoCode.png)
 
 ## 真机预览
 
-![GitHub Popular](https://gitee.com/wkl--007/GitHubPopular/raw/master/screenshot/GitHubPopular-1.png)
+![GitHub Popular](https://raw.githubusercontent.com/wkl007/GitHubPopular/master/screenshot/GitHubPopular-1.png)
 
 ## 功能与特性
 
@@ -32,11 +32,11 @@
 * [GitHubTrending ^3.0.0](https://github.com/crazycodeboy/GitHubTrending)
 * [react-navigation ^2.3.1](https://reactnavigation.org/)
 * [react-native-tab-navigator ^0.3.4](https://github.com/happypancake/react-native-tab-navigator)
-* [react-native-scrollable-tab-view ^0.2.8](https://github.com/skv-headless/react-native-scrollable-tab-view)
+* [react-native-scrollable-tab-view ^0.8.0](https://github.com/skv-headless/react-native-scrollable-tab-view)
 * [react-native-easy-toast ^1.1.0](https://github.com/crazycodeboy/react-native-easy-toast)
 * [react-native-check-box ^2.1.0](https://github.com/crazycodeboy/react-native-check-box)
 * [react-native-htmlview ^0.12.1](https://github.com/jsdf/react-native-htmlview)
-* [react-native-parallax-scroll-view ^0.21.2](https://github.com/i6mi6/react-native-parallax-scroll-view)
+* [react-native-parallax-scroll-view ^0.21.3](https://github.com/i6mi6/react-native-parallax-scroll-view)
 * [react-native-sortable-listview ^0.2.8](https://github.com/deanmcpherson/react-native-sortable-listview)
 * [react-native-splash-screen ^3.0.9](https://github.com/crazycodeboy/react-native-splash-screen)
 

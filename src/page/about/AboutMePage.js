@@ -22,22 +22,22 @@ const FLAG = {
         title: 'CSDN',
         url: 'http://blog.csdn.net/qq_35844177',
       },
-      GITEE: {
-        title: '码云',
-        url: 'https://gitee.com/wkl--007',
-      },
       GITHUB: {
         title: 'GitHub',
         url: 'https://github.com/wkl007',
+      },
+      GITEE: {
+        title: '码云',
+        url: 'https://gitee.com/wkl--007',
       },
     }
   },
   CONTACT: {
     name: '联系方式',
     items: {
-      QQ: {
-        title: 'QQ',
-        account: '499657357',
+      wechat: {
+        title: '微信',
+        account: '18404969231',
       },
       Email: {
         title: 'Email',
@@ -120,9 +120,9 @@ export default class AboutMePage extends Component {
       case FLAG.CONTACT:
         this.updateState({showContact: !this.state.showContact})
         break
-      case FLAG.CONTACT.items.QQ:
+      case FLAG.CONTACT.items.wechat:
         Clipboard.setString(tab.account)
-        this.toast.show('QQ:' + tab.account + '已复制到剪切板。')
+        this.toast.show('微信:' + tab.account + '已复制到剪切板。')
         break
       // case FLAG.QQ.items.MD:
       // case FLAG.QQ.items.RN:
