@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native'
+import BaseTouchable from './BaseTouchable'
+
 
 export default class RepositoryCell extends Component {
   constructor (props) {
@@ -58,7 +60,7 @@ export default class RepositoryCell extends Component {
              source={this.state.favoriteIcon}/>
     </TouchableOpacity>
     return (
-      <TouchableOpacity
+      <BaseTouchable
         onPress={this.props.onSelect}
       >
         <View style={styles.cell_container}>
@@ -76,7 +78,7 @@ export default class RepositoryCell extends Component {
             {favoriteButton}
           </View>
         </View>
-      </TouchableOpacity>
+      </BaseTouchable>
     )
   }
 }

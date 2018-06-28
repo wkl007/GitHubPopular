@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
+import BaseTouchable from '../common/BaseTouchable'
+
 
 export default class ViewUtils {
   /**
@@ -22,7 +24,7 @@ export default class ViewUtils {
    */
   static getSettingItem(callback, icon, text, tintStyle, expandableIco) {
     return (
-      <TouchableOpacity
+      <BaseTouchable
         onPress={callback}
       >
         <View style={[styles.setting_item_container]}>
@@ -38,7 +40,7 @@ export default class ViewUtils {
                  style={[{marginRight: 10, height: 22, width: 22, alignSelf: 'center', opacity: 1}, tintStyle]}
           />
         </View>
-      </TouchableOpacity>
+      </BaseTouchable>
     )
   }
 

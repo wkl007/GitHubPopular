@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import BaseTouchable from './BaseTouchable'
 
 export default class TrendingCell extends Component {
   constructor (props) {
@@ -60,7 +61,7 @@ export default class TrendingCell extends Component {
              source={this.state.favoriteIcon}/>
     </TouchableOpacity>
     return (
-      <TouchableOpacity
+      <BaseTouchable
         onPress={this.props.onSelect}
       >
         <View style={styles.cell_container}>
@@ -88,7 +89,7 @@ export default class TrendingCell extends Component {
             {favoriteButton}
           </View>
         </View>
-      </TouchableOpacity>
+      </BaseTouchable>
     )
   }
 }
