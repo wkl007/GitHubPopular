@@ -1,13 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.githubpopular">
+    package="com.githubpupular">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-sdk android:minSdkVersion="8"></uses-sdk>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
       android:name=".MainApplication"
@@ -26,9 +21,6 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
-        <meta-data android:value="5a6c7debf29d986f01000243" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="GitHubPopular" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

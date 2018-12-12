@@ -21,18 +21,18 @@
     "checked": false
   },
   {
-    "path": " AngularJS",
-    "name": " AngularJS",
+    "path": "AngularJS",
+    "name": "AngularJS",
     "checked": false
   },
   {
-    "path": " jQuery",
-    "name": " jQuery",
+    "path": "jQuery",
+    "name": "jQuery",
     "checked": false
   },
   {
-    "path": " react",
-    "name": " React",
+    "path": "react",
+    "name": "React",
     "checked": true
   }
 ]
