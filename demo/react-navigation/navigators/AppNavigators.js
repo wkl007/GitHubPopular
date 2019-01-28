@@ -62,19 +62,18 @@ export const DrawerNav = createDrawerNavigator(
   }
 )
 
-export const MaterialTopTabNavigator = createMaterialTopTabNavigator(
-  {
+export const MaterialTopTabNavigator = createMaterialTopTabNavigator({//在这里配置页面的路由
     Page1: {
       screen: Page1,
       navigationOptions: {
-        tabBarLabel: 'Page1',
+        tabBarLabel: 'Page10',
         tabBarIcon: ({ tintColor, focused }) => (
-          <IonIcons
-            name='ios-home'
+          <Ionicons
+            name={'ios-home'}
             size={26}
             style={{ color: tintColor }}
           />
-        )
+        ),
       }
     },
     Page4: {
@@ -82,12 +81,12 @@ export const MaterialTopTabNavigator = createMaterialTopTabNavigator(
       navigationOptions: {
         tabBarLabel: 'Page4',
         tabBarIcon: ({ tintColor, focused }) => (
-          <IonIcons
-            name='ios-people'
+          <Ionicons
+            name={'ios-people'}
             size={26}
             style={{ color: tintColor }}
           />
-        )
+        ),
       }
     },
     Page3: {
@@ -95,12 +94,12 @@ export const MaterialTopTabNavigator = createMaterialTopTabNavigator(
       navigationOptions: {
         tabBarLabel: 'Page3',
         tabBarIcon: ({ tintColor, focused }) => (
-          <IonIcons
-            name='ios-chatboxes'
+          <Ionicons
+            name={'ios-chatboxes'}
             size={26}
             style={{ color: tintColor }}
           />
-        )
+        ),
       }
     },
   },
@@ -114,18 +113,18 @@ export const MaterialTopTabNavigator = createMaterialTopTabNavigator(
       // activeTintColor: 'white',//label和icon的前景色 活跃状态下（选中）
       // inactiveTintColor: 'gray',//label和icon的前景色 活跃状态下（未选中）
       style: {
-        backgroundColor: '#678'//TabBar 的背景颜色
+        backgroundColor: '#678',//TabBar 的背景颜色
       },
       indicatorStyle: {
         height: 2,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
       },//标签指示器的样式
       labelStyle: {
         fontSize: 13,
         marginTop: 6,
-        marginBottom: 6
-      }
-    }
+        marginBottom: 6,
+      },//文字的样式
+    },
   }
 )
 

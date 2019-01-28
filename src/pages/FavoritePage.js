@@ -1,23 +1,11 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
-import NavigationUtils from '../utils/NavigationUtils'
 
-export default class WelcomePage extends Component {
-  componentDidMount () {
-    const { navigation } = this.props
-    this.timer = setTimeout(() => {
-      NavigationUtils.resetToHomePage({ navigation })
-    }, 200)
-  }
-
-  componentWillUnmount () {
-    this.timer && clearTimeout(this.timer)
-  }
-
+export default class FavoritePage extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>欢迎页面</Text>
+        <Text style={styles.welcome}>收藏</Text>
       </View>
     )
   }

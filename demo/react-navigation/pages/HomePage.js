@@ -27,7 +27,7 @@ export default class HomePage extends Component {
     const { navigation } = this.props
     const { pageCheckedArray } = this.state
     return (
-      <View style={{ flex: 1, backgroundColor: 'orange' }}>
+      <View style={{ flex: 1, backgroundColor: 'gray' }}>
         <Text style={styles.text}>欢迎来到HomePage</Text>
         <Button
           title='Go To Page1'
@@ -72,23 +72,23 @@ export default class HomePage extends Component {
             isChecked={pageCheckedArray[2]}
             leftText='Page3'
           />
-          <Button
-            title='Go to TabNavigator'
-            onPress={() => {
-              let tabs = []
-              for (let i in pageCheckedArray) {
-                pageCheckedArray[i] && tabs.push('Page' + (parseInt(i) + 1))
-              }
-              navigation.navigate('TabNav', { name: 'wkl', tabs })
-            }}
-          />
-          <Button
-            title='Go to DrawerNavigator'
-            onPress={() => {
-              navigation.navigate('DrawerNav', { name: 'wkl' })
-            }}
-          />
         </View>
+        <Button
+          title='Go to TabNavigator'
+          onPress={() => {
+            let tabs = []
+            for (let i in pageCheckedArray) {
+              pageCheckedArray[i] && tabs.push('Page' + (parseInt(i) + 1))
+            }
+            navigation.navigate('TabNav', { name: 'wkl', tabs: tabs })
+          }}
+        />
+        <Button
+          title='Go to DrawerNavigator'
+          onPress={() => {
+            navigation.navigate('DrawerNav', { name: 'wkl' })
+          }}
+        />
       </View>
     )
   }

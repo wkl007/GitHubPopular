@@ -5,11 +5,10 @@ import { MaterialTopTabNavigator } from '../navigators/AppNavigators'
 
 export default class Page2 extends Component {
   render () {
-    const MaterialTopTabNavigator = createAppContainer(MaterialTopTabNavigator)
+    const MaterialTopTabNavigatorContainer = createAppContainer(MaterialTopTabNavigator)
     return <View style={styles.container}>
-      <MaterialTopTabNavigator/>
+      <MaterialTopTabNavigatorContainer/>
     </View>
-
   }
 }
 
