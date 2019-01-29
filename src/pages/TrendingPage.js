@@ -12,7 +12,7 @@ export default class TrendingPage extends Component {
           onPress={() => {
             navigation.setParams({
               theme: {
-                tintColor: 'red',
+                tintColor: 'yellow',
                 updateTime: new Date().getTime()
               }
             })
