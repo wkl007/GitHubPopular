@@ -19,6 +19,7 @@ class HomePage extends Component {
   /**
    * 处理安卓物理返回键
    * @returns {boolean}
+   * https://reactnavigation.org/docs/en/redux-integration.html#handling-the-hardware-back-button-in-android
    */
   onBackPress = () => {
     const { dispatch, nav } = this.props
@@ -41,13 +42,12 @@ const mapStateToProps = state => ({
   theme: state.theme.theme
 })
 
-const mapDispatchToProps = dispatch => ({
+/*const mapDispatchToProps = dispatch => ({
   onThemeChange: theme => dispatch(actions.onThemeChange(theme))
-})
+})*/
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(HomePage)
 
 const styles = StyleSheet.create({
