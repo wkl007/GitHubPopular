@@ -13,14 +13,19 @@
     "react-native-gesture-handler": "^1.0.15",
     "react-native-vector-icons": "^6.2.0",
     "react-navigation": "^3.0.9",
-    "react-navigation-tabs": "^1.0.2"
+    "react-navigation-redux-helpers": "^2.0.9",
+    "react-navigation-tabs": "^1.0.2",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.0.0",
     "jest": "24.0.0",
     "metro-react-native-babel-preset": "0.51.1",
-    "react-test-renderer": "16.6.3"
+    "react-test-renderer": "16.6.3",
+    "redux-devtools": "^3.5.0"
   },
   "jest": {
     "preset": "react-native"
