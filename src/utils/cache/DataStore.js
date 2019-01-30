@@ -77,7 +77,6 @@ export default class DataStore {
     return new Promise((resolve, reject) => {
       if (flag !== FLAG_STOREGE.flag_trending) {
         request(url).then(res => {
-          console.log(res)
           this.saveData(url, res)
           resolve(res)
         }).catch(err => {reject(err)})
