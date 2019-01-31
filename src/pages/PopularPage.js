@@ -99,7 +99,7 @@ class PopularTab extends Component {
       store = {
         items: [],
         isLoading: false,
-        projectModes: [],//要显示的数据
+        projectModels: [],//要显示的数据
         hideLoadingMore: true,//默认显示加载更多
       }
     }
@@ -133,10 +133,11 @@ class PopularTab extends Component {
 
   render () {
     let store = this._store()
+    console.log(store.projectModels)
     return (
       <View style={styles.container}>
         <FlatList
-          data={store.projectModes}
+          data={store.projectModels}
           renderItem={data => this.renderItem(data)}
           keyExtractor={item => '' + item.id}
           refreshControl={
@@ -151,7 +152,7 @@ class PopularTab extends Component {
           }
           ListFooterComponent={this.renderIndicator}
           onEndReached={() => {
-            console.log('---onEndReached----');9
+            console.log('---onEndReached----')
             setTimeout(() => {
               if (this.canLoadMore) {//fix 滚动时两次调用onEndReached https://github.com/facebook/react-native/issues/14015
                 this.loadData(true)

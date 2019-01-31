@@ -13,7 +13,7 @@ export function onRefreshPopular (storeName, url, pageSize) {
     let dataStore = new DateStore()
     //异步action与数据流
     dataStore.fetchData(url, FLAG_STOREGE.flag_popular).then(res => {
-      handleData(dispatch, storeName, res)
+      handleData(dispatch, storeName, res, pageSize)
     }).catch(err => {
       console.log(err)
       dispatch({
@@ -44,7 +44,6 @@ export function onLoadMorePopular (storeName, pageIndex, pageSize, dataArray = [
             error: 'no more',
             storeName,
             pageIndex: --pageIndex,
-            projectModes: dataArray
           })
         }
       } else {
@@ -54,10 +53,10 @@ export function onLoadMorePopular (storeName, pageIndex, pageSize, dataArray = [
           type: Types.POPULAR_LOAD_MORE_SUCCESS,
           storeName,
           pageIndex,
-          projectModes: dataArray.slice(0, max)
+          projectModels: dataArray.slice(0, max)
         })
       }
-    }, 500)
+    }, 200)
   }
 }
 
@@ -69,7 +68,7 @@ function handleData (dispatch, storeName, data, pageSize) {
   dispatch({
     type: Types.POPULAR_REFRESH_SUCCESS,
     items: fixItems,
-    projectModes: pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),//第一次要加载的数据
+    projectModels: pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),//第一次要加载的数据
     storeName,
     pageIndex: 1
   })
