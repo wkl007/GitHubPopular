@@ -55,7 +55,7 @@ export default class PopularPage extends Component {
       style={{ backgroundColor: THEME_COLOR }}
     />
     const TabNavigator = this.tabNames.length ? createAppContainer(createMaterialTopTabNavigator(
-      this.renderTabs,
+      this.renderTabs(),
       {
         tabBarOptions: {
           tabStyle: styles.tabStyle,

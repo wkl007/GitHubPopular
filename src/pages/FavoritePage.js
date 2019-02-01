@@ -21,7 +21,6 @@ class FavoritePage extends Component {
     return (
       <View style={styles.container}>
         {navigationBar}
-        <Text style={styles.welcome}>收藏</Text>
         <Button
           title='更改主题色'
           onPress={() => {
@@ -52,9 +51,6 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
