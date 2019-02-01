@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "GitHubTrending": "^3.0.1",
+    "prop-types": "^15.6.2",
     "react": "16.6.3",
     "react-native": "0.58.1",
     "react-native-check-box": "^2.1.7",

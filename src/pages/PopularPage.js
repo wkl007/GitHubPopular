@@ -16,11 +16,12 @@ import { connect } from 'react-redux'
 import actions from '../redux/action'
 import Toast from 'react-native-easy-toast'
 import PopularItem from '../components/PopularItem'
+import NavigationBar from '../components/NavigationBar'
 import NavigationUtils from '../utils/NavigationUtils'
 
 const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
-const THEME_COLOR = 'red'
+const THEME_COLOR = '#678'
 const pageSize = 10//设为常量，防止修改
 
 export default class PopularPage extends Component {
@@ -29,7 +30,8 @@ export default class PopularPage extends Component {
     this.tabNames = ['iOS', 'Java', 'Android', 'React', 'React Native']
   }
 
-  _renderTabs = () => {
+  // 渲染tabs
+  renderTabs = () => {
     const tabs = {}
     this.tabNames.forEach((item, index) => {
       tabs[`tab${index}`] = {
@@ -39,8 +41,21 @@ export default class PopularPage extends Component {
         }
       }
     })
-    return createAppContainer(createMaterialTopTabNavigator(
-      tabs,
+    return tabs
+  }
+
+  render () {
+    const statusBar = {
+      backgroundColor: THEME_COLOR,
+      barStyle: 'light-content'
+    }
+    const navigationBar = <NavigationBar
+      title='最热'
+      statusBar={statusBar}
+      style={{ backgroundColor: THEME_COLOR }}
+    />
+    const TabNavigator = this.tabNames.length ? createAppContainer(createMaterialTopTabNavigator(
+      this.renderTabs,
       {
         tabBarOptions: {
           tabStyle: styles.tabStyle,
@@ -55,12 +70,11 @@ export default class PopularPage extends Component {
         },
         lazy: true
       }
-    ))
-  }
-
-  render () {
-    const TabNavigator = this._renderTabs()
-    return <TabNavigator/>
+    )) : null
+    return <View style={styles.container}>
+      {navigationBar}
+      {TabNavigator && <TabNavigator/>}
+    </View>
   }
 }
 

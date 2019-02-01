@@ -1,3 +1,6 @@
+/**
+ * 自定义Touchable组件
+ */
 import React, { Component } from 'react'
 import {
   Platform,

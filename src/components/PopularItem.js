@@ -1,3 +1,6 @@
+/**
+ * 最热页面Item
+ */
 import React, { Component } from 'react'
 import {
   Text,
