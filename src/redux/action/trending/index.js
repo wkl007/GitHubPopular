@@ -8,17 +8,16 @@ import { handleData } from '../../../utils/actionUtil'
  * @param storeName
  * @param url
  */
-export function onRefreshPopular (storeName, url, pageSize) {
+export function onRefreshTrending (storeName, url, pageSize) {
   return dispatch => {
-    dispatch({ type: Types.POPULAR_REFRESH, storeName })
+    dispatch({ type: Types.TRENDING_REFRESH, storeName })
     let dataStore = new DateStore()
     //异步action与数据流
-    dataStore.fetchData(url, FLAG_STOREGE.flag_popular).then(res => {
-      handleData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, res, pageSize)
+    dataStore.fetchData(url, FLAG_STOREGE.flag_trending).then(res => {
+      handleData(Types.TRENDING_REFRESH_SUCCESS, dispatch, storeName, res, pageSize)
     }).catch(err => {
-      console.log(err)
       dispatch({
-        type: Types.POPULAR_REFRESH_FAIL,
+        type: Types.TRENDING_REFRESH_FAIL,
         storeName,
         err
       })
@@ -34,14 +33,14 @@ export function onRefreshPopular (storeName, url, pageSize) {
  * @param dataArray 原始数据
  * @param callback 回调函数，可以通过回调函数来向调用页面通信:比如异常信息的展示，没有更多等待
  */
-export function onLoadMorePopular (storeName, pageIndex, pageSize, dataArray = [], callBack) {
+export function onLoadMoreTrending (storeName, pageIndex, pageSize, dataArray = [], callBack) {
   return dispatch => {
     setTimeout(() => {//模拟网络请求
       if ((pageIndex - 1) * pageSize >= dataArray.length) {//已加载完全部数据
         if (typeof callBack === 'function') {
           callBack('no more')
           dispatch({
-            type: Types.POPULAR_LOAD_MORE_FAIL,
+            type: Types.TRENDING_LOAD_MORE_FAIL,
             error: 'no more',
             storeName,
             pageIndex: --pageIndex,
@@ -51,7 +50,7 @@ export function onLoadMorePopular (storeName, pageIndex, pageSize, dataArray = [
         //本次和加载的最大数量
         let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex
         dispatch({
-          type: Types.POPULAR_LOAD_MORE_SUCCESS,
+          type: Types.TRENDING_LOAD_MORE_SUCCESS,
           storeName,
           pageIndex,
           projectModels: dataArray.slice(0, max)
@@ -60,4 +59,3 @@ export function onLoadMorePopular (storeName, pageIndex, pageSize, dataArray = [
     }, 200)
   }
 }
-
