@@ -53,11 +53,11 @@ export default class TrendingDialog extends Component {
       <Modal
         transparent={true}
         visible={this.state.visible}
-        onRequestClose={() => onClose}
+        onRequestClose={onClose}
       >
         <TouchableOpacity
           style={styles.container}
-          onPress={() => this.dismiss()}
+          onPress={this.dismiss}
         >
           <MaterialIcons
             name={'arrow-drop-up'}
@@ -80,12 +80,13 @@ export default class TrendingDialog extends Component {
                     <Text
                       style={styles.text}
                     >{arr[i].showText}</Text>
-                    {
-                      i !== TimeSpans.length - 1
-                        ? <View style={styles.line}/>
-                        : null
-                    }
+
                   </View>
+                  {
+                    i !== TimeSpans.length - 1
+                      ? <View style={styles.line}/>
+                      : null
+                  }
                 </TouchableOpacity>
               })
             }

@@ -130,7 +130,14 @@ class PopularTab extends Component {
     const { item } = data
     return <PopularItem
       item={item}
-      onSelect={() => {}}
+      onSelect={() => {
+        NavigationUtils.goPage(
+          {
+            projectModel: item,
+          },
+          'DetailPage'
+        )
+      }}
     />
   }
 
