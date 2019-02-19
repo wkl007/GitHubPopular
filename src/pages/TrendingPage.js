@@ -38,7 +38,7 @@ export default class TrendingPage extends Component {
   }
 
   // 弹窗分类选择
-  onSelectTimeSpan = (tab) => {
+  onSelectTimeSpan (tab) {
     this.dialog.dismiss()
     this.setState({
       timeSpan: tab
@@ -47,7 +47,7 @@ export default class TrendingPage extends Component {
   }
 
   // 渲染tabs
-  renderTabs = () => {
+  renderTabs () {
     const tabs = {}
     this.tabNames.forEach((item, index) => {
       tabs[`tab${index}`] = {
@@ -61,7 +61,7 @@ export default class TrendingPage extends Component {
   }
 
   // 渲染顶部导航
-  renderTabNav = () => {
+  renderTabNav () {
     if (!this.tabNav) {//优化效率：根据需要选择是否重新创建建TabNavigator，通常tab改变后才重新创建
       this.tabNav = createAppContainer(createMaterialTopTabNavigator(
         this.renderTabs(),
@@ -85,7 +85,7 @@ export default class TrendingPage extends Component {
   }
 
   // 渲染标题
-  renderTitleView = () => {
+  renderTitleView () {
     return <View>
       <TouchableOpacity
         underlayColor='transparent'
@@ -106,7 +106,7 @@ export default class TrendingPage extends Component {
   }
 
   // 渲染弹窗
-  renderTrendingDialog = () => {
+  renderTrendingDialog () {
     return <TrendingDialog
       ref={dialog => this.dialog = dialog}
       onSelect={tab => this.onSelectTimeSpan(tab)}
@@ -153,7 +153,7 @@ class TrendingTab extends Component {
   }
 
   //加载数据
-  loadData = (loadMore) => {
+  loadData (loadMore) {
     const { onRefreshTrending, onLoadMoreTrending } = this.props
     const store = this._store()
     const url = this.genFetchUrl(this.storeName)
@@ -169,7 +169,7 @@ class TrendingTab extends Component {
   }
 
   //获取当前页面有关的数据
-  _store = () => {
+  _store () {
     const { trending } = this.props
     let store = trending[this.storeName]
     if (!store) {
@@ -184,12 +184,12 @@ class TrendingTab extends Component {
   }
 
   //拼接url
-  genFetchUrl = (key) => {
+  genFetchUrl (key) {
     return `${URL}${key}?${this.timeSpan.searchText}`
   }
 
   //渲染每一行
-  renderItem = (data) => {
+  renderItem (data) {
     const { item } = data
     return <TrendingItem
       item={item}
@@ -205,7 +205,7 @@ class TrendingTab extends Component {
   }
 
   //渲染加载更多
-  renderIndicator = () => {
+  renderIndicator () {
     return this._store().hideLoadingMore ? null :
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
@@ -217,7 +217,6 @@ class TrendingTab extends Component {
 
   render () {
     let store = this._store()
-    console.log(store.projectModels)
     return (
       <View style={styles.container}>
         <FlatList
@@ -230,11 +229,11 @@ class TrendingTab extends Component {
               titleColor={THEME_COLOR}
               colors={[THEME_COLOR]}
               refreshing={store.isLoading}
-              onRefresh={this.loadData}
+              onRefresh={() => this.loadData()}
               tintColor={THEME_COLOR}
             />
           }
-          ListFooterComponent={this.renderIndicator}
+          ListFooterComponent={() => this.renderIndicator()}
           onEndReached={() => {
             console.log('---onEndReached----')
             setTimeout(() => {

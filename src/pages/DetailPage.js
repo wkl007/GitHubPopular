@@ -41,12 +41,12 @@ export default class DetailPage extends Component {
     this.backPress.componentWillUnmount()
   }
 
-  onBackPress = () => {
+  onBackPress () {
     this.onBack()
     return true
   }
 
-  onBack = () => {
+  onBack () {
     const { canGoBack } = this.state
     if (canGoBack) {
       this.webView.goBack()
@@ -56,7 +56,7 @@ export default class DetailPage extends Component {
   }
 
   // webView状态
-  onNavigationStateChange = (navState) => {
+  onNavigationStateChange (navState) {
     this.setState({
       canGoBack: navState.canGoBack,
       url: navState.url,
@@ -64,7 +64,7 @@ export default class DetailPage extends Component {
   }
 
   // 渲染左侧按钮
-  renderLeftButton = () => {
+  renderLeftButton () {
     const { canGoBack } = this.state
     return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       {ViewUtil.getLeftBackButton(() => {this.onBackPress()})}
@@ -78,7 +78,7 @@ export default class DetailPage extends Component {
   }
 
   // 渲染右侧按钮
-  renderRightButton = () => {
+  renderRightButton () {
     const { isFavorite } = this.state
     return <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity

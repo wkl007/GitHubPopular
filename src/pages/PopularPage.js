@@ -19,6 +19,7 @@ import PopularItem from '../components/PopularItem'
 import NavigationBar from '../components/NavigationBar'
 import NavigationUtils from '../utils/NavigationUtils'
 import FavoriteDao from '../utils/cache/FavoriteDao'
+import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
 
 const URL = 'https://api.github.com/search/repositories?q='
@@ -34,7 +35,7 @@ export default class PopularPage extends Component {
   }
 
   // 渲染tabs
-  renderTabs = () => {
+  renderTabs () {
     const tabs = {}
     this.tabNames.forEach((item, index) => {
       tabs[`tab${index}`] = {
@@ -93,7 +94,7 @@ class PopularTab extends Component {
   }
 
   //加载数据
-  loadData = (loadMore) => {
+  loadData (loadMore) {
     const { onRefreshPopular, onLoadMorePopular } = this.props
     const store = this._store()
     const url = this.genFetchUrl(this.storeName)
@@ -104,12 +105,12 @@ class PopularTab extends Component {
       })
     } else {
       //首次加载
-      onRefreshPopular(this.storeName, url, pageSize)
+      onRefreshPopular(this.storeName, url, pageSize, favoriteDao)
     }
   }
 
   //获取当前页面有关的数据
-  _store = () => {
+  _store () {
     const { popular } = this.props
     let store = popular[this.storeName]
     if (!store) {
@@ -124,12 +125,12 @@ class PopularTab extends Component {
   }
 
   //拼接url
-  genFetchUrl = (key) => {
+  genFetchUrl (key) {
     return URL + key + QUERY_STR
   }
 
   //渲染每一行
-  renderItem = (data) => {
+  renderItem (data) {
     const { item } = data
     return <PopularItem
       projectModel={item}
@@ -141,14 +142,14 @@ class PopularTab extends Component {
           'DetailPage'
         )
       }}
-      onFavorite={(item,isFavorite) => {
-        
+      onFavorite={(item, isFavorite) => {
+        FavoriteUtil.onFavorite(favoriteDao, item, isFavorite, FLAG_STOREGE.flag_popular)
       }}
     />
   }
 
   //渲染加载更多
-  renderIndicator = () => {
+  renderIndicator () {
     return this._store().hideLoadingMore ? null :
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
@@ -166,18 +167,18 @@ class PopularTab extends Component {
         <FlatList
           data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => '' + item.id}
+          keyExtractor={item => '' + item.item.id}
           refreshControl={
             <RefreshControl
               title='Loading'
               titleColor={THEME_COLOR}
               colors={[THEME_COLOR]}
               refreshing={store.isLoading}
-              onRefresh={this.loadData}
+              onRefresh={() => this.loadData()}
               tintColor={THEME_COLOR}
             />
           }
-          ListFooterComponent={this.renderIndicator}
+          ListFooterComponent={() => this.renderIndicator()}
           onEndReached={() => {
             console.log('---onEndReached----')
             setTimeout(() => {

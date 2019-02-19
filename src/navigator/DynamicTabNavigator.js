@@ -75,7 +75,7 @@ class DynamicTabNavigator extends Component {
     console.disableYellowBox = true
   }
 
-  _tabNavigator = () => {
+  _tabNavigator () {
     if (this.Tabs) {
       return this.Tabs
     }

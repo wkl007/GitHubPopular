@@ -35,13 +35,13 @@ export default class TrendingDialog extends Component {
     menus: []
   }
 
-  show = () => {
+  show () {
     this.setState({
       visible: true
     })
   }
 
-  dismiss = () => {
+  dismiss () {
     this.setState({
       visible: false
     })
@@ -57,7 +57,7 @@ export default class TrendingDialog extends Component {
       >
         <TouchableOpacity
           style={styles.container}
-          onPress={this.dismiss}
+          onPress={() => this.dismiss()}
         >
           <MaterialIcons
             name={'arrow-drop-up'}

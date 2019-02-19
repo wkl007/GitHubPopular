@@ -5,6 +5,8 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import PropTypes from 'prop-types'
 
+const THEME_COLOR = '#678'
+
 export default class BaseItem extends Component {
   static propTypes = {
     projectModel: PropTypes.object,
@@ -35,26 +37,26 @@ export default class BaseItem extends Component {
   }
 
   // 设置收藏
-  setFavoriteState = (isFavorite) => {
+  setFavoriteState (isFavorite) {
     this.props.projectModel.isFavorite = isFavorite
     this.setState({
       isFavorite
     })
   }
 
-  onItemClick = () => {
+  onItemClick () {
     this.props.onSelect(isFavorite => {
       this.setFavoriteState(isFavorite)
     })
   }
 
-  onPressFavorite = () => {
+  onPressFavorite () {
     this.setFavoriteState(!this.state.isFavorite)
     this.props.onFavorite(this.props.projectModel.item, !this.state.isFavorite)
   }
 
-  renderFavoriteIcon = () => {
-    const { theme } = this.props
+  renderFavoriteIcon () {
+    // const { theme } = this.props
     const { isFavorite } = this.state
     return <TouchableOpacity
       style={{ padding: 6 }}
@@ -64,7 +66,7 @@ export default class BaseItem extends Component {
       <FontAwesome
         name={isFavorite ? 'star' : 'star-o'}
         size={26}
-        style={{ color: theme.themeColor }}
+        style={{ color: THEME_COLOR }}
       />
     </TouchableOpacity>
   }
