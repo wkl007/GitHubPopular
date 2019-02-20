@@ -35,13 +35,13 @@ export default class TrendingDialog extends Component {
     menus: []
   }
 
-  show () {
+  show = () => {
     this.setState({
       visible: true
     })
   }
 
-  dismiss () {
+  dismiss = () => {
     this.setState({
       visible: false
     })

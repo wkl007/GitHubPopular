@@ -21,7 +21,7 @@ export default class BackPressComponent {
     if (this.props.backPress) BackHandler.removeEventListener('hardwareBackPress', this._hardwareBackPress)
   }
 
-  onHardwareBackPress (e) {
+  onHardwareBackPress = (e) => {
     return this.props.backPress(e)
   }
 }

@@ -12,6 +12,7 @@ import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
 import ViewUtil from '../utils/ViewUtil'
 import NavigationUtil from '../utils/NavigationUtils'
+import FavoriteDao from '../utils/cache/FavoriteDao'
 
 const TRENDING_URL = 'https://github.com/'
 const THEME_COLOR = '#678'
@@ -20,14 +21,16 @@ export default class DetailPage extends Component {
   constructor (props) {
     super(props)
     this.params = this.props.navigation.state.params
-    const { projectModel } = this.params
-    this.url = projectModel.html_url || `${TRENDING_URL}${projectModel.fullName}`
-    const title = projectModel.full_name || projectModel.fullName
+    const { projectModel, flag } = this.params
+    const { item } = projectModel
+    this.favoriteDao = new FavoriteDao(flag)
+    this.url = item.html_url || `${TRENDING_URL}${item.fullName}`
+    const title = item.full_name || item.fullName
     this.state = {
       title,
       url: this.url,
       canGoBack: false,
-      isFavorite: false
+      isFavorite: projectModel.isFavorite
     }
     this.backPress = new BackPressComponent({ backPress: this.onBackPress })
   }
@@ -41,12 +44,12 @@ export default class DetailPage extends Component {
     this.backPress.componentWillUnmount()
   }
 
-  onBackPress () {
+  onBackPress = () => {
     this.onBack()
     return true
   }
 
-  onBack () {
+  onBack = () => {
     const { canGoBack } = this.state
     if (canGoBack) {
       this.webView.goBack()
@@ -56,15 +59,33 @@ export default class DetailPage extends Component {
   }
 
   // webView状态
-  onNavigationStateChange (navState) {
+  onNavigationStateChange = (navState) => {
     this.setState({
       canGoBack: navState.canGoBack,
       url: navState.url,
     })
   }
 
+  // 收藏||取消收藏
+  onFavoriteButtonClick = () => {
+    const { projectModel, callback } = this.params
+    const isFavorite = projectModel.isFavorite = !projectModel.isFavorite
+    callback(isFavorite)//更新Item的收藏状态
+    this.setState({
+      isFavorite
+    })
+    let key = projectModel.item.fullName ? projectModel.item.fullName : projectModel.item.id.toString()
+    if (projectModel.isFavorite) {
+      //收藏
+      this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item))
+    } else {
+      //取消收藏
+      this.favoriteDao.removeFavoriteItem(key)
+    }
+  }
+
   // 渲染左侧按钮
-  renderLeftButton () {
+  renderLeftButton = () => {
     const { canGoBack } = this.state
     return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       {ViewUtil.getLeftBackButton(() => {this.onBackPress()})}
@@ -78,11 +99,11 @@ export default class DetailPage extends Component {
   }
 
   // 渲染右侧按钮
-  renderRightButton () {
+  renderRightButton = () => {
     const { isFavorite } = this.state
     return <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => this.onFavoriteButtonClick()}
       >
         <FontAwesome
           name={isFavorite ? 'star' : 'star-o'}

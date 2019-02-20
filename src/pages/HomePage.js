@@ -26,7 +26,7 @@ class HomePage extends Component {
    * @returns {boolean}
    * https://reactnavigation.org/docs/en/redux-integration.html#handling-the-hardware-back-button-in-android
    */
-  onBackPress () {
+  onBackPress = () => {
     const { dispatch, nav } = this.props
     if (nav.routes[1].index === 0) {//如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
       return false

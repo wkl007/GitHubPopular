@@ -4697,6 +4697,13 @@ react-native-easy-toast@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-event-bus@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-event-bus/download/react-native-event-bus-1.0.0.tgz#e193b17bb8639b623f1d72e8596e0cd8635b59d1"
+  integrity sha1-4ZOxe7hjm2I/HXLoWW4M2GNbWdE=
+  dependencies:
+    prop-types "^15.5.7"
+
 react-native-gesture-handler@^1.0.0, react-native-gesture-handler@^1.0.15:
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.15.tgz#7e0d0a457820a3c9325a3d492daaed14400508a6"

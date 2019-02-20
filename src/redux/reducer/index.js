@@ -3,6 +3,7 @@ import { RootRoute, RootNavigator } from '../../navigator/AppNavigators'
 import theme from './theme'
 import popular from './popular'
 import trending from './trending'
+import favorite from './favorite'
 
 //1. 指定默认state
 const navState = RootNavigator.router.getStateForAction(RootNavigator.router.getActionForPathAndParams(RootRoute))
@@ -19,5 +20,6 @@ export default combineReducers({
   nav: navReducer,
   theme,
   popular,
-  trending
+  trending,
+  favorite
 })

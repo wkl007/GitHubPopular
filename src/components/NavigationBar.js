@@ -42,7 +42,7 @@ export default class NavigationBar extends Component {
   }
 
   // 渲染按钮
-  renderButtonElement (data) {
+  renderButtonElement = (data) => {
     return (
       <View style={styles.navBarButton}>
         {data ? data : null}

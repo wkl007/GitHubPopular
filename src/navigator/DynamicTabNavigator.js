@@ -8,11 +8,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { connect } from 'react-redux'
+import EventBus from 'react-native-event-bus'
 import NavigationUtils from '../utils/NavigationUtils'
 import PopularPage from '../pages/PopularPage'
 import TrendingPage from '../pages/TrendingPage'
 import FavoritePage from '../pages/FavoritePage'
 import MyPage from '../pages/MyPage'
+import EventTypes from '../utils/EventTypes'
 
 const TABS = {//在这里配置页面的路由
   PopularPage: {
@@ -75,7 +77,7 @@ class DynamicTabNavigator extends Component {
     console.disableYellowBox = true
   }
 
-  _tabNavigator () {
+  _tabNavigator = () => {
     if (this.Tabs) {
       return this.Tabs
     }
@@ -94,9 +96,16 @@ class DynamicTabNavigator extends Component {
   }
 
   render () {
-    const Tabs = this._tabNavigator()
+    const Tab = this._tabNavigator()
     return (
-      <Tabs/>
+      <Tab
+        onNavigationStateChange={(prevState, newState, action) => {
+          EventBus.getInstance().fireEvent(EventTypes.bottom_tab_select, {
+            from: prevState.index,
+            to: newState.index
+          })
+        }}
+      />
     )
   }
 }

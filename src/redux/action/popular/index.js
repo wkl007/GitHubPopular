@@ -81,7 +81,7 @@ export function onFlushPopularFavorite (storeName, pageIndex, pageSize, dataArra
     let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex
     _projectModels(dataArray.slice(0, max), favoriteDao, data => {
       dispatch({
-        type: Types.POPULAR_LOAD_MORE_SUCCESS,
+        type: Types.POPULAR_FLUSH_FAVORITE,
         storeName,
         pageIndex,
         projectModels: data

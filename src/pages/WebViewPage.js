@@ -31,12 +31,12 @@ export default class WebViewPage extends Component {
 
   }
 
-  onBackPress () {
+  onBackPress = () => {
     this.onBack()
     return true
   }
 
-  onBack () {
+  onBack = () => {
     const { canGoBack } = this.state
     if (canGoBack) {
       this.webView.goBack()
