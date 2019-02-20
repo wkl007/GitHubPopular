@@ -12,6 +12,8 @@ import WelcomePage from '../pages/WelcomePage'
 import HomePage from '../pages/HomePage'
 import DetailPage from '../pages/DetailPage'
 import WebViewPage from '../pages/WebViewPage'
+import AboutPage from '../pages/about/AboutPage'
+import AboutMePage from '../pages/about/AboutMePage'
 
 export const RootRoute = 'Init'//设置根路由
 
@@ -38,6 +40,12 @@ const MainNavigator = createStackNavigator(
     },
     WebViewPage: {
       screen: WebViewPage
+    },
+    AboutPage: {
+      screen: AboutPage
+    },
+    AboutMePage: {
+      screen: AboutMePage
     }
   },
   {

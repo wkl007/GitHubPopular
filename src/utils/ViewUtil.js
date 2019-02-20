@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import BaseTouchable from '../components/BaseTouchable'
 
 export default class ViewUtil {
   /**
@@ -20,36 +21,37 @@ export default class ViewUtil {
    */
   static getSetingItem (callBack, text, color, Icons, icon, expandableIco) {
     return (
-      <TouchableOpacity
+      <BaseTouchable
         onPress={callBack}
-        style={styles.setting_item_container}
       >
-        <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-          {Icons && icon ?
-            <Icons
-              name={icon}
-              size={16}
-              style={{ color: color, marginRight: 10 }}
-            /> :
-            <View style={{ opacity: 1, width: 16, height: 16, marginRight: 10 }}/>
-          }
-          <Text>{text}</Text>
+        <View style={styles.setting_item_container}>
+          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+            {Icons && icon ?
+              <Icons
+                name={icon}
+                size={16}
+                style={{ color: color, marginRight: 10 }}
+              /> :
+              <View style={{ opacity: 1, width: 16, height: 16, marginRight: 10 }}/>
+            }
+            <Text>{text}</Text>
+          </View>
+          <Ionicons
+            name={expandableIco ? expandableIco : 'ios-arrow-forward'}
+            size={16}
+            style={{
+              marginRight: 10,
+              alignSelf: 'center',
+              color: color || 'black'
+            }}
+          />
         </View>
-        <Ionicons
-          name={expandableIco ? expandableIco : 'ios-arrow-forward'}
-          size={16}
-          style={{
-            marginRight: 10,
-            alignSelf: 'center',
-            color: color || 'black'
-          }}
-        />
-      </TouchableOpacity>
+      </BaseTouchable>
     )
   }
 
   /**
-   * 获取设置页的Item
+   * 获取我的页面的Item
    * @param callBack 单击item的回调
    * @param menu 显示的文本
    * @param color 图标着色
