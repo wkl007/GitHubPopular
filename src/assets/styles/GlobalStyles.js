@@ -6,6 +6,7 @@ import { Dimensions } from 'react-native'
 
 const BACKGROUND_COLOR = '#f3f3f4'
 const { height, width } = Dimensions.get('window')
+
 export default {
   line: {
     height: 0.5,

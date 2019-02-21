@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import actions from '../redux/action'
 import BackPressComponent from '../components/BackPressComponent'
-import NavigationUtils from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import DynamicTabNavigator from '../navigator/DynamicTabNavigator'
 
 class HomePage extends Component {
@@ -37,7 +37,7 @@ class HomePage extends Component {
 
   render () {
     const { navigation } = this.props
-    NavigationUtils.navigation = navigation
+    NavigationUtil.navigation = navigation
     return <DynamicTabNavigator/>
   }
 }

@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
 import ViewUtil from '../utils/ViewUtil'
-import NavigationUtil from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 
 const TRENDING_URL = 'https://github.com/'

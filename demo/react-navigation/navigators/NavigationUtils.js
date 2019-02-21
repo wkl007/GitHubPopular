@@ -1,7 +1,7 @@
 /**
  * 全局导航控制类
  */
-export default class NavigationUtils {
+export default class NavigationUtil {
   /**
    * 返回上一页
    * @param navigation

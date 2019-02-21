@@ -18,7 +18,7 @@ import Toast from 'react-native-easy-toast'
 import EventBus from 'react-native-event-bus'
 import PopularItem from '../components/PopularItem'
 import NavigationBar from '../components/NavigationBar'
-import NavigationUtils from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
@@ -154,7 +154,7 @@ class PopularTab extends Component {
     return <PopularItem
       projectModel={item}
       onSelect={(callback) => {
-        NavigationUtils.goPage(
+        NavigationUtil.goPage(
           {
             projectModel: item,
             flag: FLAG_STOREGE.flag_popular,

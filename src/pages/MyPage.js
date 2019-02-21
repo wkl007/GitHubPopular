@@ -16,7 +16,7 @@ import BaseTouchable from '../components/BaseTouchable'
 import ViewUtil from '../utils/ViewUtil'
 import { MORE_MENU } from '../utils/MoreMenu'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
-import NavigationUtils from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 
 const THEME_COLOR = '#678'
@@ -32,11 +32,16 @@ class MyPage extends Component {
         params.title = '教程'
         params.url = 'https://coding.m.imooc.com/classindex.html?cid=89'
         break
-
+      case MORE_MENU.About:
+        RouteName = 'AboutPage'
+        break
+      case MORE_MENU.About_Author:
+        RouteName = 'AboutMePage'
+        break
     }
 
     if (RouteName) {
-      NavigationUtils.goPage(params, RouteName)
+      NavigationUtil.goPage(params, RouteName)
     }
   }
 

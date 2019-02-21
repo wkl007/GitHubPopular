@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
 import ViewUtil from '../utils/ViewUtil'
-import NavigationUtil from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 
 const THEME_COLOR = '#678'

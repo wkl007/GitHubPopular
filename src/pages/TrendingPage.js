@@ -22,7 +22,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import TrendingItem from '../components/TrendingItem'
 import NavigationBar from '../components/NavigationBar'
 import TrendingDialog, { TimeSpans } from '../components/TrendingDialog'
-import NavigationUtils from '../utils/NavigationUtils'
+import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
@@ -214,7 +214,7 @@ class TrendingTab extends Component {
     return <TrendingItem
       projectModel={item}
       onSelect={(callback) => {
-        NavigationUtils.goPage(
+        NavigationUtil.goPage(
           {
             projectModel: item,
             flag: FLAG_STOREGE.flag_trending,
