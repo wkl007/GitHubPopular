@@ -96,6 +96,7 @@ export default class AboutMePage extends Component {
         </View>
       )
     }
+    return views
   }
 
   render () {

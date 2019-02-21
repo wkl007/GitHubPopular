@@ -31,14 +31,14 @@ export default class AboutCommon {
   constructor (props, updateState) {
     this.props = props
     this.updateState = updateState
-    this.updateState({
-      data: config
-    })
     this.backPress = new BackPressComponent({ backPress: this.onBackPress })
   }
 
   componentDidMount () {
     this.backPress.componentDidMount()
+    this.updateState({
+      data: config
+    })
   }
 
   componentWillUnmount () {
