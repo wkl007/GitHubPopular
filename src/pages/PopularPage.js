@@ -22,6 +22,7 @@ import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
+import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import EventTypes from '../utils/EventTypes'
 
 const URL = 'https://api.github.com/search/repositories?q='
@@ -30,20 +31,24 @@ const THEME_COLOR = '#678'
 const pageSize = 10//设为常量，防止修改
 const favoriteDao = new FavoriteDao(FLAG_STOREGE.flag_popular)
 
-export default class PopularPage extends Component {
+class PopularPage extends Component {
   constructor (props) {
     super(props)
-    this.tabNames = ['iOS', 'Java', 'Android', 'React', 'React Native']
+    const { onLoadLanguage } = this.props
+    onLoadLanguage(FLAG_LANGUAGE.flag_key)
   }
 
   // 渲染tabs
   renderTabs = () => {
     const tabs = {}
-    this.tabNames.forEach((item, index) => {
-      tabs[`tab${index}`] = {
-        screen: props => <PopularTabPage {...props} tabLabel={item}/>,
-        navigationOptions: {
-          title: item
+    const { keys, theme } = this.props
+    keys.forEach((item, index) => {
+      if (item.checked) {
+        tabs[`tab${index}`] = {
+          screen: props => <PopularTabPage {...props} tabLabel={item.name}/>,
+          navigationOptions: {
+            title: item.name
+          }
         }
       }
     })
@@ -51,6 +56,7 @@ export default class PopularPage extends Component {
   }
 
   render () {
+    const { keys, theme } = this.props
     const statusBar = {
       backgroundColor: THEME_COLOR,
       barStyle: 'light-content'
@@ -60,7 +66,7 @@ export default class PopularPage extends Component {
       statusBar={statusBar}
       style={{ backgroundColor: THEME_COLOR }}
     />
-    const TabNavigator = this.tabNames.length ? createAppContainer(createMaterialTopTabNavigator(
+    const TabNavigator = keys.length ? createAppContainer(createMaterialTopTabNavigator(
       this.renderTabs(),
       {
         tabBarOptions: {
@@ -83,6 +89,16 @@ export default class PopularPage extends Component {
     </View>
   }
 }
+
+const mapPopularStateToProps = state => ({
+  keys: state.language.keys
+})
+
+const mapPopularDispatchToProps = dispatch => ({
+  onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag))
+})
+
+export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(PopularPage)
 
 class PopularTab extends Component {
   constructor (props) {
@@ -225,7 +241,7 @@ class PopularTab extends Component {
 }
 
 const mapStateToProps = state => ({
-  popular: state.popular
+  popular: state.popular,
 })
 
 const mapDispatchToProps = dispatch => ({

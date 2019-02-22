@@ -26,7 +26,9 @@ import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STOREGE } from '../utils/cache/DataStore'
+import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import EventTypes from '../utils/EventTypes'
+import ArrayUtil from '../utils/ArrayUtil'
 
 const URL = 'https://github.com/trending/'
 const THEME_COLOR = '#678'
@@ -34,10 +36,12 @@ const pageSize = 10//设为常量，防止修改
 const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE'//类型更改
 const favoriteDao = new FavoriteDao(FLAG_STOREGE.flag_trending)
 
-export default class TrendingPage extends Component {
+class TrendingPage extends Component {
   constructor (props) {
     super(props)
-    this.tabNames = ['All', 'C', 'C#', 'PHP', 'JavaScript']
+    const { onLoadLanguage } = this.props
+    onLoadLanguage(FLAG_LANGUAGE.flag_language)
+    this.preKeys = []
     this.state = {
       timeSpan: TimeSpans[0]
     }
@@ -55,11 +59,15 @@ export default class TrendingPage extends Component {
   // 渲染tabs
   renderTabs = () => {
     const tabs = {}
-    this.tabNames.forEach((item, index) => {
-      tabs[`tab${index}`] = {
-        screen: props => <TrendingTabPage {...props} tabLabel={item} timeSpan={this.state.timeSpan}/>,
-        navigationOptions: {
-          title: item
+    const { keys, theme } = this.props
+    this.preKeys = keys
+    keys.forEach((item, index) => {
+      if (item.checked) {
+        tabs[`tab${index}`] = {
+          screen: props => <TrendingTabPage {...props} tabLabel={item.name} timeSpan={this.state.timeSpan}/>,
+          navigationOptions: {
+            title: item.name
+          }
         }
       }
     })
@@ -68,7 +76,7 @@ export default class TrendingPage extends Component {
 
   // 渲染顶部导航
   renderTabNav = () => {
-    if (!this.tabNav) {//优化效率：根据需要选择是否重新创建建TabNavigator，通常tab改变后才重新创建
+    if (!this.tabNav || !ArrayUtil.isEqual(this.preKeys, this.props.keys)) {//优化效率：根据需要选择是否重新创建建TabNavigator，通常tab改变后才重新创建
       this.tabNav = createAppContainer(createMaterialTopTabNavigator(
         this.renderTabs(),
         {
@@ -120,6 +128,7 @@ export default class TrendingPage extends Component {
   }
 
   render () {
+    const { keys, theme } = this.props
     const statusBar = {
       backgroundColor: THEME_COLOR,
       barStyle: 'light-content'
@@ -129,7 +138,7 @@ export default class TrendingPage extends Component {
       statusBar={statusBar}
       style={{ backgroundColor: THEME_COLOR }}
     />
-    const TabNavigator = this.tabNames.length ? this.renderTabNav() : null
+    const TabNavigator = keys.length ? this.renderTabNav() : null
     return <View style={styles.container}>
       {navigationBar}
       {TabNavigator && <TabNavigator/>}
@@ -137,6 +146,16 @@ export default class TrendingPage extends Component {
     </View>
   }
 }
+
+const mapTrendingStateToProps = state => ({
+  keys: state.language.languages
+})
+
+const mapTrendingDispatchToProps = dispatch => ({
+  onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag))
+})
+
+export default connect(mapTrendingStateToProps, mapTrendingDispatchToProps)(TrendingPage)
 
 class TrendingTab extends Component {
   constructor (props) {
