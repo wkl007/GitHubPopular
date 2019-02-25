@@ -14,6 +14,7 @@ import DetailPage from '../pages/DetailPage'
 import WebViewPage from '../pages/WebViewPage'
 import AboutPage from '../pages/about/AboutPage'
 import AboutMePage from '../pages/about/AboutMePage'
+import CustomKeyPage from '../pages/CustomKeyPage'
 
 export const RootRoute = 'Init'//设置根路由
 
@@ -46,6 +47,9 @@ const MainNavigator = createStackNavigator(
     },
     AboutMePage: {
       screen: AboutMePage
+    },
+    CustomKeyPage: {
+      screen: CustomKeyPage
     }
   },
   {
