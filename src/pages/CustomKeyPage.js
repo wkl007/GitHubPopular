@@ -91,15 +91,55 @@ class CustomKeyPage extends Component {
 
   onBack = () => {
     if (this.changeValues.length > 0) {
-
+      Alert.alert('提示', '要保存修改吗',
+        [
+          {
+            text: '否',
+            onPress: () => {
+              NavigationUtil.goBack(this.props.navigation)
+            }
+          },
+          {
+            text: '是',
+            onPress: () => {
+              this.onSave()
+            }
+          }
+        ])
     } else {
       NavigationUtil.goBack(this.props.navigation)
     }
   }
 
-  onSave = () => {}
+  //保存修改
+  onSave = () => {
+    if (this.changeValues.length === 0) {
+      NavigationUtil.goBack(this.props.navigation)
+      return
+    }
+    let keys
+    //移除标签的特殊处理
+    if (this.isRemoveKey) {
+      for (let i = 0, length = this.changeValues.length; i < length; i++) {
+        ArrayUtil.remove(keys = CustomKeyPage.getKeys(this.props, true), this.changeValues[i], 'name')
+      }
+    }
+    //更新本地数据
+    this.languageDao.save(keys || this.state.keys)
+    const { onLoadLanguage } = this.props
+    onLoadLanguage(this.params.flag)
+    NavigationUtil.goBack(this.props.navigation)
+  }
 
-  onClick = (data, index) => {}
+  // 改变收藏状态
+  onClick = (data, index) => {
+    data.checked = !data.checked
+    ArrayUtil.updateArray(this.changeValues, data)
+    this.state.keys[index] = data//更新state以便显示选中状态
+    this.setState({
+      keys: this.state.keys
+    })
+  }
 
   // 渲染复选框图标
   renderCheckedImage = (checked) => {

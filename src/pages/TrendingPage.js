@@ -264,7 +264,7 @@ class TrendingTab extends Component {
         <FlatList
           data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => '' + (item.id || item.fullName)}
+          keyExtractor={item => "" + item.item.fullName}
           refreshControl={
             <RefreshControl
               title='Loading'
