@@ -4,8 +4,10 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import actions from '../redux/action'
 import BackPressComponent from '../components/BackPressComponent'
+import CustomTheme from '../pages/CustomTheme'
 import NavigationUtil from '../utils/NavigationUtil'
 import DynamicTabNavigator from '../navigator/DynamicTabNavigator'
+import GlobalStyles from '../assets/styles/GlobalStyles'
 
 class HomePage extends Component {
   constructor (props) {
@@ -35,24 +37,40 @@ class HomePage extends Component {
     return true
   }
 
+  renderCustomThemeView = () => {
+    const { customThemeViewVisible, onShowCustomThemeView } = this.props
+    return (
+      <CustomTheme
+        visible={customThemeViewVisible}
+        {...this.props}
+        onClose={() => onShowCustomThemeView(false)}
+      />
+    )
+  }
+
   render () {
     const { navigation } = this.props
     NavigationUtil.navigation = navigation
-    return <DynamicTabNavigator/>
+    return <View style={GlobalStyles.root_container}>
+      <DynamicTabNavigator/>
+      {this.renderCustomThemeView()}
+    </View>
   }
 }
 
 const mapStateToProps = state => ({
   nav: state.nav,
-  theme: state.theme.theme
+  theme: state.theme.theme,
+  customThemeViewVisible: state.theme.customThemeViewVisible
 })
 
-/*const mapDispatchToProps = dispatch => ({
-  onThemeChange: theme => dispatch(actions.onThemeChange(theme))
-})*/
+const mapDispatchToProps = dispatch => ({
+  onShowCustomThemeView: show => dispatch(actions.onShowCustomThemeView(show))
+})
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(HomePage)
 
 const styles = StyleSheet.create({

@@ -107,7 +107,7 @@ export default class AboutCommon {
     const { theme } = this.props
     const renderConfig = this.getParallaxRenderConfig(params)
     return <ParallaxScrollView
-      backgroundColor={THEME_COLOR}
+      backgroundColor={theme.themeColor}
       contentBackgroundColor={GlobalStyles.backgroundColor}
       parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
       stickyHeaderHeight={STICKY_HEADER_HEIGHT}

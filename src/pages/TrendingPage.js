@@ -29,6 +29,7 @@ import { FLAG_STOREGE } from '../utils/cache/DataStore'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import EventTypes from '../utils/EventTypes'
 import ArrayUtil from '../utils/ArrayUtil'
+import PopularItem from './PopularPage'
 
 const URL = 'https://github.com/trending/'
 const THEME_COLOR = '#678'
@@ -64,7 +65,8 @@ class TrendingPage extends Component {
     keys.forEach((item, index) => {
       if (item.checked) {
         tabs[`tab${index}`] = {
-          screen: props => <TrendingTabPage {...props} tabLabel={item.name} timeSpan={this.state.timeSpan}/>,
+          screen: props => <TrendingTabPage {...props} tabLabel={item.name} timeSpan={this.state.timeSpan}
+                                            theme={theme}/>,
           navigationOptions: {
             title: item.name
           }
@@ -76,7 +78,9 @@ class TrendingPage extends Component {
 
   // 渲染顶部导航
   renderTabNav = () => {
-    if (!this.tabNav || !ArrayUtil.isEqual(this.preKeys, this.props.keys)) {//优化效率：根据需要选择是否重新创建建TabNavigator，通常tab改变后才重新创建
+    const { theme } = this.props
+    if (theme !== this.theme || !this.tabNav || !ArrayUtil.isEqual(this.preKeys, this.props.keys)) {//优化效率：根据需要选择是否重新创建建TabNavigator，通常tab改变后才重新创建
+      this.theme = theme
       this.tabNav = createAppContainer(createMaterialTopTabNavigator(
         this.renderTabs(),
         {
@@ -84,7 +88,7 @@ class TrendingPage extends Component {
             tabStyle: styles.tabStyle,
             style: {
               height: 30,//fix 开启scrollEnabled后再Android上初次加载时闪烁问题
-              backgroundColor: '#678',//TabBar背景色
+              backgroundColor: theme.themeColor,//TabBar背景色
             },
             indicatorStyle: styles.indicatorStyle,//标签指示器的样式
             labelStyle: styles.labelStyle,//文字的样式
@@ -130,13 +134,13 @@ class TrendingPage extends Component {
   render () {
     const { keys, theme } = this.props
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const navigationBar = <NavigationBar
       titleView={this.renderTitleView()}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     const TabNavigator = keys.length ? this.renderTabNav() : null
     return <View style={styles.container}>
@@ -148,7 +152,8 @@ class TrendingPage extends Component {
 }
 
 const mapTrendingStateToProps = state => ({
-  keys: state.language.languages
+  keys: state.language.languages,
+  theme: state.theme.theme,
 })
 
 const mapTrendingDispatchToProps = dispatch => ({
@@ -230,11 +235,14 @@ class TrendingTab extends Component {
   //渲染每一行
   renderItem = (data) => {
     const { item } = data
+    const { theme } = this.props
     return <TrendingItem
       projectModel={item}
+      theme={theme}
       onSelect={(callback) => {
         NavigationUtil.goPage(
           {
+            theme,
             projectModel: item,
             flag: FLAG_STOREGE.flag_trending,
             callback
@@ -259,20 +267,21 @@ class TrendingTab extends Component {
 
   render () {
     let store = this._store()
+    const { theme } = this.props
     return (
       <View style={styles.container}>
         <FlatList
           data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => "" + item.item.fullName}
+          keyExtractor={item => '' + item.item.fullName}
           refreshControl={
             <RefreshControl
               title='Loading'
-              titleColor={THEME_COLOR}
-              colors={[THEME_COLOR]}
+              titleColor={theme.themeColor}
+              colors={[theme.themeColor]}
               refreshing={store.isLoading}
               onRefresh={() => this.loadData()}
-              tintColor={THEME_COLOR}
+              tintColor={theme.themeColor}
             />
           }
           ListFooterComponent={() => this.renderIndicator()}

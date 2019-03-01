@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import { RootRoute, RootNavigator } from '../../navigator/AppNavigators'
-import theme from './theme'
 import popular from './popular'
 import trending from './trending'
 import favorite from './favorite'
 import language from './language'
+import theme from './theme'
 
 //1. 指定默认state
 const navState = RootNavigator.router.getStateForAction(RootNavigator.router.getActionForPathAndParams(RootRoute))
@@ -19,9 +19,9 @@ const navReducer = (state = navState, action) => {
 //3. 合并ruducer
 export default combineReducers({
   nav: navReducer,
-  theme,
   popular,
   trending,
   favorite,
-  language
+  language,
+  theme,
 })

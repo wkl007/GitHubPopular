@@ -20,8 +20,6 @@ import NavigationUtil from '../utils/NavigationUtil'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 
-const THEME_COLOR = '#678'
-
 class MyPage extends Component {
 
   onClick = (menu) => {
@@ -35,6 +33,10 @@ class MyPage extends Component {
         break
       case MORE_MENU.About:
         RouteName = 'AboutPage'
+        break
+      case MORE_MENU.Custom_Theme:
+        const { onShowCustomThemeView } = this.props
+        onShowCustomThemeView(true)
         break
       case MORE_MENU.Sort_Key:
         RouteName = 'SortKeyPage'
@@ -64,19 +66,19 @@ class MyPage extends Component {
   // 渲染item
   renderItem = (menu) => {
     const { theme } = this.props
-    return ViewUtil.getMenuItem(() => this.onClick(menu), menu, THEME_COLOR)
+    return ViewUtil.getMenuItem(() => this.onClick(menu), menu, theme.themeColor)
   }
 
   render () {
-    const { navigation, onThemeChange } = this.props
+    const { theme } = this.props
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const navigationBar = <NavigationBar
       title='我的'
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     return (
       <View style={GlobalStyles.root_container}>
@@ -90,7 +92,7 @@ class MyPage extends Component {
                 <Ionicons
                   name={MORE_MENU.About.icon}
                   size={40}
-                  style={{ marginRight: 10, color: THEME_COLOR }}
+                  style={{ marginRight: 10, color: theme.themeColor }}
                 />
                 <Text>GitHub Popular</Text>
               </View>
@@ -100,7 +102,7 @@ class MyPage extends Component {
                 style={{
                   marginRight: 10,
                   alignSelf: 'center',
-                  color: THEME_COLOR
+                  color: theme.themeColor
                 }}
               />
             </View>
@@ -146,10 +148,12 @@ class MyPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  theme: state.theme.theme
+})
 
 const mapDispatchToProps = dispatch => ({
-  onThemeChange: theme => dispatch(actions.onThemeChange(theme))
+  onShowCustomThemeView: show => dispatch(actions.onShowCustomThemeView(show))
 })
 
 export default connect(

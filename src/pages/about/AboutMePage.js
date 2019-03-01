@@ -90,7 +90,7 @@ export default class AboutMePage extends Component {
           {ViewUtil.getSetingItem(
             () => {this.onClick(dic[i])},
             title,
-            THEME_COLOR
+            theme.themeColor
           )}
           <View style={GlobalStyles.line}/>
         </View>

@@ -45,7 +45,7 @@ class PopularPage extends Component {
     keys.forEach((item, index) => {
       if (item.checked) {
         tabs[`tab${index}`] = {
-          screen: props => <PopularTabPage {...props} tabLabel={item.name}/>,
+          screen: props => <PopularTabPage {...props} tabLabel={item.name} theme={theme}/>,
           navigationOptions: {
             title: item.name
           }
@@ -58,13 +58,13 @@ class PopularPage extends Component {
   render () {
     const { keys, theme } = this.props
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const navigationBar = <NavigationBar
       title='最热'
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     const TabNavigator = keys.length ? createAppContainer(createMaterialTopTabNavigator(
       this.renderTabs(),
@@ -73,7 +73,7 @@ class PopularPage extends Component {
           tabStyle: styles.tabStyle,
           style: {
             height: 30,//fix 开启scrollEnabled后再Android上初次加载时闪烁问题
-            backgroundColor: '#678',//TabBar背景色
+            backgroundColor: theme.themeColor,//TabBar背景色
           },
           indicatorStyle: styles.indicatorStyle,//标签指示器的样式
           labelStyle: styles.labelStyle,//文字的样式
@@ -91,7 +91,8 @@ class PopularPage extends Component {
 }
 
 const mapPopularStateToProps = state => ({
-  keys: state.language.keys
+  keys: state.language.keys,
+  theme: state.theme.theme,
 })
 
 const mapPopularDispatchToProps = dispatch => ({
@@ -167,11 +168,14 @@ class PopularTab extends Component {
   //渲染每一行
   renderItem = (data) => {
     const { item } = data
+    const { theme } = this.props
     return <PopularItem
       projectModel={item}
+      theme={theme}
       onSelect={(callback) => {
         NavigationUtil.goPage(
           {
+            theme,
             projectModel: item,
             flag: FLAG_STOREGE.flag_popular,
             callback
@@ -198,7 +202,8 @@ class PopularTab extends Component {
 
   render () {
     let store = this._store()
-    console.log(store.projectModels)
+    const { theme } = this.props
+    console.log(theme)
     return (
       <View style={styles.container}>
         <FlatList
@@ -208,11 +213,11 @@ class PopularTab extends Component {
           refreshControl={
             <RefreshControl
               title='Loading'
-              titleColor={THEME_COLOR}
-              colors={[THEME_COLOR]}
+              titleColor={theme.themeColor}
+              colors={[theme.themeColor]}
               refreshing={store.isLoading}
               onRefresh={() => this.loadData()}
-              tintColor={THEME_COLOR}
+              tintColor={theme.themeColor}
             />
           }
           ListFooterComponent={() => this.renderIndicator()}

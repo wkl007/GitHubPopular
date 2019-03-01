@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
 import NavigationUtil from '../utils/NavigationUtil'
+import actions from '../redux/action'
 
-export default class WelcomePage extends Component {
+class WelcomePage extends Component {
   componentDidMount () {
-    const { navigation } = this.props
+    const { navigation, onThemeInit } = this.props
+    onThemeInit()
     this.timer = setTimeout(() => {
       NavigationUtil.resetToHomePage({ navigation })
     }, 200)
@@ -22,6 +25,12 @@ export default class WelcomePage extends Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  onThemeInit: () => dispatch(actions.onThemeInit())
+})
+
+export default connect(null, mapDispatchToProps)(WelcomePage)
 
 const styles = StyleSheet.create({
   container: {

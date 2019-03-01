@@ -24,31 +24,32 @@ import EventTypes from '../utils/EventTypes'
 
 const THEME_COLOR = '#678'
 
-export default class FavoritePage extends Component {
+class FavoritePage extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
+    const { theme } = this.props
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const navigationBar = <NavigationBar
       title='收藏'
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     const TabNavigator = createAppContainer(createMaterialTopTabNavigator(
       {
         'Popular': {
-          screen: props => <FavoriteTabPage  {...props} flag={FLAG_STOREGE.flag_popular}/>,
+          screen: props => <FavoriteTabPage  {...props} flag={FLAG_STOREGE.flag_popular} theme={theme}/>,
           navigationOptions: {
             title: '最热'
           }
         },
         'Trending': {
-          screen: props => <FavoriteTabPage  {...props} flag={FLAG_STOREGE.flag_trending}/>,
+          screen: props => <FavoriteTabPage  {...props} flag={FLAG_STOREGE.flag_trending} theme={theme}/>,
           navigationOptions: {
             title: '趋势'
           }
@@ -59,7 +60,7 @@ export default class FavoritePage extends Component {
           tabStyle: styles.tabStyle,
           style: {
             height: 30,//fix 开启scrollEnabled后再Android上初次加载时闪烁问题
-            backgroundColor: '#678',//TabBar背景色
+            backgroundColor: theme.themeColor,//TabBar背景色
           },
           indicatorStyle: styles.indicatorStyle,//标签指示器的样式
           labelStyle: styles.labelStyle,//文字的样式
@@ -74,6 +75,12 @@ export default class FavoritePage extends Component {
     </View>
   }
 }
+
+const mapFavoriteStateToProps = state => ({
+  theme: state.theme.theme,
+})
+
+export default connect(mapFavoriteStateToProps)(FavoritePage)
 
 class FavoriteTab extends Component {
   constructor (props) {
@@ -130,13 +137,16 @@ class FavoriteTab extends Component {
 
   //渲染每一行
   renderItem = (data) => {
+    const { theme } = this.props
     const { item } = data
     const Item = this.storeName === FLAG_STOREGE.flag_popular ? PopularItem : TrendingItem
     return <Item
+      theme={theme}
       projectModel={item}
       onSelect={(callback) => {
         NavigationUtil.goPage(
           {
+            theme,
             projectModel: item,
             flag: this.storeName,
             callback

@@ -147,7 +147,7 @@ class CustomKeyPage extends Component {
     return <Ionicons
       name={checked ? 'ios-checkbox' : 'md-square-outline'}
       size={20}
-      style={{ color: THEME_COLOR }}
+      style={{ color: theme.themeColor }}
     />
   }
 
@@ -189,7 +189,7 @@ class CustomKeyPage extends Component {
     title = this.params.flag === FLAG_LANGUAGE.flag_language ? '自定义语言' : title
     let rightButtonTitle = this.isRemoveKey ? '移除' : '保存'
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     let navigationBar = <NavigationBar
@@ -197,7 +197,7 @@ class CustomKeyPage extends Component {
       leftButton={ViewUtil.getLeftBackButton(() => this.onBack())}
       rightButton={ViewUtil.getRightButton(rightButtonTitle, () => this.onSave())}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     return <View style={styles.container}>
       {navigationBar}

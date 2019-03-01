@@ -1,7 +1,10 @@
 import Types from '../../constant'
+import ThemeFactory, { ThemeFlags } from '../../../assets/styles/ThemeFactory'
 
 const defaultState = {
-  theme: 'blue',
+  theme: ThemeFactory.createTheme(ThemeFlags.Default),
+
+  customThemeViewVisible: false
 }
 
 export default function onAction (state = defaultState, action) {
@@ -10,6 +13,11 @@ export default function onAction (state = defaultState, action) {
       return {
         ...state,
         theme: action.theme
+      }
+    case Types.SHOW_THEME_VIEW:
+      return {
+        ...state,
+        customThemeViewVisible: action.customThemeViewVisible
       }
     default:
       return state

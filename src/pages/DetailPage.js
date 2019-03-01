@@ -115,9 +115,10 @@ export default class DetailPage extends Component {
   }
 
   render () {
+    const { theme } = this.params
     const { title, url, canGoBack } = this.state
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const titleLayoutStyle = title.length > 30 && canGoBack ? { paddingLeft: 20 } : null
@@ -125,7 +126,7 @@ export default class DetailPage extends Component {
       title={title}
       leftButton={this.renderLeftButton()}
       rightButton={this.renderRightButton()}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
       statusBar={statusBar}
       titleLayoutStyle={titleLayoutStyle}
     />

@@ -150,7 +150,7 @@ class SortKeyPage extends Component {
     const { theme } = this.params
     let title = this.params.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序'
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     let navigationBar = <NavigationBar
@@ -158,7 +158,7 @@ class SortKeyPage extends Component {
       leftButton={ViewUtil.getLeftBackButton(() => this.onBack())}
       rightButton={ViewUtil.getRightButton('保存', () => this.onSave())}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
     />
     return <View style={styles.container}>
       {navigationBar}
@@ -187,7 +187,7 @@ class SortCell extends Component {
         <MaterialCommunityIcons
           name={'sort'}
           size={16}
-          style={{ marginRight: 10, color: THEME_COLOR }}/>
+          style={{ marginRight: 10, color: theme.themeColor }}/>
         <Text>{this.props.data.name}</Text>
       </View>
     </TouchableHighlight>
