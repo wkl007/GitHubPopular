@@ -1,6 +1,6 @@
 import Types from '../../constant'
-import DateStore, { FLAG_STOREGE } from '../../../utils/cache/DataStore'
-import { _projectModels, handleData } from '../../../utils/actionUtil'
+import DateStore, { FLAG_STORAGE } from '../../../utils/cache/DataStore'
+import { _projectModels, handleData } from '../../../utils/ActionUtil'
 
 /**
  * 获取最热数据的异步action
@@ -15,7 +15,7 @@ export function onRefreshTrending (storeName, url, pageSize, favoriteDao) {
     dispatch({ type: Types.TRENDING_REFRESH, storeName })
     let dataStore = new DateStore()
     //异步action与数据流
-    dataStore.fetchData(url, FLAG_STOREGE.flag_trending).then(res => {
+    dataStore.fetchData(url, FLAG_STORAGE.flag_trending).then(res => {
       handleData(Types.TRENDING_REFRESH_SUCCESS, dispatch, storeName, res, pageSize, favoriteDao)
     }).catch(err => {
       dispatch({

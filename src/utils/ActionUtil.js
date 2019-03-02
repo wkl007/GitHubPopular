@@ -1,4 +1,3 @@
-import Types from '../redux/constant'
 import ProjectModel from '../utils/model/ProjectModel'
 import Utils from '../utils'
 
@@ -22,7 +21,6 @@ export function handleData (actionType, dispatch, storeName, data, pageSize, fav
   }
   //第一次要加载的数据
   let showItems = pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize)
-
   _projectModels(showItems, favoriteDao, projectModels => {
     dispatch({
       type: actionType,
@@ -55,6 +53,7 @@ export async function _projectModels (showItems, favoriteDao, callback) {
   for (let i = 0, length = showItems.length; i < length; i++) {
     projectModels.push(new ProjectModel(showItems[i], Utils.checkFavorite(showItems[i], keys)))
   }
+  console.log('projectModels', projectModels)
   doCallBack(callback, projectModels)
 }
 

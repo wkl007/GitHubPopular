@@ -73,8 +73,9 @@ export default class WebViewPage extends Component {
 
   render () {
     const { title, url, canGoBack } = this.state
+    const { theme } = this.params
     const statusBar = {
-      backgroundColor: THEME_COLOR,
+      backgroundColor: theme.themeColor,
       barStyle: 'light-content'
     }
     const titleLayoutStyle = title.length > 30 && canGoBack ? { paddingLeft: 20 } : null
@@ -82,7 +83,7 @@ export default class WebViewPage extends Component {
       title={title}
       statusBar={statusBar}
       leftButton={this.renderLeftButton()}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={theme.styles.navBar}
       titleLayoutStyle={titleLayoutStyle}
     />
     return (

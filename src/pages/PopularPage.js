@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Platform,
   StyleSheet,
+  TouchableOpacity
 } from 'react-native'
 import {
   createMaterialTopTabNavigator,
@@ -16,20 +17,21 @@ import { connect } from 'react-redux'
 import actions from '../redux/action'
 import Toast from 'react-native-easy-toast'
 import EventBus from 'react-native-event-bus'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import PopularItem from '../components/PopularItem'
 import NavigationBar from '../components/NavigationBar'
 import NavigationUtil from '../utils/NavigationUtil'
 import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
-import { FLAG_STOREGE } from '../utils/cache/DataStore'
+import { FLAG_STORAGE } from '../utils/cache/DataStore'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
+// import AnalyticsUtil from '../utils/AnalyticsUtil'
 import EventTypes from '../utils/EventTypes'
 
 const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
-const THEME_COLOR = '#678'
 const pageSize = 10//设为常量，防止修改
-const favoriteDao = new FavoriteDao(FLAG_STOREGE.flag_popular)
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
 
 class PopularPage extends Component {
   constructor (props) {
@@ -55,6 +57,28 @@ class PopularPage extends Component {
     return tabs
   }
 
+  // 渲染右侧按钮
+  renderRightButton = () => {
+    const { theme } = this.props
+    return <TouchableOpacity
+      onPress={() => {
+        // AnalyticsUtil.track('SearchButtonClick')
+        NavigationUtil.goPage({ theme }, 'SearchPage')
+      }}
+    >
+      <View style={{ padding: 5, marginRight: 8 }}>
+        <Ionicons
+          name={'ios-search'}
+          size={24}
+          style={{
+            marginRight: 8,
+            alignSelf: 'center',
+            color: 'white',
+          }}/>
+      </View>
+    </TouchableOpacity>
+  }
+
   render () {
     const { keys, theme } = this.props
     const statusBar = {
@@ -63,6 +87,7 @@ class PopularPage extends Component {
     }
     const navigationBar = <NavigationBar
       title='最热'
+      rightButton={this.renderRightButton()}
       statusBar={statusBar}
       style={theme.styles.navBar}
     />
@@ -177,14 +202,14 @@ class PopularTab extends Component {
           {
             theme,
             projectModel: item,
-            flag: FLAG_STOREGE.flag_popular,
+            flag: FLAG_STORAGE.flag_popular,
             callback
           },
           'DetailPage'
         )
       }}
       onFavorite={(item, isFavorite) => {
-        FavoriteUtil.onFavorite(favoriteDao, item, isFavorite, FLAG_STOREGE.flag_popular)
+        FavoriteUtil.onFavorite(favoriteDao, item, isFavorite, FLAG_STORAGE.flag_popular)
       }}
     />
   }
@@ -203,7 +228,6 @@ class PopularTab extends Component {
   render () {
     let store = this._store()
     const { theme } = this.props
-    console.log(theme)
     return (
       <View style={styles.container}>
         <FlatList

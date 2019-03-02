@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native'
 import Trending from 'GitHubTrending'
 import request from '../../api/request'
 
-export const FLAG_STOREGE = {
+export const FLAG_STORAGE = {
   flag_popular: 'popular',
   flag_trending: 'trending'
 }
@@ -75,7 +75,7 @@ export default class DataStore {
    */
   fetchNetData (url, flag) {
     return new Promise((resolve, reject) => {
-      if (flag !== FLAG_STOREGE.flag_trending) {
+      if (flag !== FLAG_STORAGE.flag_trending) {
         request(url).then(res => {
           this.saveData(url, res)
           resolve(res)

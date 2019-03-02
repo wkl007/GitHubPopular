@@ -18,8 +18,6 @@ import actions from '../redux/action'
 import ViewUtil from '../utils/ViewUtil'
 import { onLoadLanguage } from '../redux/action/language'
 
-const THEME_COLOR = '#678'
-
 class CustomKeyPage extends Component {
   constructor (props) {
     super(props)

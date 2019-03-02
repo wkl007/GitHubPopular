@@ -5,6 +5,7 @@ import trending from './trending'
 import favorite from './favorite'
 import language from './language'
 import theme from './theme'
+import search from './search'
 
 //1. 指定默认state
 const navState = RootNavigator.router.getStateForAction(RootNavigator.router.getActionForPathAndParams(RootRoute))
@@ -24,4 +25,5 @@ export default combineReducers({
   favorite,
   language,
   theme,
+  search
 })
