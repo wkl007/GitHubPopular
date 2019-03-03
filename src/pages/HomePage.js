@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { BackHandler, StyleSheet, Text, View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
+import SplashScreen from 'react-native-splash-screen'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import actions from '../redux/action'
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import BackPressComponent from '../components/BackPressComponent'
@@ -17,6 +19,7 @@ class HomePage extends Component {
   }
 
   componentDidMount () {
+    SplashScreen && SplashScreen.hide()
     this.backPress.componentDidMount()
   }
 
@@ -36,6 +39,14 @@ class HomePage extends Component {
     }
     dispatch(NavigationActions.back())
     return true
+    /*console.log(nav.routes[1].index)
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false
+    }
+    this.lastBackPressed = Date.now()
+    this.toast.show('再按一次退出应用', DURATION.LENGTH_LONG)
+    return true*/
   }
 
   renderCustomThemeView = () => {
@@ -57,6 +68,7 @@ class HomePage extends Component {
       topColor={theme.themeColor}>
       <DynamicTabNavigator/>
       {this.renderCustomThemeView()}
+      <Toast ref={toast => this.toast = toast}/>
     </SafeAreaViewPlus>
   }
 }

@@ -1,3 +1,5 @@
+import { StackActions, NavigationActions } from 'react-navigation'
+
 /**
  * 全局导航控制类
  */
@@ -8,7 +10,7 @@ export default class NavigationUtil {
    * @param page 要跳转的页面名
    */
   static goPage (params, page) {
-    const navigation = NavigationUtil.navigation;
+    const navigation = NavigationUtil.navigation
     if (!navigation) {
       console.log('navigation can not be null')
       return
@@ -23,6 +25,11 @@ export default class NavigationUtil {
   static resetToHomePage (params) {
     const { navigation } = params
     navigation.navigate('Main')
+    /*const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Main' })],
+    });
+    navigation.dispatch(resetAction);*/
   }
 
   /**

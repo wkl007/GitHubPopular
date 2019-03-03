@@ -71,7 +71,12 @@ export const RootNavigator = createAppContainer(createSwitchNavigator(
   {
     Init: InitNavigator,
     Main: MainNavigator
-  })
+  },
+  {
+    initialRouteName: 'Init',
+    backBehavior: 'none'
+  }
+  )
 )
 
 /**
