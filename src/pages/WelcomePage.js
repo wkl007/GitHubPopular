@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
+import SplashScreen from 'react-native-splash-screen'
 import NavigationUtil from '../utils/NavigationUtil'
 import actions from '../redux/action'
 
@@ -9,6 +10,7 @@ class WelcomePage extends Component {
     const { navigation, onThemeInit } = this.props
     onThemeInit()
     this.timer = setTimeout(() => {
+      SplashScreen.hide()
       NavigationUtil.resetToHomePage({ navigation })
     }, 200)
   }
