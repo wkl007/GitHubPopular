@@ -10,17 +10,15 @@ import {
 import { connect } from 'react-redux'
 import SortableListView from 'react-native-sortable-listview'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
-import BaseTouchable from '../components/BaseTouchable'
 import NavigationUtil from '../utils/NavigationUtil'
 import ArrayUtil from '../utils/ArrayUtil'
 import ViewUtil from '../utils/ViewUtil'
 import LanguageDao, { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import actions from '../redux/action'
 import GlobalStyles from '../assets/styles/GlobalStyles'
-
-const THEME_COLOR = '#678'
 
 class SortKeyPage extends Component {
   constructor (props) {
@@ -160,7 +158,10 @@ class SortKeyPage extends Component {
       statusBar={statusBar}
       style={theme.styles.navBar}
     />
-    return <View style={styles.container}>
+    return <SafeAreaViewPlus
+      style={GlobalStyles.root_container}
+      topColor={theme.themeColor}
+    >
       {navigationBar}
       <SortableListView
         data={this.state.checkedArray}
@@ -171,7 +172,7 @@ class SortKeyPage extends Component {
         }}
         renderRow={row => <SortCell data={row} {...this.params}/>}
       />
-    </View>
+    </SafeAreaViewPlus>
   }
 }
 

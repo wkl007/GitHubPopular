@@ -15,6 +15,7 @@ import {
 import { connect } from 'react-redux'
 import actions from '../redux/action'
 import Toast from 'react-native-easy-toast'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import PopularItem from '../components/PopularItem'
 import BackPressComponent from '../components/BackPressComponent'
 import NavigationUtil from '../utils/NavigationUtil'
@@ -228,13 +229,16 @@ class SearchPage extends Component {
       {indicatorView}
       {listView}
     </View>
-    return <View style={styles.container}>
+    return <SafeAreaViewPlus
+      style={GlobalStyles.root_container}
+      topColor={theme.themeColor}
+    >
       {statusBar}
       {this.renderNavBar()}
       {resultView}
       {bottomButton}
       <Toast ref={toast => this.toast = toast}/>
-    </View>
+    </SafeAreaViewPlus>
   }
 }
 

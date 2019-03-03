@@ -3,6 +3,7 @@ import { BackHandler, StyleSheet, Text, View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import actions from '../redux/action'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import BackPressComponent from '../components/BackPressComponent'
 import CustomTheme from '../pages/CustomTheme'
 import NavigationUtil from '../utils/NavigationUtil'
@@ -49,12 +50,14 @@ class HomePage extends Component {
   }
 
   render () {
-    const { navigation } = this.props
+    const { navigation, theme } = this.props
     NavigationUtil.navigation = navigation
-    return <View style={GlobalStyles.root_container}>
+    return <SafeAreaViewPlus
+      style={GlobalStyles.root_container}
+      topColor={theme.themeColor}>
       <DynamicTabNavigator/>
       {this.renderCustomThemeView()}
-    </View>
+    </SafeAreaViewPlus>
   }
 }
 

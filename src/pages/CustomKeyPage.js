@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux'
 import CheckBox from 'react-native-check-box'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
 import NavigationUtil from '../utils/NavigationUtil'
@@ -16,7 +17,7 @@ import ArrayUtil from '../utils/ArrayUtil'
 import LanguageDao, { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import actions from '../redux/action'
 import ViewUtil from '../utils/ViewUtil'
-import { onLoadLanguage } from '../redux/action/language'
+import GlobalStyles from '../assets/styles/GlobalStyles'
 
 class CustomKeyPage extends Component {
   constructor (props) {
@@ -197,12 +198,15 @@ class CustomKeyPage extends Component {
       statusBar={statusBar}
       style={theme.styles.navBar}
     />
-    return <View style={styles.container}>
+    return <SafeAreaViewPlus
+      style={GlobalStyles.root_container}
+      topColor={theme.themeColor}
+    >
       {navigationBar}
       <ScrollView>
         {this.renderView()}
       </ScrollView>
-    </View>
+    </SafeAreaViewPlus>
   }
 }
 

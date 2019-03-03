@@ -18,11 +18,12 @@ class WelcomePage extends Component {
   }
 
   render () {
-    return (
+    return null/*(
       <View style={styles.container}>
         <Text style={styles.welcome}>欢迎页面</Text>
       </View>
-    )
+
+    )*/
   }
 }
 

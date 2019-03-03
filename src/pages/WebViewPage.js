@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 import NavigationBar from '../components/NavigationBar'
 import BackPressComponent from '../components/BackPressComponent'
 import ViewUtil from '../utils/ViewUtil'
@@ -87,7 +88,10 @@ export default class WebViewPage extends Component {
       titleLayoutStyle={titleLayoutStyle}
     />
     return (
-      <View style={GlobalStyles.root_container}>
+      <SafeAreaViewPlus
+        style={GlobalStyles.root_container}
+        topColor={theme.themeColor}
+      >
         {navigationBar}
         <WebView
           ref={webView => this.webView = webView}
@@ -95,7 +99,7 @@ export default class WebViewPage extends Component {
           onNavigationStateChange={e => this.onNavigationStateChange(e)}
           source={{ uri: url }}
         />
-      </View>
+      </SafeAreaViewPlus>
     )
   }
 }
