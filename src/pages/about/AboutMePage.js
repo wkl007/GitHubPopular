@@ -38,7 +38,7 @@ export default class AboutMePage extends Component {
     //网页
     if (tab.url) {
       NavigationUtil.goPage(
-        { THEME_COLOR, title: tab.title, url: tab.url },
+        { theme, title: tab.title, url: tab.url },
         'WebViewPage'
       )
       return

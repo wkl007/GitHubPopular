@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import Trending from 'GitHubTrending'
 import request from '../../api/request'
 

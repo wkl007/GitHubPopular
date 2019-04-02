@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const FAVROITE_KEY_PREFIX = 'favorite_'
 

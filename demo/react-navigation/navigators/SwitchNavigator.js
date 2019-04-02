@@ -1,4 +1,4 @@
-import Reactk, { Component } from 'react'
+import React, { Component } from 'react'
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import Page1 from '../pages/Page1'
 import Login from '../pages/Login'

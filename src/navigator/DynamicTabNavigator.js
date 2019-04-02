@@ -124,16 +124,11 @@ class TabBarComponent extends Component {
      * custom tabBarComponent
      * https://github.com/react-navigation/react-navigation/issues/4297
      */
-    /*const { routes, index } = this.props.navigation.state
-    if (routes[index].params) {
-      const { theme } = routes[index].params
-      if (theme && theme.updateTime > this.theme.updateTime) {
-        this.theme = theme
-      }
-    }*/
     return (
       <BottomTabBar
         {...this.props}
+        getAccessibilityRole={() => {}}
+        getAccessibilityStates={() => {}}
         activeTintColor={this.props.theme.themeColor}
       />
     )

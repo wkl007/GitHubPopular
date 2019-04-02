@@ -17,6 +17,7 @@ export default class HomePage extends Component {
   }
 
   doCheck = (index) => {
+    console.log(index)
     this.state.pageCheckedArray[index] = !this.state.pageCheckedArray[index]
     this.setState({
       pageCheckedArray: this.state.pageCheckedArray

@@ -77,6 +77,8 @@ class TabBarComponent extends Component {
     return (
       <BottomTabBar
         {...this.props}
+        getAccessibilityRole={() => {}}
+        getAccessibilityStates={() => {}}
         activeTintColor={this.theme.tintColor || this.props.activeTintColor}
       />
     )
