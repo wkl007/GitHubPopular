@@ -32,7 +32,6 @@ export default class WebViewPage extends Component {
 
   componentWillUnmount () {
     this.backPress.componentWillUnmount()
-
   }
 
   onBackPress = () => {

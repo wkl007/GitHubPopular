@@ -55,6 +55,21 @@ class MyPage extends Component {
       case MORE_MENU.About_Author:
         RouteName = 'AboutMePage'
         break
+      case MORE_MENU.Feedback:
+        const url = 'mailto://18404969231@163.com'
+        Linking.canOpenURL(url).then(support => {
+          if (!support) {
+            console.log('Can\'t handle url: ' + url)
+          } else {
+            Linking.openURL(url)
+          }
+        }).catch(err => {
+          console.error('An error occurred', err)
+        })
+        break
+      case MORE_MENU.CodePush:
+        RouteName = 'CodePushPage'
+        break
     }
 
     if (RouteName) {
@@ -108,7 +123,7 @@ class MyPage extends Component {
           </BaseTouchable>
           {/*<View style={GlobalStyles.line}/>*/}
           {/*教程*/}
-         {/* {this.renderItem(MORE_MENU.Tutorial)}*/}
+          {/* {this.renderItem(MORE_MENU.Tutorial)}*/}
 
           {/*最热管理*/}
           <Text style={styles.groupTitle}>最热管理</Text>
@@ -138,8 +153,8 @@ class MyPage extends Component {
           <View style={GlobalStyles.line}/>
           {/*反馈*/}
           {this.renderItem(MORE_MENU.Feedback)}
-          {/*<View style={GlobalStyles.line}/>
-          {this.renderItem(MORE_MENU.CodePush)}*/}
+          <View style={GlobalStyles.line}/>
+          {this.renderItem(MORE_MENU.CodePush)}
 
         </ScrollView>
       </View>

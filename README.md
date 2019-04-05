@@ -31,9 +31,10 @@
 
 * [GitHubTrending ^3.0.0](https://github.com/crazycodeboy/GitHubTrending)
 * [react-navigation ^3.6.0](https://reactnavigation.org/)
+* [react-navigation-tabs ^2.1.0](https://github.com/react-navigation/react-navigation-tabs)
 * [react-native-vector-icons ^6.4.2](https://github.com/oblador/react-native-vector-icons)
 * [react-native-webview ^5.5.0](https://github.com/react-native-community/react-native-webview)
-* [react-navigation-tabs ^2.1.0](https://github.com/react-navigation/react-navigation-tabs)
+* [react-native-code-push ^5.6.0](https://github.com/Microsoft/react-native-code-push)
 * [react-native-scrollable-tab-view ^0.8.0](https://github.com/skv-headless/react-native-scrollable-tab-view)
 * [react-native-easy-toast ^1.2.0](https://github.com/crazycodeboy/react-native-easy-toast)
 * [react-native-check-box ^2.1.7](https://github.com/crazycodeboy/react-native-check-box)
