@@ -7,8 +7,6 @@ import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
 import config from '../../assets/data/config'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 
-const THEME_COLOR = '#678'
-
 export default class AboutPage extends Component {
   constructor (props) {
     super(props)
@@ -24,6 +22,14 @@ export default class AboutPage extends Component {
     this.state = {
       data: config
     }
+  }
+
+  componentDidMount () {
+    this.aboutCommon.componentDidMount()
+  }
+
+  componentWillUnmount () {
+    this.aboutCommon.componentWillUnmount()
   }
 
   onClick = (menu) => {
@@ -65,8 +71,8 @@ export default class AboutPage extends Component {
 
   render () {
     const content = <View>
-      {this.renderItem(MORE_MENU.Tutorial)}
-      <View style={GlobalStyles.line}/>
+      {/* {this.renderItem(MORE_MENU.Tutorial)}
+      <View style={GlobalStyles.line}/>*/}
       {this.renderItem(MORE_MENU.About_Author)}
       <View style={GlobalStyles.line}/>
       {this.renderItem(MORE_MENU.Feedback)}

@@ -13,8 +13,6 @@ import ViewUtil from '../utils/ViewUtil'
 import NavigationUtil from '../utils/NavigationUtil'
 import GlobalStyles from '../assets/styles/GlobalStyles'
 
-const THEME_COLOR = '#678'
-
 export default class WebViewPage extends Component {
   constructor (props) {
     super(props)

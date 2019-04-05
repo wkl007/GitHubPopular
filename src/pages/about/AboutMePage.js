@@ -4,12 +4,10 @@ import Toast from 'react-native-easy-toast'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import NavigationUtil from '../../utils/NavigationUtil'
 import ViewUtil from '../../utils/ViewUtil'
-import { MORE_MENU } from '../../utils/MoreMenu'
 import AboutCommon, { FLAG_ABOUT } from './AboutCommon'
 import config from '../../assets/data/config'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
-
-const THEME_COLOR = '#678'
+import BackPressComponent from '../../components/BackPressComponent'
 
 export default class AboutMePage extends Component {
   constructor (props) {
@@ -30,6 +28,20 @@ export default class AboutMePage extends Component {
       showQQ: false,
       showContact: false
     }
+    this.backPress = new BackPressComponent({ backPress: this.onBackPress })
+  }
+
+  componentDidMount () {
+    this.aboutCommon.componentDidMount()
+  }
+
+  componentWillUnmount () {
+    this.aboutCommon.componentWillUnmount()
+  }
+
+  onBackPress = () => {
+    NavigationUtil.goBack(this.props.navigation)
+    return true
   }
 
   onClick = (tab) => {
@@ -58,7 +70,7 @@ export default class AboutMePage extends Component {
     //复制
     if (tab.account) {
       Clipboard.setString(tab.account)
-      this.toast.show(`${tab.title}${tab.account}已复制到剪贴板。`)
+      this.toast.show(`${tab.title}:${tab.account}已复制到剪贴板。`)
     }
   }
 
@@ -72,7 +84,7 @@ export default class AboutMePage extends Component {
         })
       },
       data.name,
-      THEME_COLOR,
+      theme.themeColor,
       Ionicons,
       data.icon,
       isShow ? 'ios-arrow-up' : 'ios-arrow-down'
@@ -103,17 +115,17 @@ export default class AboutMePage extends Component {
     const { data, showTutorial, showBlog, showQQ, showContact } = this.state
     const content = <View>
       {/*课程*/}
-      {this.renderSectionItem(data.aboutMe.Tutorial, showTutorial, 'showTutorial')}
+      {/* {this.renderSectionItem(data.aboutMe.Tutorial, showTutorial, 'showTutorial')}
       <View style={GlobalStyles.line}/>
-      {showTutorial ? this.renderItems(data.aboutMe.Tutorial.items) : null}
+      {showTutorial ? this.renderItems(data.aboutMe.Tutorial.items) : null}*/}
       {/*博客*/}
       {this.renderSectionItem(data.aboutMe.Blog, showBlog, 'showBlog')}
       <View style={GlobalStyles.line}/>
       {showBlog ? this.renderItems(data.aboutMe.Blog.items) : null}
       {/*QQ*/}
-      {this.renderSectionItem(data.aboutMe.QQ, showQQ, 'showQQ')}
+      {/*{this.renderSectionItem(data.aboutMe.QQ, showQQ, 'showQQ')}
       <View style={GlobalStyles.line}/>
-      {showQQ ? this.renderItems(data.aboutMe.QQ.items, true) : null}
+      {showQQ ? this.renderItems(data.aboutMe.QQ.items, true) : null}*/}
       {/*联系*/}
       {this.renderSectionItem(data.aboutMe.Contact, showContact, 'showContact')}
       <View style={GlobalStyles.line}/>

@@ -19,24 +19,12 @@
       "icon": "ios-laptop",
       "items": [
         {
-          "title": "个人博客",
-          "url": "http://jiapenghui.com"
-        },
-        {
           "title": "CSDN",
-          "url": "http://blog.csdn.net/fengyuzhengfan"
-        },
-        {
-          "title": "简书",
-          "url": "http://www.jianshu.com/users/ca3943a4172a/latest_articles"
+          "url": "https://blog.csdn.net/qq_35844177"
         },
         {
           "title": "GitHub",
-          "url": "https://github.com/crazycodeboy"
-        },
-        {
-          "title": "慕课网",
-          "url": "http://www.imooc.com/u/4951150"
+          "url": "https://github.com/wkl007"
         }
       ]
     },
@@ -44,13 +32,13 @@
       "name": "联系方式",
       "icon": "ios-contacts",
       "items": {
-        "QQ": {
-          "title": "QQ",
-          "account": "1586866509"
+        "WeChat": {
+          "title": "WeChat",
+          "account": "18404969231"
         },
         "Email": {
           "title": "Email",
-          "account": "crazycodeboy@gmail.com"
+          "account": "18404969231@163.com"
         }
       }
     },
@@ -75,16 +63,17 @@
     "currentRepoUrl": "https://api.github.com/repos/crazycodeboy/GitHubPopular"
   },
   "author": {
-    "name": "CrazyCodeBoy",
-    "description": "专注于移动开发，分享知识，共享快乐。",
-    "avatar": "http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg",
-    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg",
-    "url": "http://www.devio.org/"
+    "name": "小小令",
+    "description": "前端小菜鸟的成长之路",
+    "avatar": "https://avatar.csdn.net/A/1/3/1_qq_35844177.jpg",
+    "backgroundImg": "https://apk-1256738511.cos.ap-chengdu.myqcloud.com/GitHubPopular/images/about_me.jpg",
+    "avatar1": "http://www.devio.org/io/GitHubPopular/img/ic_app.png",
+    "url": "http://blog.csdn.net/qq_35844177"
   },
   "app": {
     "name": "GitHub Popular",
     "description": "这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。",
     "avatar": "http://www.devio.org/io/GitHubPopular/img/ic_app.png",
-    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg"
+    "backgroundImg": "https://apk-1256738511.cos.ap-chengdu.myqcloud.com/GitHubPopular/images/about_me.jpg"
   }
 }

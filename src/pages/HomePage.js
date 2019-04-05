@@ -19,11 +19,14 @@ class HomePage extends Component {
   }
 
   componentDidMount () {
-    SplashScreen && SplashScreen.hide()
+    this.timer = setTimeout(() => {
+      SplashScreen && SplashScreen.hide()
+    }, 200)
     this.backPress.componentDidMount()
   }
 
   componentWillUnmount () {
+    this.timer && clearTimeout(this.timer)
     this.backPress.componentWillUnmount()
   }
 
@@ -37,7 +40,7 @@ class HomePage extends Component {
     if (nav.routes[1].index === 0) {//如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
       return false
     }
-    dispatch(NavigationActions.back())
+    dispatch && dispatch(NavigationActions.back())
     return true
     /*console.log(nav.routes[1].index)
     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {

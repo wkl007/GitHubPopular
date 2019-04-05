@@ -50,7 +50,6 @@ class SearchPage extends Component {
 
   // 加载数据
   loadData = (loadMore) => {
-    console.log(loadMore)
     const { onLoadMoreSearch, onSearch, search, keys } = this.props
     if (loadMore) {
       onLoadMoreSearch(++search.pageIndex, pageSize, search.items, this.favoriteDao, keys, callback => {

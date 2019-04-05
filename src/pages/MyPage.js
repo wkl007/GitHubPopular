@@ -106,9 +106,9 @@ class MyPage extends Component {
               />
             </View>
           </BaseTouchable>
-          <View style={GlobalStyles.line}/>
+          {/*<View style={GlobalStyles.line}/>*/}
           {/*教程*/}
-          {this.renderItem(MORE_MENU.Tutorial)}
+         {/* {this.renderItem(MORE_MENU.Tutorial)}*/}
 
           {/*最热管理*/}
           <Text style={styles.groupTitle}>最热管理</Text>
@@ -138,8 +138,8 @@ class MyPage extends Component {
           <View style={GlobalStyles.line}/>
           {/*反馈*/}
           {this.renderItem(MORE_MENU.Feedback)}
-          <View style={GlobalStyles.line}/>
-          {this.renderItem(MORE_MENU.CodePush)}
+          {/*<View style={GlobalStyles.line}/>
+          {this.renderItem(MORE_MENU.CodePush)}*/}
 
         </ScrollView>
       </View>

@@ -16,7 +16,6 @@ import GlobalStyles from '../../assets/styles/GlobalStyles'
 import config from '../../assets/data/config'
 import share from '../../assets/data/share'
 
-const THEME_COLOR = '#678'
 export const FLAG_ABOUT = {
   flag_about: 'about',
   flag_about_me: 'about_me'
