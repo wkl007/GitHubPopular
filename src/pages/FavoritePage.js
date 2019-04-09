@@ -23,10 +23,6 @@ import { FLAG_STORAGE } from '../utils/cache/DataStore'
 import EventTypes from '../utils/EventTypes'
 
 class FavoritePage extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     const { theme } = this.props
     const statusBar = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Linking, Clipboard } from 'react-native'
+import { View, Linking, Clipboard } from 'react-native'
 import Toast from 'react-native-easy-toast'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import NavigationUtil from '../../utils/NavigationUtil'

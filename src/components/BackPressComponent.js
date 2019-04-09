@@ -4,8 +4,7 @@
 import React from 'react'
 import {
   BackHandler
-}
-  from 'react-native'
+} from 'react-native'
 
 export default class BackPressComponent {
   constructor (props) {

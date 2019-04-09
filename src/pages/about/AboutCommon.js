@@ -14,7 +14,6 @@ import NavigationUtil from '../../utils/NavigationUtil'
 import ViewUtil from '../../utils/ViewUtil'
 import GlobalStyles from '../../assets/styles/GlobalStyles'
 import config from '../../assets/data/config'
-import share from '../../assets/data/share'
 
 export const FLAG_ABOUT = {
   flag_about: 'about',

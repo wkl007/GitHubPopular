@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import {
   View,
-  DeviceInfo,
-  StyleSheet
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -100,10 +98,3 @@ export default class WebViewPage extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0
-  },
-})

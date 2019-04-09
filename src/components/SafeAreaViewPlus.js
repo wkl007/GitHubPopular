@@ -1,3 +1,6 @@
+/**
+ * 全面屏适配
+ */
 import React, { Component, } from 'react'
 import { DeviceInfo, SafeAreaView, StyleSheet, View, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'

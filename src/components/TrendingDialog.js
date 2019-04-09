@@ -6,7 +6,6 @@ import {
   Modal,
   TouchableOpacity,
   StyleSheet,
-  Image,
   DeviceInfo,
   View,
   Text

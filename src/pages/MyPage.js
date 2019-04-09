@@ -1,12 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import {
-  Button,
-  Platform,
   StyleSheet,
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
   Linking
 } from 'react-native'
 import { connect } from 'react-redux'
@@ -21,7 +18,6 @@ import GlobalStyles from '../assets/styles/GlobalStyles'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 
 class MyPage extends Component {
-
   onClick = (menu) => {
     const { theme } = this.props
     let RouteName, params = { theme }

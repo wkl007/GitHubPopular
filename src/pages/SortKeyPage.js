@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   Alert,
   StyleSheet,
-  ScrollView,
   View,
   Text,
   TouchableHighlight

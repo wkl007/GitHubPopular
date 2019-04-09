@@ -1,25 +1,18 @@
 /**
  * 趋势页面Item
  */
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text,
   View,
   Image,
   StyleSheet,
-  TouchableOpacity
 } from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HTMLView from 'react-native-htmlview'
 import BaseTouchable from './BaseTouchable'
 import BaseItem from './BaseItem'
 
 export default class TrendingItem extends BaseItem {
-  constructor (props) {
-    super(props)
-
-  }
-
   render () {
     const { projectModel } = this.props
     const { item } = projectModel

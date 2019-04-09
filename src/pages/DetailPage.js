@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import {
   View,
-  DeviceInfo,
-  StyleSheet,
   TouchableOpacity
 } from 'react-native'
 import { WebView } from 'react-native-webview'
@@ -146,10 +144,3 @@ export default class DetailPage extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0
-  },
-})

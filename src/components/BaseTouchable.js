@@ -2,16 +2,12 @@
  * 自定义Touchable组件
  */
 import React, { Component } from 'react'
-import {
-  Platform,
-  TouchableOpacity,
-  TouchableNativeFeedback
-} from 'react-native'
+import { Platform, TouchableNativeFeedback, TouchableOpacity } from 'react-native'
 
 export default class BaseTouchable extends Component {
   render () {
     const { children } = this.props
-    let content = Platform.OS === 'ios'
+    return Platform.OS === 'ios'
       ? <TouchableOpacity
         {...this.props}
       >
@@ -22,6 +18,5 @@ export default class BaseTouchable extends Component {
       >
         {children}
       </TouchableNativeFeedback>
-    return content
   }
 }

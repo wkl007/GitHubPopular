@@ -6,7 +6,6 @@ import {
   RefreshControl,
   ActivityIndicator,
   TouchableOpacity,
-  Platform,
   StyleSheet,
   DeviceEventEmitter
 } from 'react-native'
@@ -29,7 +28,6 @@ import { FLAG_STORAGE } from '../utils/cache/DataStore'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
 import EventTypes from '../utils/EventTypes'
 import ArrayUtil from '../utils/ArrayUtil'
-import PopularItem from './PopularPage'
 
 const URL = 'https://github.com/trending/'
 const pageSize = 10//设为常量，防止修改

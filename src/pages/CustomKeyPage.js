@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  Text
 } from 'react-native'
 import { connect } from 'react-redux'
 import CheckBox from 'react-native-check-box'

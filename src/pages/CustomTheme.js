@@ -1,14 +1,5 @@
 import React, { Component } from 'react'
-import {
-  DeviceInfo,
-  Modal,
-  TouchableHighlight,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { DeviceInfo, Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import { connect } from 'react-redux'
 import ThemeDao from '../utils/cache/ThemeDao'
 import ThemeFactory, { ThemeFlags } from '../assets/styles/ThemeFactory'
@@ -76,10 +67,9 @@ class CustomKeyPage extends Component {
   }
 
   render () {
-    let view = this.props.visible ? <View style={GlobalStyles.root_container}>
+    return this.props.visible ? <View style={GlobalStyles.root_container}>
       {this.renderContentView()}
     </View> : null
-    return view
   }
 }
 

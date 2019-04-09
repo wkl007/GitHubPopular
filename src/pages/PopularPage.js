@@ -5,7 +5,6 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
-  Platform,
   StyleSheet,
   TouchableOpacity
 } from 'react-native'
@@ -25,7 +24,6 @@ import FavoriteDao from '../utils/cache/FavoriteDao'
 import FavoriteUtil from '../utils/FavoriteUtil'
 import { FLAG_STORAGE } from '../utils/cache/DataStore'
 import { FLAG_LANGUAGE } from '../utils/cache/LanguageDao'
-// import AnalyticsUtil from '../utils/AnalyticsUtil'
 import EventTypes from '../utils/EventTypes'
 
 const URL = 'https://api.github.com/search/repositories?q='
@@ -62,7 +60,6 @@ class PopularPage extends Component {
     const { theme } = this.props
     return <TouchableOpacity
       onPress={() => {
-        // AnalyticsUtil.track('SearchButtonClick')
         NavigationUtil.goPage({ theme }, 'SearchPage')
       }}
     >

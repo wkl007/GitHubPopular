@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Linking } from 'react-native'
+import { View, Linking } from 'react-native'
 import NavigationUtil from '../../utils/NavigationUtil'
 import ViewUtil from '../../utils/ViewUtil'
 import { MORE_MENU } from '../../utils/MoreMenu'
